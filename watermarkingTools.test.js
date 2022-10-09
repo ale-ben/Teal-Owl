@@ -30,7 +30,7 @@ test('Single character decode 1 bit', () => {
 	}
 });
 
-xtest('Space decode', () => {
+test('Space decode', () => {
 	for (let i = 0; i < watermarkingTools.spacesArr.length; i++) {
 		expect(watermarkingTools.decodeSpace(watermarkingTools.spacesArr[i])).toBe(i.toString(2).padStart(3, '0'));
 	}

@@ -113,7 +113,7 @@ function decodeChar(char, bit) {
 	// Space char
 	const spacePos = spacesArr.indexOf(char);
 	if (spacePos == -1) return '';
-	return spacePos.toString(2);
+	return spacePos.toString(2).padStart(3, '0');
   }
 
 function decodeText(text) {
@@ -127,7 +127,7 @@ function decodeText(text) {
 	return outCode
   }
 
-function test(){
+function manualTest(){
   const text = "ccc ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
   const payload = "010101000110";
   console.log(encodeText(text,payload))
@@ -136,7 +136,7 @@ function test(){
 }
 
 if (require.main === module) {
-	test();
+	manualTest();
 }
 
 if (process.env.NODE_ENV === 'test') {
