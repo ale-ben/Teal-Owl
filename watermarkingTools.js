@@ -1,6 +1,6 @@
 // Non Printable Character used as a delimiter
 //const NPC = '\u200b' // Zero Width Space
-const NPC = '<>' // <>;
+const NPC = '_' // <>;
 
 // Homoglyph character encoding
 const encodeTableChar = {
@@ -21,9 +21,30 @@ const encodeTableChar = {
 	'\u0076':'\u2174', // v
 	'\u0078':'\u0006', // x
   }
+
+  // Homoglyph character decoding
+  // TODO: Can it be optimized with only one map for encode and decode?
+const decodeTableChar = {
+	'\u2010':'\u002d', // - 
+	'\u037e':'\u003b', // ;
+	'\u216d':'\u0043', // C
+	'\u216e':'\u0044', // D
+	'\u212a':'\u004b', // K
+	'\u216c':'\u004c', // L
+	'\u216f':'\u004d', // M
+	'\u2164':'\u0056', // V
+	'\u2169':'\u0058', // X
+	'\u217d':'\u0063', // c
+	'\u217e':'\u0064', // d
+	'\u2170':'\u0069', // i
+	'\u0458':'\u006a', // j
+	'\u217c':'\u006c', // l
+	'\u2174':'\u0076', // v
+	'\u0006':'\u0078', // x
+  }
   
-  // Homoglyph spaces encoding
-  const encodeTableSpace = [
+  // Homoglyph spaces
+  const spacesArr = [
 	'\u0020',
 	'\u2000',
 	'\u2004',
@@ -33,7 +54,6 @@ const encodeTableChar = {
 	'\u202f',
 	'\u205f',
   ]
-  
 
 function encodeChar(char, bit) {
   // Normal char handler
@@ -46,7 +66,7 @@ function encodeChar(char, bit) {
 
 function encodeSpace(bit){
   // Space char
-  const newChar = encodeTableSpace[parseInt(bit,2)];
+  const newChar = spacesArr[parseInt(bit,2)];
   //console.log("Space " + bit + "-" + newChar + "-")
   return newChar
 }
@@ -59,7 +79,7 @@ function encodeText(text, binaryCode) {
     if (c in encodeTableChar) {
       outText = outText.concat(encodeChar(c, binaryCode.charAt(binIter)))
       binIter++
-    } else if (c === encodeTableSpace[0]) {
+    } else if (c === spacesArr[0]) {
       var bitStr = ""
       for (let i = binIter; i < binIter+3; i++) { 
         if (i<binLen) {
@@ -82,12 +102,58 @@ function encodeText(text, binaryCode) {
   return outText
 }
 
+function decodeChar(char, bit) {
+	// Normal char handler
+	if (char in encodeTableChar) return '0';
+	if (char in decodeTableChar) return '1';
+	return '';
+  }
+  
+  function decodeSpace(char){
+	// Space char
+	const spacePos = spacesArr.indexOf(char);
+	if (spacePos == -1) return '';
+	return spacePos.toString(2);
+  }
+
+function decodeText(text) {
+	var outCode = ""
+	
+	for (const c of text) {
+		outCode = outCode.concat(decodeChar(c));
+		if (c in spacesArr) outCode = outCode.concat(decodeSpace(c));
+		if (c === NPC) outCode = outCode.concat(NPC);
+	}
+	return outCode
+  }
+
 function test(){
-  const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod pulvinar ipsum. Nunc quis dictum nunc. Sed ac turpis non justo ornare tempus eget a eros. Nam vitae mi sed quam mattis eleifend in sit amet enim. Cras pharetra eget tellus vitae commodo. Ut eu libero iaculis, elementum quam a, tempor massa. Nunc in lectus eu risus commodo tristique. Donec feugiat, lorem nec gravida iaculis, eros nulla vulputate arcu, ac tristique tortor arcu non erat. Donec diam lorem, egestas eget feugiat sed, pharetra at purus. Aliquam erat volutpat. Vivamus fringilla tellus bibendum lectus feugiat, vitae imperdiet nisi venenatis.";
-  const payload = "0101010001100101011110000111010000100000011101110110000101110100011001010111001001101101011000010111001001101011011010010110111001100111001000000110100101110011001000000110000101110111011001010111001101101111011011010110010100100001";
+  const text = "ccc ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+  const payload = "010101000110";
   console.log(encodeText(text,payload))
+  console.log(payload);
+  console.log(decodeText(encodeText(text,payload)));
 }
 
 if (require.main === module) {
 	test();
+}
+
+if (process.env.NODE_ENV === 'test') {
+	module.exports = {
+		encodeTableChar: encodeTableChar,
+		decodeTableChar: decodeTableChar,
+		spacesArr: spacesArr,
+		encodeChar: encodeChar,
+		decodeChar: decodeChar,
+		encodeSpace: encodeSpace,
+		decodeSpace: decodeSpace,
+		encodeText: encodeText,
+		decodeText: decodeText,
+	};
+} else {
+	module.exports = {
+		encodeText: encodeText,
+		decodeText: decodeText,
+	};
 }
