@@ -1,4 +1,4 @@
-const watermarkingTools = require('./watermarkingTools');
+const watermarkingTools = require('./watermarkingLib');
 
 test('Single character encode 0 bit', () => {
 	for (let key in watermarkingTools.encodeTableChar) {
@@ -41,4 +41,10 @@ test('Decode encoded char', () => {
 		expect(watermarkingTools.decodeChar(watermarkingTools.encodeChar(key, '0'))).toBe('0');
 		expect(watermarkingTools.decodeChar(watermarkingTools.encodeChar(key, '1'))).toBe('1');
 	}
+});
+
+//TODO: Full text watermarking 
+xtest('Encode and decode full text', () => {
+	let text = "Pellentesque mattis efficitur augue. Maecenas eget egestas leo. Aliquam augue ex, pharetra sodales nisl quis, laoreet vehicula quam. Nam tincidunt eros vitae lacus bibendum, non aliquet ante cursus. Nam tristique magna vitae libero rutrum convallis. Curabitur augue sem, porta vitae nulla id, dapibus porttitor ligula. Aliquam eleifend est quam, sit amet imperdiet nunc vestibulum vitae. Nunc accumsan fringilla neque et lacinia. Cras auctor nec ex a lobortis. Nulla a massa nec mauris pulvinar fermentum. Morbi placerat vitae dui posuere commodo.";
+	let binCode = "0101010001100101011000010110110000100000010011110111011101101100"
 });

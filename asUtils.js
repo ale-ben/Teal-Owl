@@ -1,3 +1,5 @@
+// Google App Script utility functions
+
 function saveAsPDF(docFile, fileName) {
   const docDoc = DocumentApp.openById(docFile.getId());
   var pdfFile = DriveApp.createFile(docDoc.getAs("application/pdf"));
