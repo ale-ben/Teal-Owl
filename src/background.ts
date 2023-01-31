@@ -1,5 +1,4 @@
-'use strict';
-
+console.log("Background script running");
 // With background scripts you can communicate with popup
 // and contentScript files.
 // For more information on background script,

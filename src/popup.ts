@@ -1,8 +1,6 @@
-'use strict';
+console.log("Popup script running");
 
 import './popup.css';
-
-
 /*
 (function () {
   // We will make use of Storage API to get and store `count` value

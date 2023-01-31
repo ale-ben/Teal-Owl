@@ -69,9 +69,9 @@ const common = {
     }),
   ],
   entry: {
-	popup: PATHS.src + '/popup.js',
+	popup: PATHS.src + '/popup.ts',
 	contentScript: PATHS.src + '/contentScript.ts',
-	background: PATHS.src + '/background.js',
+	background: PATHS.src + '/background.ts',
   },
 };
 

@@ -1,5 +1,3 @@
-"use strict";
-
 // Content script file will run in the context of web page.
 // With content script you can manipulate the web pages using
 // Document Object Model (DOM).
@@ -57,20 +55,20 @@ const body = document.querySelector("body");
 if (body != null) {
 	if (body.innerHTML.includes(NPC)) {
 		console.log("Non Printable Character found");
-		//body.innerHTML = body.innerHTML.replaceAll(NPC, '<span ' + blueHighlight + '>' + NPC + "</span>");
+		body.innerHTML = body.innerHTML.replaceAll(NPC, '<span ' + blueHighlight + '>' + NPC + "</span>");
 	}
 
 	for (let i = 1; i < TableSpace.length; i++) {
 		if (body.innerHTML.includes(TableSpace[i])) {
 			console.log("Homoglyph space found");
-			//body.innerHTML = body.innerHTML.replaceAll(TableSpace[i], '<span ' + redHighlight + '>' + TableSpace[i] + "</span>");
+			body.innerHTML = body.innerHTML.replaceAll(TableSpace[i], '<span ' + redHighlight + '>' + TableSpace[i] + "</span>");
 		}
 	}
 
 	Object.keys(DecodeTableChar).forEach(function (key) {
 		if (body.innerHTML.includes(key)) {
 			console.log("Homoglyph char found");
-			//body.innerHTML = body.innerHTML.replaceAll(key, '<span ' + greenHighlight + '>' + key + "</span>");
+			body.innerHTML = body.innerHTML.replaceAll(key, '<span ' + greenHighlight + '>' + key + "</span>");
 		}
 	});
 }
