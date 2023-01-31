@@ -46,6 +46,11 @@ const common = {
           },
         ],
       },
+	  {
+		test: /\.tsx?$/,
+		use: "ts-loader",
+		exclude: /node_modules/,
+	},
     ],
   },
   plugins: [
@@ -63,6 +68,11 @@ const common = {
       filename: '[name].css',
     }),
   ],
+  entry: {
+	popup: PATHS.src + '/popup.js',
+	contentScript: PATHS.src + '/contentScript.ts',
+	background: PATHS.src + '/background.js',
+  },
 };
 
 module.exports = common;
