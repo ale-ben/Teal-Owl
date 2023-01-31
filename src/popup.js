@@ -2,6 +2,8 @@
 
 import './popup.css';
 
+
+/*
 (function () {
   // We will make use of Storage API to get and store `count` value
   // More information on Storage API can we found at
@@ -110,3 +112,6 @@ import './popup.css';
     }
   );
 })();
+
+
+*/

@@ -16,9 +16,6 @@
     "default_title": "Teal Owl_reader",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage"
-  ],
   "content_scripts": [
     {
       "matches": [
