@@ -68,6 +68,9 @@ const common = {
       filename: '[name].css',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx'],
+  },
   entry: {
 	popup: PATHS.src + '/popup.ts',
 	contentScript: PATHS.src + '/contentScript.ts',

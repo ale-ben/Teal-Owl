@@ -1,6 +1,29 @@
 console.log("Popup script running");
 
-import './popup.css';
+import "./popup.css";
+
+let scanButton = document.getElementById("scanPage");
+if (scanButton != null) {
+	scanButton.onclick = () => {
+		console.log("Scan button clicked");
+		chrome.tabs.query({
+			active: true,
+			currentWindow: true
+		}, (tabs) => {
+			const tab = tabs[0];
+
+			if (tab != null && tab.id != null) {
+				chrome.tabs.sendMessage(tab.id, {
+					type: "TO_COMMAND",
+					payload: {
+						message: "highlightHomoglyphs"
+					}
+				});
+			}
+		});
+	};
+}
+
 /*
 (function () {
   // We will make use of Storage API to get and store `count` value

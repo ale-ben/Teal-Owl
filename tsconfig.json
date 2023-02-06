@@ -2,13 +2,19 @@
     "compilerOptions": {
         "strict": true,
         "module": "commonjs",
-        "target": "es2021",
+        "target": "es2022",
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
         "noEmitOnError": true,
         "jsx": "react",
-        "typeRoots": [ "node_modules/@types" ]
-    }
+        "typeRoots": [ "node_modules/@types" ],
+		"moduleResolution": "node"
+    },
+	"types": [
+        //(various types, e.g. jquery, core-js),
+        "chrome",
+		"node"
+    ]
 }
