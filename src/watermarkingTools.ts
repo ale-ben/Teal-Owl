@@ -1,8 +1,6 @@
 export class WatermarkingTools {
 	public static readonly NPC: string = "\u00a7"; // <>;
 
-	private static readonly HomoglyphCharacters: string[] = [];
-
 	public static readonly TableCharacters: {
 		original: string[];
 		homoglyph: string[];
@@ -61,8 +59,10 @@ export class WatermarkingTools {
 		let index = this.TableSpaces.indexOf(space);
 
 		// If not found, return an empty string
-		if (index != -1) 
+		if (index == -1) {
+			console.warn("Trying to get the code of a space that is not in the table")
 			return "";
+		}
 		
 		// Convert the index to binary
 		let binary = index.toString(2);
@@ -75,8 +75,10 @@ export class WatermarkingTools {
 		let index = parseInt(code, 2);
 
 		// If not found, return an empty string
-		if (index != -1) 
+		if (index == -1) {
+			console.warn("Trying to get the space from a code that is not in the table")
 			return "";
+		}
 		
 		return this.TableSpaces[index];
 	}
@@ -90,8 +92,10 @@ export class WatermarkingTools {
 		let index = this.TableCharacters.original.indexOf(character);
 
 		// If not found, return an empty string
-		if (index != -1) 
+		if (index == -1) {
+			console.warn("Trying to apply homoglyph to a character that is not in the original set")
 			return "";
+		}
 		
 		return charSet[index];
 	}
@@ -115,10 +119,10 @@ export class WatermarkingTools {
 
 		// Iterate over the text
 		for (const c of text) {
-			if (c in this.TableCharacters.original.concat(this.TableCharacters.homoglyph)) {
+			if (this.TableCharacters.original.includes(c)) {
 				outText = outText.concat(this.getCharacterWithHomoglyph(c, binaryCode.charAt(binIter)));
 				binIter += 1;
-			} else if (c in this.TableSpaces) {
+			} else if (this.TableSpaces.includes(c)) {
 				// Get the binary code for the space (composed of 3 bits with eventual 0 padding)
 				var bitStr = "";
 				for (let i = binIter; i < binIter + 3; i++) {
@@ -141,7 +145,7 @@ export class WatermarkingTools {
 			}
 		}
 
-		return outText.concat(this.NPC);
+		return outText.concat(this.NPC).replaceAll(this.NPC + this.NPC, this.NPC);
 	}
 
 	// Decode a single paragraph
