@@ -65,7 +65,7 @@ export class WatermarkingTools {
 		}
 		
 		// Convert the index to binary
-		let binary = index.toString(2);
+		let binary = index.toString(2).padStart(3, '0');
 
 		return binary;
 	}
@@ -149,13 +149,51 @@ export class WatermarkingTools {
 	}
 
 	// Decode a single paragraph
-	public static decodeParagraph(text : string): string {
-		return ""
+	public static decodeParagraph(text : string): string[] {
+		const paragraphs = text.split(this.NPC);
+
+		  const decodedParagraphs = paragraphs.reduce(function(result : string[], paragraph: string) {
+			
+			if (paragraph.length == 0) return result;
+			
+			// Initialize the output string
+			const outText = WatermarkingTools.decodeText(paragraph);
+			
+			if (outText.length == 0 || !outText.includes("1")) return result;
+
+			result.push(outText);
+
+			return result;
+		  }, []);
+
+		return decodedParagraphs;
 	}
 
 	// Split text based on NPC and call decodeParagraph on all paragraphs
 	public static decodeText(text : string): string {
-	
-		return ""
+		
+		// Initialize the output string
+		var outCode = "";
+
+		// Iterate over the text
+		for (const c of text) {
+			if (this.TableCharacters.original.includes(c)) {
+				outCode = outCode.concat("0");
+			} else if (this.TableCharacters.homoglyph.includes(c)) {
+				outCode = outCode.concat("1");
+			} else if (this.TableSpaces.includes(c)) {
+				outCode = outCode.concat(this.getSpaceCode(c));
+			}
+
+		}
+
+		return outCode;
 	}
 }
+
+// const payload = "0101010001100101011110000111010000100000011101110110000101110100011001010111001001101101011000010111001001101011011010010110111001100111001000000110100101110011001000000110000101110111011001010111001101101111011011010110010100100001";
+// const originalText = "The ⅼast decaⅾes are charaⅽterⅰzeⅾ by the easy avaiⅼability of miⅼⅼⅰons upon miⅼlⅰons of dⅰgⅰtal ⅽontents that meet seⅴeraⅼ kinⅾ of users’ neeⅾs both in professⅰonal aⅽtⅰvⅰties anⅾ soⅽⅰal";
+					
+// let dec = WatermarkingTools.decodeText(originalText);
+// console.log(dec);
+// console.log(dec == payload);
