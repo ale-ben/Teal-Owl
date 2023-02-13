@@ -9,9 +9,9 @@ function onOpen() {
 }
 
 function applyExportPDFButton() {
-  DocumentApp.getUi() // Or DocumentApp or FormApp.
-     .alert('This should apply the watermarking and export as PDF to google drive');
   applyExportPDF(DocumentApp.getActiveDocument());
+  DocumentApp.getUi()
+     .alert('Watermark applied correctly');
 }
 
 function openConfigButton() {
