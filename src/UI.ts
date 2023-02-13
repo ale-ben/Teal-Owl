@@ -6,8 +6,8 @@ function onOpen() {
 }
 
 function applyExportPDFButton() {
-	Utils.applyExportPDF(DocumentApp.getActiveDocument());
-	DocumentApp.getUi().alert("Watermark applied correctly");
+	const outFile = Utils.applyExportPDF(DocumentApp.getActiveDocument());
+	DocumentApp.getUi().alert("Watermark applied correctly. Output file: " + outFile.getName() + ". Location: " + outFile.getUrl());
 }
 
 function openConfigButton() {
