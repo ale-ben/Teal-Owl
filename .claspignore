@@ -1,7 +1,3 @@
-dist
-src/TOW/tests
-src/TOW/jest.config.js
-node_modules
-src/TOW/node_modules
-.git
-.vscode
+TOW/tests/*
+TOW/jest.config.js
+TOW/node_modules/*

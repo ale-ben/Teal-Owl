@@ -17,6 +17,7 @@
         //(various types, e.g. jquery, core-js),
 		"google-apps-script",
         "chrome",
-		"node"
+		"node",
+		"jest"
     ]
 }

@@ -1,12 +1,15 @@
 {
 	"scripts": {
 		"watch": "clasp push --watch",
-		"ts-watch": "tsc -w"
+		"ts-watch": "tsc -w",
+		"test": "jest"
 	},
 	"dependencies": {
 		"@types/google-apps-script": "^1.0.57"
 	},
 	"devDependencies": {
-		"@types/jest": "^29.4.0"
+		"@types/jest": "^29.4.0",
+		"jest": "^29.4.2",
+		"ts-jest": "^29.0.5"
 	}
 }
