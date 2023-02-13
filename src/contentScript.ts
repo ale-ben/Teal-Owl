@@ -8,7 +8,7 @@
 
 // For more information on Content Scripts,
 // See https://developer.chrome.com/extensions/content_scripts
-import {WatermarkingTools} from "./watermarkingTools";
+import {WatermarkingTools} from "./TOW/watermarkingTools";
 
 // Custom CSS for highlighting
 const redHighlight: string = 'style="background-color: rgb(248 113 113);"';

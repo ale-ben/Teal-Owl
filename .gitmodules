@@ -1,0 +1,3 @@
+[submodule "src/TOW"]
+	path = src/TOW
+	url = git@github.com:ale-ben/Teal_Owl_Watermarking.git
