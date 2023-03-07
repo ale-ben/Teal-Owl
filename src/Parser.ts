@@ -1,6 +1,4 @@
-
 export module Parser {
-
 	/**
 	 * Tree structure of the document
 	 */
@@ -16,7 +14,6 @@ export module Parser {
 	 * @returns The root of the tree structure of the document as a TreeStruct object.
 	 */
 	export function ParseDocument(content : GoogleAppsScript.Document.Body): TreeStruct {
-
 		// Queue for the elements to be parsed (See BFS algorithm)
 		let parseQueue: TreeStruct[] = [];
 
@@ -92,8 +89,36 @@ export module Parser {
 				suffix = "</watermark>";
 				break;
 			case DocumentApp.ElementType.PARAGRAPH:
-				prefix = "<p>";
-				suffix = "</p>";
+				switch (tree.content.asParagraph().getHeading()) {
+					case DocumentApp.ParagraphHeading.HEADING1:
+						prefix = "<h1>";
+						suffix = "</h1>";
+						break;
+					case DocumentApp.ParagraphHeading.HEADING2:
+						prefix = "<h2>";
+						suffix = "</h2>";
+						break;
+					case DocumentApp.ParagraphHeading.HEADING3:
+						prefix = "<h3>";
+						suffix = "</h3>";
+						break;
+					case DocumentApp.ParagraphHeading.HEADING4:
+						prefix = "<h4>";
+						suffix = "</h4>";
+						break;
+					case DocumentApp.ParagraphHeading.HEADING5:
+						prefix = "<h5>";
+						suffix = "</h5>";
+						break;
+					case DocumentApp.ParagraphHeading.HEADING6:
+						prefix = "<h6>";
+						suffix = "</h6>";
+						break;
+					default:
+						prefix = "<p>";
+						suffix = "</p>";
+						break;
+				}
 				break;
 			case DocumentApp.ElementType.TEXT:
 				prefix = "";
