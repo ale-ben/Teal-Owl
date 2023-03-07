@@ -2,10 +2,22 @@ import {Utils} from "./Utils";
 
 function onOpen() {
 	var ui = DocumentApp.getUi();
-	ui.createMenu("Watermarking Tools").addSubMenu(ui.createMenu("Apply watermark").addItem("Apply and export to PDF", "applyExportPDFButton")).addSeparator().addItem(
+
+	const mainDropdown = ui.createMenu("Watermarking Tools");
+
+	const watermarkingMenu = ui.createMenu("Apply watermark")
+	watermarkingMenu.addItem("Apply and export to PDF", "applyExportPDFButton");
+
+	mainDropdown.addSubMenu(watermarkingMenu);
+	
+	mainDropdown.addSeparator();
+
+	mainDropdown.addItem(
 		"Config",
 		"openConfigButton"
-	).addToUi();
+	);
+
+	mainDropdown.addToUi();
 }
 
 function applyExportPDFButton() {
