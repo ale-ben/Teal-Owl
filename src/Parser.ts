@@ -139,6 +139,22 @@ export module Parser {
 		
 		return html;
 	}
+
+	/**
+	 * Extracts from the tree all the text components and stores them in an array.
+	 * This is useful to later apply watermarking to all the text elements.
+	 * @param tree The root of the tree structure of the document
+	 * @param textArr The array to store the text components
+	 */
+	export function GetTextComponents(tree : TreeStruct, textArr : GoogleAppsScript.Document.Text[]) {
+		if (tree.content.getType() == DocumentApp.ElementType.TEXT) {
+			textArr.push(tree.content.asText());
+		} else {
+			tree.children.forEach((child) => {
+				GetTextComponents(child, textArr);
+			});
+		}
+	}
 }
 
 export function testParse() {
