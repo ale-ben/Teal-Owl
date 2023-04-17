@@ -4,6 +4,7 @@ export module Parser {
 	 */
 	export type TreeStruct = {
 		content: GoogleAppsScript.Document.Element;
+		text?: string;
 		children: TreeStruct[];
 		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
 	};
@@ -16,6 +17,7 @@ export module Parser {
 	export function ParseDocument(content : GoogleAppsScript.Document.Body): TreeStruct {
 		// Queue for the elements to be parsed (See BFS algorithm)
 		let parseQueue: TreeStruct[] = [];
+		let textElements: TreeStruct[] = [];
 
 		// Root of the tree structure
 		let root: TreeStruct = {
@@ -31,8 +33,12 @@ export module Parser {
 
 		// Parse each element in the queue. This function will add the elements to the tree and push the childs to the queue.
 		while ((el = parseQueue.shift()) != undefined) {
-			parseElement(parseQueue, el);
+			parseElement(parseQueue, textElements, el);
 		}
+
+		console.warn("Text elements: " + textElements.length)
+		console.log(JSON.stringify(textElements))
+		console.log(JSON.stringify(root))
 
 		return root;
 	}
@@ -42,7 +48,7 @@ export module Parser {
 	 * @param parseQueue Queue of elements to be parsed
 	 * @param elem The element to be parsed
 	 */
-	function parseElement(parseQueue : TreeStruct[], elem : TreeStruct) {
+	function parseElement(parseQueue : TreeStruct[], textElements: TreeStruct[], elem : TreeStruct) {
 		// Define how to parse each type of element.
 		if (elem.content.getType() == DocumentApp.ElementType.PARAGRAPH) {
 			let par = elem.content.asParagraph();
@@ -68,6 +74,9 @@ export module Parser {
 				elem.children.push(child);
 				parseQueue.push(child);
 			}
+		} else if (elem.content.getType() == DocumentApp.ElementType.TEXT) {
+			elem.text = elem.content.asText().getText();
+			textElements.push(elem)
 		}
 	}
 
@@ -160,6 +169,6 @@ export module Parser {
 export function testParse() {
 	const doc = DocumentApp.openById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8");
 	const tree = Parser.ParseDocument(doc.getBody());
-	const html = Parser.ConvertToHTML(tree);
-	console.log(html);
+	//const html = Parser.ConvertToHTML(tree);
+	//console.log(html);
 }
