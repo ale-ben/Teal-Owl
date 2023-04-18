@@ -1,3 +1,5 @@
+import {WatermarkingTools} from "./TOW/watermarkingTools";
+
 export module Parser {
 	/**
 	 * Tree structure of the document
@@ -9,12 +11,13 @@ export module Parser {
 		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
 	};
 
+	
 	/**
 	 * Main function to parse the document into a tree structure.
 	 * @param content The body of the document
-	 * @returns The root of the tree structure of the document as a TreeStruct object.
+	 * @returns The root of the tree structure of the document as a TreeStruct object and an array of tree text elements.
 	 */
-	export function ParseDocument(content : GoogleAppsScript.Document.Body): TreeStruct {
+	export function ParseDocument(content : GoogleAppsScript.Document.Body): [TreeStruct, TreeStruct[]] {
 		// Queue for the elements to be parsed (See BFS algorithm)
 		let parseQueue: TreeStruct[] = [];
 		let textElements: TreeStruct[] = [];
@@ -36,11 +39,7 @@ export module Parser {
 			parseElement(parseQueue, textElements, el);
 		}
 
-		console.warn("Text elements: " + textElements.length)
-		console.log(JSON.stringify(textElements))
-		console.log(JSON.stringify(root))
-
-		return root;
+		return [root, textElements];
 	}
 
 	/**
@@ -132,7 +131,7 @@ export module Parser {
 			case DocumentApp.ElementType.TEXT:
 				prefix = "";
 				suffix = "";
-				html += tree.content.asText().getText();
+				html += tree.text;
 				break;
 		}
 
@@ -168,7 +167,12 @@ export module Parser {
 
 export function testParse() {
 	const doc = DocumentApp.openById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8");
-	const tree = Parser.ParseDocument(doc.getBody());
-	//const html = Parser.ConvertToHTML(tree);
-	//console.log(html);
+	const [tree, textElements] = Parser.ParseDocument(doc.getBody());
+	console.log(JSON.stringify(tree));
+	console.log(JSON.stringify(textElements));
+
+	WatermarkingTools.encodeTree(textElements, "100100101010101010101");
+
+	const html = Parser.ConvertToHTML(tree);
+	console.log(html);	
 }
