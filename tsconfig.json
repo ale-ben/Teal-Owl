@@ -10,6 +10,11 @@
 		"noEmitOnError": true,
 		"jsx": "react",
 		"typeRoots": ["node_modules/@types"],
-		"moduleResolution": "node"
-	}
+		"moduleResolution": "node",
+		"skipLibCheck": true
+	},
+	"types": [
+        //(various types, e.g. jquery, core-js),
+		"google-apps-script"
+    ]
 }

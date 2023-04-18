@@ -1,4 +1,11 @@
 export module WatermarkingTools {
+	type TreeStruct = {
+		content: GoogleAppsScript.Document.Element;
+		text?: string;
+		children: TreeStruct[];
+		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
+	};
+
 	export const NPC: string = "\u00a7"; // <>;
 
 	export const TableCharacters: {
@@ -146,6 +153,59 @@ export module WatermarkingTools {
 		}
 
 		return outText.concat(WatermarkingTools.NPC).replaceAll(WatermarkingTools.NPC + WatermarkingTools.NPC, WatermarkingTools.NPC);
+	}
+
+	export function encodeTree(tree : TreeStruct[], binaryCode : string) {
+		// Initializa output string with the NPC
+		
+		// Iterator index for binary code
+		var binIter = 0;
+		// Length of the binary code
+		const binLen = binaryCode.length;
+
+		// Iterate over the text
+		for (const text of tree) {
+			if (text.text === undefined) continue;
+			var outText = "";
+			for (const c of text.text) {
+				if (WatermarkingTools.TableCharacters.original.includes(c)) {
+					outText = outText.concat(getCharacterWithHomoglyph(c, binaryCode.charAt(binIter)));
+					binIter += 1;
+				} else if (WatermarkingTools.TableSpaces.includes(c)) {
+					// Get the binary code for the space (composed of 3 bits with eventual 0 padding)
+					var bitStr = "";
+					for (let i = binIter; i < binIter + 3; i++) {
+						if (i < binLen) {
+							bitStr = bitStr.concat(binaryCode[i]);
+						} else {
+							bitStr = bitStr.concat("0");
+						}
+					}
+					outText = outText.concat(getSpaceFromCode(bitStr));
+					binIter += 3;
+				} else {
+					outText = outText.concat(c);
+				}
+
+				// If the binary code is over, add the NPC and restart from 0
+				if (binIter >= binLen) {
+					outText = outText.concat(WatermarkingTools.NPC);
+					binIter = 0;
+				}
+			}
+
+			text.text = outText;
+		}
+
+		// Add NPC at beginning of first text and end of last text
+		tree[0].text = WatermarkingTools.NPC + tree[0].text;
+		tree[tree.length - 1].text = tree[tree.length - 1].text + WatermarkingTools.NPC;
+
+		// Remove double NPC
+		for (const text of tree) {
+			if (text.text === undefined) continue;
+			text.text = text.text.replaceAll(WatermarkingTools.NPC + WatermarkingTools.NPC, WatermarkingTools.NPC);
+		}
 	}
 
 	// Decode a single paragraph
