@@ -11,8 +11,11 @@
         "jsx": "react",
         "typeRoots": [ "node_modules/@types" ],
 		"moduleResolution": "node",
-		"skipLibCheck": true
+		"skipLibCheck": true,
     },
+	"exclude": [
+        "GoogleDoc2Html"
+    ],
 	"types": [
         //(various types, e.g. jquery, core-js),
 		"google-apps-script",
