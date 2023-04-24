@@ -11,13 +11,14 @@ export module Parser {
 		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
 	};
 
-	
 	/**
 	 * Main function to parse the document into a tree structure.
 	 * @param content The body of the document
 	 * @returns The root of the tree structure of the document as a TreeStruct object and an array of tree text elements.
 	 */
-	export function ParseDocument(content : GoogleAppsScript.Document.Body): [TreeStruct, TreeStruct[]] {
+	export function ParseDocument(content : GoogleAppsScript.Document.Body): [
+		TreeStruct, TreeStruct[]
+	]{
 		// Queue for the elements to be parsed (See BFS algorithm)
 		let parseQueue: TreeStruct[] = [];
 		let textElements: TreeStruct[] = [];
@@ -47,7 +48,7 @@ export module Parser {
 	 * @param parseQueue Queue of elements to be parsed
 	 * @param elem The element to be parsed
 	 */
-	function parseElement(parseQueue : TreeStruct[], textElements: TreeStruct[], elem : TreeStruct) {
+	function parseElement(parseQueue : TreeStruct[], textElements : TreeStruct[], elem : TreeStruct) {
 		// Define how to parse each type of element.
 		if (elem.content.getType() == DocumentApp.ElementType.PARAGRAPH) {
 			let par = elem.content.asParagraph();
@@ -75,7 +76,7 @@ export module Parser {
 			}
 		} else if (elem.content.getType() == DocumentApp.ElementType.TEXT) {
 			elem.text = elem.content.asText().getText();
-			textElements.push(elem)
+			textElements.push(elem);
 		}
 	}
 
@@ -147,22 +148,6 @@ export module Parser {
 		
 		return html;
 	}
-
-	/**
-	 * Extracts from the tree all the text components and stores them in an array.
-	 * This is useful to later apply watermarking to all the text elements.
-	 * @param tree The root of the tree structure of the document
-	 * @param textArr The array to store the text components
-	 */
-	export function GetTextComponents(tree : TreeStruct, textArr : GoogleAppsScript.Document.Text[]) {
-		if (tree.content.getType() == DocumentApp.ElementType.TEXT) {
-			textArr.push(tree.content.asText());
-		} else {
-			tree.children.forEach((child) => {
-				GetTextComponents(child, textArr);
-			});
-		}
-	}
 }
 
 export function testParse() {
@@ -174,5 +159,5 @@ export function testParse() {
 	WatermarkingTools.encodeTree(textElements, "100100101010101010101");
 
 	const html = Parser.ConvertToHTML(tree);
-	console.log(html);	
+	console.log(html);
 }
