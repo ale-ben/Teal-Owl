@@ -5,17 +5,14 @@ function onOpen() {
 
 	const mainDropdown = ui.createMenu("Watermarking Tools");
 
-	const watermarkingMenu = ui.createMenu("Apply watermark")
+	const watermarkingMenu = ui.createMenu("Apply watermark");
 	watermarkingMenu.addItem("Apply and export to PDF", "applyExportPDFButton");
 
 	mainDropdown.addSubMenu(watermarkingMenu);
-	
+
 	mainDropdown.addSeparator();
 
-	mainDropdown.addItem(
-		"Config",
-		"openConfigButton"
-	);
+	mainDropdown.addItem("Config", "openConfigButton");
 
 	mainDropdown.addToUi();
 }

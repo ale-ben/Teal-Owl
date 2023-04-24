@@ -9,18 +9,16 @@
         "outDir": "dist/js",
         "noEmitOnError": true,
         "jsx": "react",
-        "typeRoots": [ "node_modules/@types" ],
-		"moduleResolution": "node",
-		"skipLibCheck": true,
+        "typeRoots": ["node_modules/@types"],
+        "moduleResolution": "node",
+        "skipLibCheck": true
     },
-	"exclude": [
-        "GoogleDoc2Html"
-    ],
-	"types": [
+    "exclude": ["GoogleDoc2Html"],
+    "types": [
         //(various types, e.g. jquery, core-js),
-		"google-apps-script",
+        "google-apps-script",
         "chrome",
-		"node",
-		"jest"
+        "node",
+        "jest"
     ]
 }
