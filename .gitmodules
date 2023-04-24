@@ -1,6 +1,3 @@
 [submodule "src/TOW"]
 	path = src/TOW
 	url = git@github.com:ale-ben/Teal-Owl_Watermarking.git
-[submodule "GoogleDoc2Html"]
-	path = GoogleDoc2Html
-	url = git@github.com:thejimbirch/GoogleDoc2Html.git
