@@ -1,13 +1,14 @@
 import {WatermarkingTools} from "./TOW/watermarkingTools";
 import {Parser} from "./Parser";
+import {Config} from "./Config";
+import {Payload} from "./Payload";
 
 export module Utils {
 	export function applyExport(origDoc : GoogleAppsScript.Document.Document): GoogleAppsScript.Drive.File {
 		const fileName = origDoc.getName();
 		const filePath = DriveApp.getFileById(origDoc.getId()).getParents().next();
 
-		const fakePayload = "0101010001100101011110000111010000100000011101110110000101110100011001010111001001101101011000010111001001101011011010010110111001100111001000000110" +
-				"100101110011001000000110000101110111011001010111001101101111011011010110010100100001";
+		const fakePayload = Payload.generatePayload(Config.getUserID(), "123456"); //TODO get doc ID
 
 		const tree = applyWatermark(origDoc, fakePayload);
 		const outHTML = Parser.ConvertToHTML(tree);

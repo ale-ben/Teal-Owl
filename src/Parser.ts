@@ -1,6 +1,5 @@
-// This is a customized version of the parser from google docs to html (https://github.com/thejimbirch/GoogleDoc2Html/tree/master)
-// Note that original parser is in js, this is converted to ts
-
+// This is a customized version of the parser from google docs to html (https://github.com/thejimbirch/GoogleDoc2Html/tree/master) Note that original
+// parser is in js, this is converted to ts
 
 import {WatermarkingTools} from "./TOW/watermarkingTools";
 
