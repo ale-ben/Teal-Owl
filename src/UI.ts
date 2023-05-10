@@ -1,4 +1,5 @@
 import {Utils} from "./Utils";
+import {Config} from "./Config";
 
 function onOpen() {
 	var ui = DocumentApp.getUi();
@@ -24,7 +25,7 @@ function onOpen() {
 
 function applyExportPDFButton() {
 	const ui = DocumentApp.getUi();
-	if (checkConfig()) {
+	if (Config.checkConfig()) {
 		const outFile = Utils.applyExport(DocumentApp.getActiveDocument());
 		ui.alert("Watermark applied correctly. Output file: " + outFile.getName() + ". Location: " + outFile.getUrl());
 	} else {
@@ -32,14 +33,9 @@ function applyExportPDFButton() {
 	}
 }
 
-function checkConfig(): boolean {
-	const userProperties = PropertiesService.getUserProperties();
-	return userProperties.getProperty("userID") != null && userProperties.getProperty("userID") != "";
-}
-
 function validateConfigButton() {
 	const ui = DocumentApp.getUi();
-	if (checkConfig()) {
+	if (Config.checkConfig()) {
 		ui.alert("Config is valid.");
 	} else {
 		ui.alert("Config is invalid.");
@@ -47,39 +43,26 @@ function validateConfigButton() {
 }
 
 function viewConfigButton() {
-	const userProperties = PropertiesService.getUserProperties();
 	const ui = DocumentApp.getUi();
 
-	const userID = userProperties.getProperty("userID");
-
-	ui.alert("User ID: " + (
-		userID
-			? userID
-			: ""
-	));
+	ui.alert("User ID: " + Config.getUserID());
 }
 
 function resetConfigButton() {
-	const userProperties = PropertiesService.getUserProperties();
 	const ui = DocumentApp.getUi();
 
-	userProperties.deleteAllProperties();
+	Config.resetConfig();
 	ui.alert("Config reset.");
 }
 
 function openConfigButton() {
-	const userProperties = PropertiesService.getUserProperties();
 	const ui = DocumentApp.getUi();
 
-	const userID = userProperties.getProperty("userID");
+	const userID = Config.getUserID();
 
-	var userIDPrompt = ui.prompt("Please enter your user ID", "Current user ID is: " + (
-		userID
-			? userID
-			: ""
-	), ui.ButtonSet.OK_CANCEL);
+	var userIDPrompt = ui.prompt("Please enter your user ID", "Current user ID is: " + userID, ui.ButtonSet.OK_CANCEL);
 	if (userIDPrompt.getSelectedButton() == ui.Button.OK && userIDPrompt.getResponseText() != "") {
-		userProperties.setProperty("userID", userIDPrompt.getResponseText());
+		Config.setUserID(userIDPrompt.getResponseText());
 		ui.alert("User ID updated, new user ID: " + userIDPrompt.getResponseText());
 	}
 }
