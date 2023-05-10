@@ -29,7 +29,9 @@ function applyExportPDFButton() {
 		const outFile = Utils.applyExport(DocumentApp.getActiveDocument());
 
 		// Display a modal dialog box with custom HtmlService content.
-		var htmlOutput = HtmlService.createHtmlOutput("Output file: <a href=\"" + outFile.getUrl() + "\" target=\"_blank\">" + outFile.getName() + "</a>").setWidth(500).setHeight(150);
+		var htmlOutput = HtmlService.createHtmlOutput('Output file: <a href="' + outFile.getUrl() + '" target="_blank">' + outFile.getName() + "</a>").setWidth(
+			500
+		).setHeight(150);
 		ui.showModalDialog(htmlOutput, "Watermarking complete.");
 	} else {
 		ui.alert("Please run config in the watermarking menu.");
