@@ -27,7 +27,10 @@ function applyExportPDFButton() {
 	const ui = DocumentApp.getUi();
 	if (Config.checkConfig()) {
 		const outFile = Utils.applyExport(DocumentApp.getActiveDocument());
-		ui.alert("Watermark applied correctly. Output file: " + outFile.getName() + ". Location: " + outFile.getUrl());
+
+		// Display a modal dialog box with custom HtmlService content.
+		var htmlOutput = HtmlService.createHtmlOutput("Output file: <a href=\"" + outFile.getUrl() + "\" target=\"_blank\">" + outFile.getName() + "</a>").setWidth(500).setHeight(150);
+		ui.showModalDialog(htmlOutput, "Watermarking complete.");
 	} else {
 		ui.alert("Please run config in the watermarking menu.");
 	}
