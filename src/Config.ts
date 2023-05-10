@@ -13,7 +13,7 @@ export module Config {
 		return userProperties.getProperty("userID") || "";
 	}
 
-	export function setUserID(id: string){
+	export function setUserID(id : string) {
 		const userProperties = PropertiesService.getUserProperties();
 		userProperties.setProperty("userID", id);
 	}

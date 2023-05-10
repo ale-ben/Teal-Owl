@@ -1,7 +1,7 @@
 import {WatermarkingTools} from "./TOW/watermarkingTools";
 import {Parser} from "./Parser";
 import {Config} from "./Config";
-import { Payload } from "./Payload";
+import {Payload} from "./Payload";
 
 export module Utils {
 	export function applyExport(origDoc : GoogleAppsScript.Document.Document): GoogleAppsScript.Drive.File {
