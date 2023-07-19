@@ -18,6 +18,8 @@
         "google-apps-script",
         "chrome",
         "node",
-        "jest"
+        "jest",
+		"gapi",
+		"google.picker"
     ]
 }

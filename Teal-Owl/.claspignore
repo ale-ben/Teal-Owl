@@ -4,3 +4,4 @@ TOW/node_modules/**
 jest.config.js
 node_modules/**
 dist/**
+tailwind.config.js
