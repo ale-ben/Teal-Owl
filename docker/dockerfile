@@ -1,4 +1,4 @@
-FROM node:20.4.0
+FROM node:20.8
 
 RUN npm install @google/clasp typescript jest ts-jest ts-node -g
 RUN npm install @types/google-apps-script -g
