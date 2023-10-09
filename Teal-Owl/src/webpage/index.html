@@ -3,43 +3,54 @@
 
 <head>
     <link rel="stylesheet" href="../../static/output.css">
-	<?!= include('static/outputMin'); ?>
-	<?!= include('static/pickerUtils'); ?>
+    <?!= include('static/outputMin'); ?>
+    <?!= include('static/pickerUtils'); ?>
 </head>
 
-<body>
+<body onload="pageLoaded()">
     <div class="bg-blue-200 w-screen h-screen flex flex-col">
         <p class="text-center text-5xl pt-5">Teal Owl Publisher</p>
         <div class="p-5 pt-10 grid grid-cols-3">
             <div class="flex flex-col p-5">
-                <p class="text-2xl">1. Compile your info</p>
-                <p class="text-sm pt-2">This informations will be used to sign the document.</p>
-				<form class="pt-10">
-					<div class="relative z-0 w-full mb-6 group">
-						<input type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-						<label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">User ID</label>
-					</div>
-				</form>
-            </div>
-            <div class="flex flex-col p-5">
-                <p class="text-2xl">2. Select the file</p>
+                <p class="text-2xl">1. Select the file</p>
                 <p class="text-sm pt-2">Pick a file from Google Drive to apply watermark.</p>
                 <button onclick="getOAuthToken()" class="mt-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Select a file</button>
                 <p class="text-xl pt-10">File selected:</p>
-				<p id="result">---</p>
+                <p id="result">---</p>
+            </div>
+            <div class="flex flex-col p-5">
+                <p class="text-2xl">2. Review informations</p>
+                <p class="text-xl pt-10">Author ID:</p>
+                <p id="author-id">---</p>
+                <p class="text-xl pt-5">Document ID:</p>
+                <p id="document-id">---</p>
             </div>
             <div class="flex flex-col p-5">
                 <p class="text-2xl">3. Apply Watermark</p>
-                <p class="text-sm pt-2">The watermarked file will watermarked and saved to Google Drive.</p>
-				<button type="button" class="mt-10 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Publish</button>
-				<p class="text-xl pt-10">Output folder:</p>
-				<p id="out-folder">---</p>
-				<p class="text-xl pt-5">Output URL:</p>
-				<p id="out-url">---</p>
-			</div>
+                <p class="text-sm pt-2">The file will be watermarked and saved to Google Drive along with the relative manifest.</p>
+                <button type="button" class="mt-10 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Publish</button>
+                <p class="text-xl pt-10">Output folder:</p>
+                <p id="out-folder">---</p>
+                <p class="text-xl pt-5">Generated files:</p>
+                <p id="out-url">---</p>
+            </div>
         </div>
     </div>
     <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 </body>
+
+<script>
+    function pageLoaded() {
+        google
+            .script
+            .run
+            .withSuccessHandler(function(result) {
+                document
+                    .getElementById('author-id')
+                    .innerHTML = result.authorID;
+            })
+            .getBasicInfo();
+    }
+</script>
 
 </html>

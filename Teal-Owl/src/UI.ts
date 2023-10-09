@@ -16,6 +16,12 @@ function include(filename: string) {
 		.getContent();
 }
 
+
+// ---- Helpèr functions ----
+/*
+This functions will be called from the client side
+*/
+
 /**
  * Gets the user's OAuth 2.0 access token so that it can be passed to Picker.
  * This technique keeps Picker from needing to show its own authorization
@@ -35,3 +41,16 @@ function getOAuthToken() {
 	  console.log('Failed with error: %s', e.error);
 	}
   }
+
+function getBasicInfo() {
+	try {
+		return {
+			authorID: Session.getActiveUser().getEmail(),
+			home: DriveApp.getRootFolder().getId(),
+			// TODO (Developer) - Add more info
+		}
+	} catch (e:any) {
+		// TODO (Developer) - Handle exception
+		console.log('Failed with error: %s', e.error);
+	}
+}
