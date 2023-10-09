@@ -60,7 +60,7 @@ function getBasicInfo() {
 }
 
 function applyWatermark(documentID: string) {
-	console.log(documentID);
+	console.log("docID" + documentID);
 	// TODO: Implement
 	return {
 		documents: ["doc1", "doc2"],
