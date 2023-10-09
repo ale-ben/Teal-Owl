@@ -87,6 +87,7 @@
             document
                 .getElementById('document-id')
                 .innerHTML = id;
+			document.getElementById("apply-button").disabled = false;
         } else if (action == google.picker.Action.CANCEL) {
             document
                 .getElementById('result')

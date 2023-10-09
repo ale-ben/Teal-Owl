@@ -42,6 +42,10 @@ function getOAuthToken() {
 	}
   }
 
+  /**
+   * Gets the user's basic info
+   * @returns {Object} Basic info about the user
+   */
 function getBasicInfo() {
 	try {
 		return {
@@ -52,5 +56,15 @@ function getBasicInfo() {
 	} catch (e:any) {
 		// TODO (Developer) - Handle exception
 		console.log('Failed with error: %s', e.error);
+	}
+}
+
+function applyWatermark(documentID: string) {
+	console.log(documentID);
+	// TODO: Implement
+	return {
+		documents: ["doc1", "doc2"],
+		outFolder: "folder name",
+		outFolderURL: "folder url",
 	}
 }
