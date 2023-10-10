@@ -6,6 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+	"preinstall": "npx only-allow pnpm",
     "watch": "clasp push --watch",
     "ts-watch": "tsc -w",
     "tw-watch": "tailwindcss -i ./src/input.css -o ./static/output.css --watch",
