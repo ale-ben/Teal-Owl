@@ -157,7 +157,7 @@ export module WatermarkingTools {
 
 	export function encodeTree(tree : TreeStruct[], binaryCode : string) {
 		// Initializa output string with the NPC
-		
+
 		// Iterator index for binary code
 		var binIter = 0;
 		// Length of the binary code
@@ -165,7 +165,8 @@ export module WatermarkingTools {
 
 		// Iterate over the text
 		for (const text of tree) {
-			if (text.text === undefined) continue;
+			if (text.text === undefined) 
+				continue;
 			var outText = "";
 			for (const c of text.text) {
 				if (WatermarkingTools.TableCharacters.original.includes(c)) {
@@ -203,7 +204,8 @@ export module WatermarkingTools {
 
 		// Remove double NPC
 		for (const text of tree) {
-			if (text.text === undefined) continue;
+			if (text.text === undefined) 
+				continue;
 			text.text = text.text.replaceAll(WatermarkingTools.NPC + WatermarkingTools.NPC, WatermarkingTools.NPC);
 		}
 	}
