@@ -16,7 +16,7 @@ export module Utils {
 
 	export function saveToHTMLFile(content : string, path : GoogleAppsScript.Drive.Folder, name : string): GoogleAppsScript.Drive.File {
 		// Generate out document
-		const outFile = DriveApp.createFile(name, content, "text/html");
+		const outFile = DriveApp.createFile(name+".html", content, "text/html");
 		// Move to correct folder
 		DriveApp.getFileById(outFile.getId()).moveTo(path);
 
@@ -25,7 +25,7 @@ export module Utils {
 
 	export function saveToJSONFile(content : string, path : GoogleAppsScript.Drive.Folder, name : string): GoogleAppsScript.Drive.File {
 		// Generate out document
-		const outFile = DriveApp.createFile(name, content, "text/json");
+		const outFile = DriveApp.createFile(name+".json", content, "text/json");
 		// Move to correct folder
 		DriveApp.getFileById(outFile.getId()).moveTo(path);
 
@@ -37,5 +37,12 @@ export function testApply() {
 	const doc = DocumentApp.openById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8");
 	const payload = Payload.generatePayload("test1", "123456");
 	const outHTML = Utils.applyWatermark(doc, payload);
-	Utils.saveToHTMLFile(outHTML, DriveApp.getFileById(doc.getId()).getParents().next(), "test_wm.html");
+	Utils.saveToHTMLFile(outHTML, DriveApp.getFileById(doc.getId()).getParents().next(), "test_wm");
+}
+
+
+export function testSave() {
+	const folder = DriveApp.getFileById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8").getParents().next();
+	Utils.saveToJSONFile(JSON.stringify({"test": true}), folder, "test");
+	Utils.saveToHTMLFile("<html><body><h1>Test</h1></body></html>", folder, "test");
 }
