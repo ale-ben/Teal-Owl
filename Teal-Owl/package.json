@@ -20,7 +20,7 @@
     "@types/google-apps-script": "^1.0.66",
     "@types/google.picker": "^0.0.39",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
