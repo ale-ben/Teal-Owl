@@ -61,10 +61,21 @@ function getBasicInfo() {
 
 function applyWatermark(documentID: string) {
 	console.log("docID" + documentID);
-	// TODO: Implement
+	const doc = DocumentApp.openById(documentID);
+	const docFolder = DriveApp.getFileById(documentID).getParents().next();
+	
+	const outFolderName = doc.getName() + "_watermarked";
+	const outFileName = doc.getName() + "_watermark";
+	const outPayloadName = doc.getName() + "_payload";
+
+	const outFolder = docFolder.createFolder(outFolderName);
+
+
+	// TODO: Implement payload generation and save to document
+	// TODO: Implement document watermarking and save to document
 	return {
-		documents: ["doc1", "doc2"],
-		outFolder: "folder name",
-		outFolderURL: "folder url",
+		documents: [outFileName, outPayloadName],
+		outFolder: outFolderName,
+		outFolderURL: outFolder.getUrl(),
 	}
 }
