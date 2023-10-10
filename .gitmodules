@@ -1,3 +1,6 @@
 [submodule "Teal-Owl-Specific/src/TOW"]
 	path = Teal-Owl-Specific/src/TOW
 	url = git@github.com:ale-ben/Teal-Owl_Watermarking.git
+[submodule "Teal-Owl/src/TOW"]
+	path = Teal-Owl/src/TOW
+	url = git@github.com:ale-ben/Teal-Owl_Watermarking.git
