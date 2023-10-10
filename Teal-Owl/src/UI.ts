@@ -1,3 +1,6 @@
+import {Payload} from "./Payload";
+import {Utils} from "./Utils";
+
 "use strict";
 function doGet() {
 	try {
@@ -60,21 +63,34 @@ function getBasicInfo() {
 }
 
 function applyWatermark(documentID: string) {
-	console.log("docID" + documentID);
+	// Basic info and paths 
+	const authorID = Session.getActiveUser().getEmail();
 	const doc = DocumentApp.openById(documentID);
 	const docFolder = DriveApp.getFileById(documentID).getParents().next();
 	
 	const outFolderName = doc.getName() + "_watermarked";
 	const outFileName = doc.getName() + "_watermark";
-	const outPayloadName = doc.getName() + "_payload";
+	const outManifestName = doc.getName() + "_manifest";
 
 	const outFolder = docFolder.createFolder(outFolderName);
 
+	// Generate the payload
+	const payload = Payload.generatePayload(authorID, documentID);
+
+	// Generate out html
+	const outHTML = Utils.applyWatermark(doc, payload);
+	
+	// Generate manifest
+	const manifest = JSON.stringify({"a": "b"}); // TODO: Implement manifest generation
+
+	// Save to files
+	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
+	Utils.saveToJSONFile(manifest, outFolder, outManifestName);
 
 	// TODO: Implement payload generation and save to document
 	// TODO: Implement document watermarking and save to document
 	return {
-		documents: [outFileName, outPayloadName],
+		documents: [outFileName, outManifestName],
 		outFolder: outFolderName,
 		outFolderURL: outFolder.getUrl(),
 	}

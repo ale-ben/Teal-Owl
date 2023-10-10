@@ -70,19 +70,29 @@
 
 	// Handle the successful return of the watermark apply
     function watermarkSuccess(result) {
+		// Disable the apply button
+		document
+			.getElementById('apply-button')
+			.disabled = true;
+
         const outFolderP = document.getElementById('out-folder');
         const outFilesP = document.getElementById('out-files');
 
         console.debug("result", result);
         outFolderP.innerHTML = '<a href="' + result.outFolderURL + '">' + result.outFolder + '</a>';
 
-        let tmp = '<ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside">';
+        let tmp = '<ul class="max-w-md space-y-1 list-disc list-inside">';
 
         for (const i in result.documents) { 
 			tmp = tmp.concat('<li>'+ result.documents[i] + '</li>');
 		}
 
         outFilesP.innerHTML = tmp.concat('</ul>');
+
+		// Enable the apply button
+		document
+			.getElementById('apply-button')
+			.disabled = false;
     }
 </script>
 
