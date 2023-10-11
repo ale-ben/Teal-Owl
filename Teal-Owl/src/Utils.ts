@@ -6,7 +6,7 @@ export module Utils {
 	export function applyWatermark(content : GoogleAppsScript.Document.Document, payload : string): string {
 		// Generate document tree
 		const [tree, textElements] = Parser.ParseDocument(content.getBody());
-		WatermarkingTools.encodeTree(textElements, "100100101010101010101");
+		WatermarkingTools.encodeTree(textElements, payload);
 
 		// Convert tree to HTML
 		const outHTML = Parser.ConvertToHTML(tree);
