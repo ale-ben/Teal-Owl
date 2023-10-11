@@ -84,10 +84,12 @@ function applyWatermark(documentID: string) {
 	// Generate out html
 	const outHTML = Utils.applyWatermark(doc, payloadStr);
 	
-	// Generate manifest
+	// --- Manifest ---
 	// Convert HTML back to string
 	const htmlStr = Parser.HTMLToText(outHTML);
+	// Remove all HTML tags and homoglyphs
 	const rawText = WatermarkingTools.extractRawText(htmlStr);
+	// Generate manifest
 	const manifest = Manifest.GenerateManifest(authorID, documentID, doc.getName(), rawText);
 
 	// Save to files
