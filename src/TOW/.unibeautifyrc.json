@@ -1,0 +1,34 @@
+{
+	"HTML": {
+		"beautifiers": [
+			"Pretty Diff", "JS-Beautify"
+		],
+		"indent_style": "tab",
+		"indent_size": 2
+	},
+	"JSON": {
+		"beautifiers": [
+			"Prettier", "Pretty Diff", "JS-Beautify"
+		],
+		"indent_style": "tab",
+		"indent_size": 1
+	},
+	"JavaScript": {
+		"beautifiers": [
+			"Prettier", "Pretty Diff", "JS-Beautify", "ESLint"
+		],
+		"indent_style": "tab",
+		"indent_size": 1
+	},
+	"Markdown": {
+		"beautifiers": ["Prettier"]
+	},
+	"TypeScript": {
+		"beautifiers": [
+			"Prettier", "Pretty Diff", "TSLint"
+		],
+		"indent_style": "tab",
+		"indent_size": 1
+	}
+}
+

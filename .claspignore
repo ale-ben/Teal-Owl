@@ -6,3 +6,4 @@ jest.config.js
 node_modules/**
 dist/**
 tailwind.config.js
+Teal-Owl-Specific/**
