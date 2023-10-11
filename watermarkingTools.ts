@@ -6,7 +6,7 @@ export module WatermarkingTools {
 		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
 	};
 
-	export const NPC: string = "\u00a7"; // <>; //TODO: Change this to the real NPC
+	export const NPC: string = "\u00a7"; // <>; TODO: Change this to the real NPC
 
 	export const TableCharacters: {
 		original: string[];
