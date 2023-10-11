@@ -228,7 +228,7 @@ export module WatermarkingTools {
 	 * @param text The text to decode
 	 * @returns The decoded paragraphs
 	 */
-	export function decodeParagraph(text : string): Paragraph[] {
+	export function decodeParagraphs(text : string): Paragraph[] {
 		let paragraphs: Paragraph[] = [];
 
 		const split = text.split(WatermarkingTools.NPC);
@@ -277,6 +277,30 @@ export module WatermarkingTools {
 		}
 
 		return {payload: outCode, text: outText};
+	}
+
+	/**
+	 * Extracts the text from a list of paragraphs
+	 * @param paragraphs The list of paragraphs to extract the text from
+	 * @returns The extracted text
+	 */
+	function extractTextFromParagraphs(paragraphs : Paragraph[]): string {
+		let text = "";
+		paragraphs.forEach((par) => {
+			text = text.concat(par.text);
+		});
+		return text;
+	}
+
+	/**
+	 * Converts a watermarked text to a text without homoglyphs
+	 * @param str The watermarked text
+	 * @returns The text without homoglyphs
+	 */
+	export function extractRawText(str: string): string {
+		const html = decodeParagraphs(str);
+		const text = extractTextFromParagraphs(html);
+		return text;
 	}
 }
 
