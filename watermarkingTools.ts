@@ -6,6 +6,11 @@ export module WatermarkingTools {
 		type: GoogleAppsScript.Document.ElementType; //TODO: Remove this after testing
 	};
 
+	interface Paragraph {
+		text: string;
+		payload: string;
+	}
+
 	export const NPC: string = "\u00a7"; // <>; TODO: Change this to the real NPC
 
 	export const TableCharacters: {
@@ -107,11 +112,19 @@ export module WatermarkingTools {
 		return charSet[index];
 	}
 
+	/**
+	 * Given a character, returns the payload it represents (if any)
+	 * @param character The character to get the payload from
+	 * @returns The payload represented by the character
+	 */
 	function getCodeFromCharacter(character : string): string {
-		if (WatermarkingTools.TableCharacters.original.indexOf(character) != -1) 
+		if (WatermarkingTools.TableCharacters.original.includes(character)) 
 			return "0";
-		if (WatermarkingTools.TableCharacters.homoglyph.indexOf(character) != -1) 
+		if (WatermarkingTools.TableCharacters.homoglyph.includes(character)) 
 			return "1";
+		if (WatermarkingTools.TableSpaces.includes(character)) {
+			return getSpaceCode(character);
+		}
 		return "";
 	}
 
@@ -210,52 +223,69 @@ export module WatermarkingTools {
 		}
 	}
 
-	// Decode a single paragraph
-	export function decodeParagraph(text : string): string[]{
-		const paragraphs = text.split(WatermarkingTools.NPC);
+	/**
+	 * Split the text into paragraphs and decode each paragraph
+	 * @param text The text to decode
+	 * @returns The decoded paragraphs
+	 */
+	export function decodeParagraph(text : string): Paragraph[] {
+		let paragraphs: Paragraph[] = [];
 
-		const decodedParagraphs = paragraphs.reduce(function (result : string[], paragraph : string) {
-			if (paragraph.length == 0) 
-				return result;
+		const split = text.split(WatermarkingTools.NPC);
+
+		split.forEach((par) => {
+			if (par.length == 0) 
+				return;
 			
 			// Initialize the output string
-			const outText = WatermarkingTools.decodeText(paragraph);
+			const out = WatermarkingTools.decodeText(par);
 
-			if (outText.length == 0 || !outText.includes("1")) 
-				return result;
+			if (out.payload.length == 0) 
+				return;
 			
-			result.push(outText);
+			paragraphs.push(out);
+		});
 
-			return result;
-		}, []);
-
-		return decodedParagraphs;
+		return paragraphs;
 	}
 
-	// Split text based on NPC and call decodeParagraph on all paragraphs
-	export function decodeText(text : string): string {
+	/**
+	 * Decodes a single paragraph
+	 * @param text The text to decode
+	 * @returns
+	 */
+	export function decodeText(text : string): {
+		payload: string;
+		text: string
+	} {
 		// Initialize the output string
 		var outCode = "";
+		var outText = "";
 
 		// Iterate over the text
 		for (const c of text) {
-			if (WatermarkingTools.TableCharacters.original.includes(c)) {
-				outCode = outCode.concat("0");
-			} else if (WatermarkingTools.TableCharacters.homoglyph.includes(c)) {
-				outCode = outCode.concat("1");
-			} else if (WatermarkingTools.TableSpaces.includes(c)) {
-				outCode = outCode.concat(getSpaceCode(c));
+			const code = getCodeFromCharacter(c);
+			outCode = outCode.concat(code);
+
+			if (code == "" || code == "0") {
+				outText = outText.concat(c);
+			} else if (code == "1") {
+				outText = outText.concat(WatermarkingTools.TableCharacters.original[WatermarkingTools.TableCharacters.homoglyph.indexOf(c)]);
+			} else {
+				outText = outText.concat(WatermarkingTools.TableSpaces[0]);
 			}
 		}
 
-		return outCode;
+		return {payload: outCode, text: outText};
 	}
 }
 
 function testWatermark() {
-	const text = "Test apply watermark";
-	const payload = "10";
+	// const text = "Test apply watermark";
+	// const payload = "10";
 
-	const encoded = WatermarkingTools.encodeText(text, payload);
-	console.log(encoded);
+	// const encoded = WatermarkingTools.encodeText(text, payload);
+	// console.log(encoded);
+
+	console.log(JSON.stringify(WatermarkingTools.decodeText("as dfghjr5y htre ge56treg5r tgfhjyk5e 6rt")));
 }
