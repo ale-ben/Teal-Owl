@@ -87,8 +87,6 @@ function applyWatermark(documentID: string) {
 	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
 	Utils.saveToJSONFile(manifest, outFolder, outManifestName);
 
-	// TODO: Implement payload generation and save to document
-	// TODO: Implement document watermarking and save to document
 	return {
 		documents: [outFileName, outManifestName],
 		outFolder: outFolderName,
