@@ -1,8 +1,0 @@
-src/TOW/tests/**
-src/TOW/jest.config.js
-src/TOW/node_modules/**
-src/tests/**
-jest.config.js
-node_modules/**
-dist/**
-tailwind.config.js

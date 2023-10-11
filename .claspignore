@@ -1,0 +1,8 @@
+src/TOW/**
+!src/TOW/watermarkingTools.ts
+src/tests/**
+jest.config.js
+node_modules/**
+dist/**
+tailwind.config.js
+Teal-Owl-Specific/**

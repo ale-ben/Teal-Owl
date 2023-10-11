@@ -1,9 +1,0 @@
-services:
-  teal-owl_publisher:
-    entrypoint:
-      - sleep
-      - infinity
-    image: app-script-env
-    build: ./docker
-    volumes:
-      - ".:/teal-owl_publisher"
