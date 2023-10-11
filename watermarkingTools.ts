@@ -228,7 +228,7 @@ export module WatermarkingTools {
 	 * @param text The text to decode
 	 * @returns The decoded paragraphs
 	 */
-	export function decodeParagraphs(text : string): Paragraph[] {
+	export function decodeParagraphs(text : string): Paragraph[]{
 		let paragraphs: Paragraph[] = [];
 
 		const split = text.split(WatermarkingTools.NPC);
@@ -256,7 +256,7 @@ export module WatermarkingTools {
 	 */
 	export function decodeText(text : string): {
 		payload: string;
-		text: string
+		text: string;
 	} {
 		// Initialize the output string
 		var outCode = "";
@@ -297,7 +297,7 @@ export module WatermarkingTools {
 	 * @param str The watermarked text
 	 * @returns The text without homoglyphs
 	 */
-	export function extractRawText(str: string): string {
+	export function extractRawText(str : string): string {
 		const html = decodeParagraphs(str);
 		const text = extractTextFromParagraphs(html);
 		return text;
