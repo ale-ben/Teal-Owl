@@ -1,4 +1,5 @@
 src/TOW/**
+!src/TOW/watermarkingTools.ts
 src/tests/**
 jest.config.js
 node_modules/**

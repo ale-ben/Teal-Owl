@@ -21,5 +21,6 @@
         "jest",
 		"gapi",
 		"google.picker"
-    ]
+    ],
+	"include": ["src/**/*"]
 }
