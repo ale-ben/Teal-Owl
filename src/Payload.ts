@@ -6,7 +6,7 @@ export module Payload {
 	 * @param value 
 	 * @returns 
 	 */
-	function Sha256Hash(value : string): string {
+	export function Sha256Hash(value : string): string {
 		return BytesToHex(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value));
 	}
 

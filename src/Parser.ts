@@ -151,6 +151,15 @@ export module Parser {
 		
 		return html;
 	}
+
+	/**
+	 * Converts an HTML string into a plain text string by removing all tags.
+	 * @param html The HTML string to be converted
+	 * @returns The plain text string
+	 */
+	export function HTMLToText(html : string): string {
+		return html.replace(/<[^>]*>?/gm, '');
+	}
 }
 
 export function testParse() {
@@ -163,4 +172,11 @@ export function testParse() {
 
 	const html = Parser.ConvertToHTML(tree);
 	console.log(html);
+}
+
+
+export function testHTMLToText() {
+	const html = "<h1 class='AHJED'>Heading</h1>\n<p>Paragraph</p><h2>Heading 2</h2><p>Paragraph 2</p>";
+	const text = Parser.HTMLToText(html);
+	console.log(text);
 }

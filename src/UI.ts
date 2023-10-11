@@ -1,4 +1,7 @@
+import { Manifest } from "./Manifest";
+import { Parser } from "./Parser";
 import {Payload} from "./Payload";
+import { WatermarkingTools } from "./TOW/watermarkingTools";
 import {Utils} from "./Utils";
 
 "use strict";
@@ -82,12 +85,14 @@ function applyWatermark(documentID: string) {
 	const outHTML = Utils.applyWatermark(doc, payloadStr);
 	
 	// Generate manifest
-	
-	const manifest = JSON.stringify({"a": "b"}); // TODO: Implement manifest generation
+	// Convert HTML back to string
+	const htmlStr = Parser.HTMLToText(outHTML);
+	const rawText = WatermarkingTools.extractRawText(htmlStr);
+	const manifest = Manifest.GenerateManifest(authorID, documentID, doc.getName(), rawText);
 
 	// Save to files
 	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
-	Utils.saveToJSONFile(manifest, outFolder, outManifestName);
+	Utils.saveToJSONFile(JSON.stringify(manifest), outFolder, outManifestName);
 
 	return {
 		documents: [outFileName, outManifestName],
