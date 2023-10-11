@@ -20,8 +20,12 @@ describe("Testing single space encoding", () => {
 describe("Testing single character decoding", () => {
 	for (let i = 0; i < WatermarkingTools.TableCharacters.original.length; i++) {
 		test(`Decoding character ${WatermarkingTools.TableCharacters.original[i]}`, () => {
-			expect(WatermarkingTools.decodeText(WatermarkingTools.TableCharacters.original[i])).toBe("0");
-			expect(WatermarkingTools.decodeText(WatermarkingTools.TableCharacters.homoglyph[i])).toBe("1");
+			const orig = WatermarkingTools.decodeText(WatermarkingTools.TableCharacters.original[i]);
+			const wm = WatermarkingTools.decodeText(WatermarkingTools.TableCharacters.homoglyph[i]);
+			expect(orig.payload).toBe("0");
+			expect(orig.text).toBe(WatermarkingTools.TableCharacters.original[i]);
+			expect(wm.payload).toBe("1");
+			expect(wm.text).toBe(WatermarkingTools.TableCharacters.original[i]);
 		});
 	}
 });
@@ -29,7 +33,9 @@ describe("Testing single character decoding", () => {
 describe("Testing single space decoding", () => {
 	for (let i = 0; i < WatermarkingTools.TableSpaces.length; i++) {
 		test(`Decoding space |${WatermarkingTools.TableSpaces[i]}|`, () => {
-			expect(WatermarkingTools.decodeText(WatermarkingTools.TableSpaces[i])).toBe(i.toString(2).padStart(3, "0"));
+			const space = WatermarkingTools.decodeText(WatermarkingTools.TableSpaces[i]);
+			expect(space.payload).toBe(i.toString(2).padStart(3, "0"));
+			expect(space.text).toBe(WatermarkingTools.TableSpaces[0]);
 		});
 	}
 });
@@ -53,7 +59,9 @@ describe("Testing text decoding", () => {
 
 	test("Decoding paragraph", () => {
 		for (let i = 0; i < originalText.length; i++) {
-			expect(WatermarkingTools.decodeText(encodedText[i])).toBe(payload);
+			const res = WatermarkingTools.decodeText(encodedText[i]);
+			expect(res.payload).toBe(payload);
+			// TODO: Compare originalText[i] and res.text
 		}
 	});
 });
