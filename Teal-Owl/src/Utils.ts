@@ -35,7 +35,8 @@ export module Utils {
 
 export function testApply() {
 	const doc = DocumentApp.openById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8");
-	const payload = Payload.generatePayload("test1", "123456");
+	const payload = Payload.GeneratePayload("test1", "123456");
+	console.log(payload);
 	const outHTML = Utils.applyWatermark(doc, payload);
 	Utils.saveToHTMLFile(outHTML, DriveApp.getFileById(doc.getId()).getParents().next(), "test_wm");
 }

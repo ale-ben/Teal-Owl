@@ -75,7 +75,7 @@ function applyWatermark(documentID: string) {
 	const outFolder = docFolder.createFolder(outFolderName);
 
 	// Generate the payload
-	const payload = Payload.generatePayload(authorID, documentID);
+	const payload = Payload.GeneratePayload(authorID, documentID);
 
 	// Generate out html
 	const outHTML = Utils.applyWatermark(doc, payload);

@@ -1,27 +1,85 @@
 export module Payload {
-	function algorithmDecToBinConverter(signature : number[]) {
-		var signatureStr = "";
-		for (let i = 0; i < signature.length; i++) {
-			var byte = signature[i];
-			if (byte < 0) 
-				byte += 256;
-			var byteStr = byte.toString(2);
-			while (byteStr.length < 8) 
-				byteStr = "0" + byteStr;
-			signatureStr += byteStr;
+
+	/**
+	 * Generate SHA256 hash of string
+	 * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
+	 * @param value 
+	 * @returns 
+	 */
+	function Sha256Hash(value : string): string {
+		return BytesToHex(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value));
+	}
+
+	/**
+	 * Convert bytes array to hex string
+	 * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
+	 * @param bytes 
+	 * @returns 
+	 */
+	function BytesToHex(bytes : number[]): string {
+		let hex = [];
+		for (let i = 0; i < bytes.length; i++) {
+			const b = bytes[i];
+			let c;
+			if (b < 0) {
+				c = (256 + b).toString(16);
+			} else {
+				c = b.toString(16);
+			}
+			if (c.length == 1) {
+				hex.push("0" + c);
+			} else {
+				hex.push(c);
+			}
 		}
-		return signatureStr;
+		return hex.join("");
 	}
 
-	export function generatePayload(userID : string, docID : string): string {
-		const payload = userID + "," + docID;
+	/**
+	 * Generate payload for watermarking
+	 * @param userID ID of the author of the document
+	 * @param docID ID of the document
+	 * @returns Payload as string
+	 */
+	export function GeneratePayload(userID : string, docID : string): string {
+		// Base payload
+		let payload = userID + "," + docID;
 
-		const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, payload);
+		// Generarte hash of payload
+		const hash = Sha256Hash(payload);
 
-		return payload + "," + algorithmDecToBinConverter(hash);
+		// Add hash to payload (as string)
+		payload += "," + hash;
+		console.log(hash);
+		console.log(payload);
+
+		return payload;
 	}
+
+	export function StringToBinStr(str : string): string {
+		let result = "";
+		for (let i = 0; i < str.length; i++) {
+			result += str.charCodeAt(i).toString(2).padStart(8, "0");
+		}
+		return result;
+	}
+
+	export function BinStrToString(binStr: string): string {
+		let result = "";
+		for (let i = 0; i < binStr.length; i += 8) {
+			result += String.fromCharCode(parseInt(binStr.substring(i, i+8), 2));
+		}
+		return result;
+	}
+
 }
 
 export function testPayload() {
-	console.log(Payload.generatePayload("test1", "123456"));
+	const initPay = Payload.GeneratePayload("test1", "123456");
+	console.log(initPay);
+	const binStr = Payload.StringToBinStr(initPay);
+	console.log(binStr);
+	const str = Payload.BinStrToString(binStr);
+	console.log(str);
+	console.log("Works: ", initPay == str);
 }
