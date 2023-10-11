@@ -58,6 +58,13 @@
             .getElementById('document-id')
             .innerHTML;
         console.log("Document ID: " + documentID);
+		// Disable the apply button
+		const applyBtn = document
+			.getElementById('apply-button')
+		applyBtn
+			.disabled = true;
+		applyBtn
+			.innerHTML = "Applying...";
         google
             .script
             .run
@@ -70,11 +77,6 @@
 
 	// Handle the successful return of the watermark apply
     function watermarkSuccess(result) {
-		// Disable the apply button
-		document
-			.getElementById('apply-button')
-			.disabled = true;
-
         const outFolderP = document.getElementById('out-folder');
         const outFilesP = document.getElementById('out-files');
 
@@ -90,9 +92,12 @@
         outFilesP.innerHTML = tmp.concat('</ul>');
 
 		// Enable the apply button
-		document
+		const applyBtn = document
 			.getElementById('apply-button')
+		applyBtn
 			.disabled = false;
+		applyBtn
+			.innerHTML = "Apply";
     }
 </script>
 

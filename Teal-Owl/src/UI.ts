@@ -76,11 +76,13 @@ function applyWatermark(documentID: string) {
 
 	// Generate the payload
 	const payload = Payload.GeneratePayload(authorID, documentID);
+	const payloadStr = Payload.StringToBinStr(payload);
 
 	// Generate out html
-	const outHTML = Utils.applyWatermark(doc, payload);
+	const outHTML = Utils.applyWatermark(doc, payloadStr);
 	
 	// Generate manifest
+	
 	const manifest = JSON.stringify({"a": "b"}); // TODO: Implement manifest generation
 
 	// Save to files
