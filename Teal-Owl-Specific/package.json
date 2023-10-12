@@ -7,7 +7,7 @@
         "compile": "tsc"
     },
     "dependencies": {
-        "@types/google-apps-script": "^1.0.69"
+        "@types/google-apps-script": "^1.0.70"
     },
     "devDependencies": {
         "@types/jest": "^29.5.5",
