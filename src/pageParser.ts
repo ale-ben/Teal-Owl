@@ -13,12 +13,48 @@
  */
 
 /**
+ * Entrypoint for the page parser, called by onClicked event in background.ts
+ */
+export function toggleReader() {
+	let status: number;
+
+	// Check if meta tag exists
+	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
+
+	// If meta tag exists, check and update status
+	if (meta) {
+		status = getStatus(meta);
+	} else {
+		meta = document.createElement('watermarking-meta');
+		document.head.appendChild(meta);
+		status = setStatus(meta, 0);
+	}
+
+	switch (status) {
+		case 1:
+			// TODO
+			break;
+		case 2:
+			// TODO
+			break;
+		case 3:
+			// TODO
+			break;
+		default:
+			// Page has not been parsed yet
+			parsePage();
+			// FIXME: setStatus does not work
+			//setStatus(meta, 1);
+			break;
+	}
+}
+
+/**
  * Reads the status tag from header and returns the status code
  * @param meta the watermarking-meta tag
  * @returns the status code of the page (0-3) or 0 if no status tag exists
  */
 function getStatus(meta: Element): number {
-	console.log('getStatus', meta);
 	const metaStatus = meta.getElementsByTagName('status')[0]?.textContent;
 	if (metaStatus) {
 		return parseInt(metaStatus);
@@ -33,7 +69,6 @@ function getStatus(meta: Element): number {
  * @returns the status code of the page (0-3)
  */
 function setStatus(meta: Element, status: number): number {
-	console.debug('setStatus', meta, status);
 	const stat = document.createElement('status');
 	stat.textContent = status.toString();
 	meta.appendChild(stat);
@@ -47,8 +82,6 @@ function setStatus(meta: Element, status: number): number {
  * @returns The parsed string
  */
 function parseString(paragraph: string, wmIndex: number): string {
-	console.log('parseString', paragraph, wmIndex);
-
 	// //TODO: Manage paragraphs
 
 	let newString =
@@ -64,7 +97,6 @@ function parseString(paragraph: string, wmIndex: number): string {
  * Parses the page and adds watermarking tags
  */
 function parsePage() {
-	console.log('parsePage');
 	const body = document.body.innerHTML;
 
 	// This will contain the new body with watermarking tags
@@ -110,42 +142,4 @@ function parsePage() {
 
 	// Replace body with newBody
 	document.body.innerHTML = newBody;
-}
-
-/**
- * Entrypoint for the page parser, called by onClicked event in background.ts
- */
-export function toggleReader() {
-	console.log('toggleReader');
-	let status: number;
-
-	// Check if meta tag exists
-	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
-
-	// If meta tag exists, check and update status
-	if (meta) {
-		status = getStatus(meta);
-	} else {
-		meta = document.createElement('watermarking-meta');
-		document.head.appendChild(meta);
-		status = setStatus(meta, 0);
-	}
-
-	switch (status) {
-		case 1:
-			// TODO
-			break;
-		case 2:
-			// TODO
-			break;
-		case 3:
-			// TODO
-			break;
-		default:
-			// Page has not been parsed yet
-			parsePage();
-			// FIXME: setStatus does not work
-			//setStatus(meta, 1);
-			break;
-	}
 }
