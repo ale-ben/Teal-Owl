@@ -41,6 +41,78 @@ function setStatus(meta: Element, status: number): number {
 }
 
 /**
+ * Parses a string and adds watermarking tags. if string contains multiple paragraphs, it will be split and parsed recursively
+ * @param paragraph The string to parse
+ * @param wmIndex The index of the watermarking tag
+ * @returns The parsed string
+ */
+function parseString(paragraph: string, wmIndex: number): string {
+	console.log('parseString', paragraph, wmIndex);
+
+	// //TODO: Manage paragraphs
+
+	let newString =
+		'<mark class="watermark-marktag" id="watermark-' + wmIndex + '">';
+	newString += paragraph;
+
+	newString += '</mark>';
+
+	return newString;
+}
+
+/**
+ * Parses the page and adds watermarking tags
+ */
+function parsePage() {
+	console.log('parsePage');
+	const body = document.body.innerHTML;
+
+	// This will contain the new body with watermarking tags
+	let newBody = '';
+
+	// Index of last character added to newBody
+	let lastIndex = 0;
+
+	// Index of watermarking tag
+	let wmIndex = 0;
+
+	// Non Printable Character used to separate paragraphs
+	const NPC = '§';
+
+	// Find first NPC in body
+	let beginIndex = body.indexOf(NPC);
+	while (beginIndex !== -1) {
+		// Find closing NPC
+		const endIndex = body.indexOf(NPC, beginIndex + 1);
+
+		// If no closing NPC is found, break
+		if (endIndex === -1) break;
+
+		// Save everything new preceding NPC in newBody
+		newBody += body.substring(lastIndex, beginIndex);
+
+		// Update lastIndex to current end index
+		lastIndex = endIndex + 1;
+
+		// Parse string between NPC and add to newBody
+		const tmp = body.substring(beginIndex, endIndex + 1);
+		newBody += parseString(tmp, wmIndex);
+
+		// Increment wmIndex
+		wmIndex += 1;
+
+		// Find next opening NPC
+		beginIndex = body.indexOf(NPC, endIndex + 1);
+	}
+
+	// Add everything after last NPC to newBody
+	newBody += body.substring(lastIndex, body.length);
+
+	// Replace body with newBody
+	document.body.innerHTML = newBody;
+}
+
+/**
  * Entrypoint for the page parser, called by onClicked event in background.ts
  */
 export function toggleReader() {
@@ -72,61 +144,8 @@ export function toggleReader() {
 		default:
 			// Page has not been parsed yet
 			parsePage();
+			// FIXME: setStatus does not work
 			//setStatus(meta, 1);
 			break;
 	}
-}
-
-function parsePage() {
-	console.log('parsePage');
-	const body = document.body.innerHTML;
-
-	// This will contain the new body with watermarking tags
-	let newBody = '';
-
-	// Index of last character added to newBody
-	let lastIndex = 0;
-
-	// Boolean to control wether to add open or close tag
-	let newPar: boolean = true;
-
-	// Index of watermarking tag
-	let wmIndex = 0;
-
-	// Non Printable Character used to separate paragraphs
-	const NPC = '§';
-
-	for (let index = 0; index < body.length; index += 1) {
-		// If you find a NPC, add a watermarking tag
-		if (body[index] === '§') {
-			// Save everything preceding NPC in newBody
-			if (index > 0) {
-				newBody += body.substring(lastIndex, index);
-			}
-
-			// Add watermarking tag (newPar determines if open or close tag)
-			if (newPar) {
-				// Add open tag, increment wmIndex and set newPar to false
-				newBody +=
-					'<mark class="watermark-marktag" id="watermark-' +
-					wmIndex +
-					'">' +
-					NPC;
-				wmIndex += 1;
-				newPar = false;
-			} else {
-				// Add close tag and set newPar to true
-				newBody += NPC + '</mark>';
-				newPar = true;
-			}
-			// Update lastIndex to current index
-			lastIndex = index + 1;
-		}
-	}
-
-	// Add everything after last NPC to newBody
-	newBody += body.substring(lastIndex, body.length);
-
-	// Replace body with newBody
-	document.body.innerHTML = newBody;
 }
