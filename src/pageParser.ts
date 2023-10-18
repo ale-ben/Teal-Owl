@@ -43,8 +43,7 @@ export function toggleReader() {
 		default:
 			// Page has not been parsed yet
 			parsePage();
-			// FIXME: setStatus does not work
-			//setStatus(meta, 1);
+			setStatus(meta, 1);
 			break;
 	}
 }
@@ -69,6 +68,7 @@ function getStatus(meta: Element): number {
  * @returns the status code of the page (0-3)
  */
 function setStatus(meta: Element, status: number): number {
+	//FIXME: If status already exists, DO NOT RECREATE IT
 	const stat = document.createElement('status');
 	stat.textContent = status.toString();
 	meta.appendChild(stat);
