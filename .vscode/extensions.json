@@ -2,6 +2,8 @@
 	"recommendations": [
 		"dbaeumer.vscode-eslint",
 		"ms-vscode.vscode-typescript-next",
-		"aaravb.chrome-extension-developer-tools"
+		"aaravb.chrome-extension-developer-tools",
+		"orta.vscode-jest",
+		"esbenp.prettier-vscode"
 	]
 }

@@ -81,12 +81,114 @@ function setStatus(meta: Element, status: number): number {
  * @param wmIndex The index of the watermarking tag
  * @returns The parsed string
  */
-function parseString(paragraph: string, wmIndex: number): string {
-	// //TODO: Manage paragraphs
+export function parseString(paragraph: string, wmIndex: number): string {
+	// Index of the last subparagraph added to newString
+	let subParIndex = 1;
+	let newString = '';
+	/*
+		Idea: Count HTML opening and closing tags in paragraph, if they are equal than no need for parsing.
+		Opening tag regex: <[^/][^>]*(?<!\/)>
+		Closing tag regex: <\/[^>]+>
+	*/
 
-	let newString =
-		'<mark class="watermark-marktag" id="watermark-' + wmIndex + '">';
-	newString += paragraph;
+	// Count opening and closing tags
+	const openingTags = paragraph.match(/<[^/][^>]*(?<!\/)>/g)?.length ?? 0;
+	const closingTags = paragraph.match(/<\/[^>]+>/g)?.length ?? 0;
+
+	if (openingTags === closingTags) {
+		// No need for parsing
+		newString += paragraph;
+	} else {
+		// Paragraph contains subparagraphs with at least one unbalanced tag
+
+		const difference = Math.abs(openingTags - closingTags);
+		let lastIndex: number;
+
+		if (openingTags > closingTags) {
+			// Paragraph contains more opening tags than closing tags
+			lastIndex = 0;
+
+			// Find "difference" opening tags and wrap them with mark tags
+			for (let i = 0; i < difference; i += 1) {
+				// Find next opening tag and get index of beginning and end of tag
+				const beginIndex = paragraph.indexOf('<', lastIndex);
+				const endIndex = paragraph.indexOf('>', lastIndex);
+
+				// Save everything preceding opening tag in newString
+				newString += paragraph.substring(lastIndex, beginIndex);
+
+				// Add opening tag to newString
+				newString +=
+					'<mark class="watermark-marktag" id="watermark-' +
+					wmIndex +
+					'-' +
+					subParIndex +
+					'">';
+
+				// Increase subParIndex
+				subParIndex += 1;
+
+				// Add actual tag to newString
+				newString += paragraph.substring(beginIndex, endIndex + 1);
+
+				// Add closing tag to newString
+				newString += '</mark>';
+
+				// Increase lastIndex to current index
+				lastIndex = endIndex + 1;
+			}
+
+			// Add everything after last opening tag to newString
+			newString += paragraph.substring(lastIndex, paragraph.length);
+		} else {
+			// Paragraph contains more closing tags than opening tags
+			lastIndex = paragraph.length;
+
+			// Find "difference" closing tags and wrap them with mark tags
+			for (let i = 0; i < difference; i += 1) {
+				// Find previous closing tag and get index of beginning and end of tag
+				const beginIndex = paragraph.lastIndexOf('<', lastIndex);
+				const endIndex = paragraph.lastIndexOf('>', lastIndex);
+
+				// Save everything after closing tag in newString
+				newString =
+					paragraph.substring(endIndex + 1, lastIndex) + newString;
+
+				// Add opening tag to newString
+				newString =
+					'<mark class="watermark-marktag" id="watermark-' +
+					wmIndex +
+					'-' +
+					subParIndex +
+					'">' +
+					newString;
+
+				// Increase subParIndex
+				subParIndex += 1;
+
+				// Add actual tag to newString
+				newString =
+					paragraph.substring(beginIndex, endIndex + 1) + newString;
+
+				// Add closing tag to newString
+				newString = '</mark>' + newString;
+
+				// Increase lastIndex to current index
+				lastIndex = beginIndex;
+			}
+
+			// Add everything before first closing tag to newString
+			newString = paragraph.substring(0, lastIndex) + newString;
+		}
+	}
+
+	// Add external marks
+	// Add opening tag to newString
+	newString =
+		'<mark class="watermark-marktag" id="watermark-' +
+		wmIndex +
+		'-0">' +
+		newString;
 
 	newString += '</mark>';
 
