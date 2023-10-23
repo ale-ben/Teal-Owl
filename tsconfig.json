@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "strict": true,
-        "target": "es6",
+        "target": "es2017",
         "moduleResolution": "bundler",
         "module": "ES6",
         "esModuleInterop": true,
@@ -11,5 +11,6 @@
         "noEmitOnError": true,
         "jsx": "react",
         "typeRoots": [ "node_modules/@types" ]
-    }
+    },
+	"exclude": ["src/TOW/src/watermarkingToolsGAS.ts"]
 }
