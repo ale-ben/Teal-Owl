@@ -4,6 +4,7 @@
 		"dbaeumer.vscode-eslint",
 		"iulian-radu-at.find-unused-exports",
 		"labnol.google-apps-script",
-		"Orta.vscode-jest"
+		"orta.vscode-jest",
+		"ms-vscode.vscode-typescript-next"
 	]
 }

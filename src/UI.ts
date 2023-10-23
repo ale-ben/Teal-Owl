@@ -1,27 +1,28 @@
-import { Manifest } from "./Manifest";
-import { Parser } from "./Parser";
-import {Payload} from "./Payload";
-import { WatermarkingTools } from "./TOW/watermarkingTools";
-import {Utils} from "./Utils";
+/* eslint @typescript-eslint/no-unused-vars: "off" */
+import { Manifest } from './Manifest';
+import { Parser } from './Parser';
+import { Payload } from './Payload';
+import * as WatermarkingTools from './TOW/src/watermarkingTools';
+import { Utils } from './Utils';
 
-"use strict";
+('use strict');
 function doGet() {
 	try {
-		return HtmlService
-		.createTemplateFromFile("src/webpage/index")
-		.evaluate()
-	} catch (e:any) {
+		return HtmlService.createTemplateFromFile(
+			'src/webpage/index'
+		).evaluate();
+	} catch (e) {
 		// TODO (Developer) - Handle exception
-		console.log("Failed with error: %s", e.error);
-		return HtmlService.createHtmlOutput(e.error);
+		console.log('Failed with error', e);
+		return HtmlService.createHtmlOutput(
+			'Failed with error: ' + JSON.stringify(e)
+		);
 	}
 }
 
 function include(filename: string) {
-	return HtmlService.createHtmlOutputFromFile(filename)
-		.getContent();
+	return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
-
 
 // ---- Helpèr functions ----
 /*
@@ -38,42 +39,44 @@ This functions will be called from the client side
  *
  * @return {string} The user's OAuth 2.0 access token.
  */
+
 function getOAuthToken() {
 	try {
-	  DriveApp.getRootFolder();
-	  return ScriptApp.getOAuthToken();
-	} catch (e:any) {
-	  // TODO (Developer) - Handle exception
-	  console.log('Failed with error: %s', e.error);
+		DriveApp.getRootFolder();
+		return ScriptApp.getOAuthToken();
+	} catch (e) {
+		// TODO (Developer) - Handle exception
+		console.log('Failed with error', e);
 	}
-  }
+}
 
-  /**
-   * Gets the user's basic info
-   * @returns {Object} Basic info about the user
-   */
+/**
+ * Gets the user's basic info
+ * @returns {Object} Basic info about the user
+ */
+
 function getBasicInfo() {
 	try {
 		return {
 			authorID: Session.getActiveUser().getEmail(),
-			home: DriveApp.getRootFolder().getId(),
+			home: DriveApp.getRootFolder().getId()
 			// TODO (Developer) - Add more info
-		}
-	} catch (e:any) {
+		};
+	} catch (e) {
 		// TODO (Developer) - Handle exception
-		console.log('Failed with error: %s', e.error);
+		console.log('Failed with error', e);
 	}
 }
 
 function applyWatermark(documentID: string) {
-	// Basic info and paths 
+	// Basic info and paths
 	const authorID = Session.getActiveUser().getEmail();
 	const doc = DocumentApp.openById(documentID);
 	const docFolder = DriveApp.getFileById(documentID).getParents().next();
-	
-	const outFolderName = doc.getName() + "_watermarked";
-	const outFileName = doc.getName() + "_watermark";
-	const outManifestName = doc.getName() + "_manifest";
+
+	const outFolderName = doc.getName() + '_watermarked';
+	const outFileName = doc.getName() + '_watermark';
+	const outManifestName = doc.getName() + '_manifest';
 
 	const outFolder = docFolder.createFolder(outFolderName);
 
@@ -83,14 +86,19 @@ function applyWatermark(documentID: string) {
 
 	// Generate out html
 	const outHTML = Utils.applyWatermark(doc, payloadStr);
-	
+
 	// --- Manifest ---
 	// Convert HTML back to string
 	const htmlStr = Parser.HTMLToText(outHTML);
 	// Remove all HTML tags and homoglyphs
 	const rawText = WatermarkingTools.extractRawText(htmlStr);
 	// Generate manifest
-	const manifest = Manifest.GenerateManifest(authorID, documentID, doc.getName(), rawText);
+	const manifest = Manifest.GenerateManifest(
+		authorID,
+		documentID,
+		doc.getName(),
+		rawText
+	);
 
 	// Save to files
 	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
@@ -99,6 +107,6 @@ function applyWatermark(documentID: string) {
 	return {
 		documents: [outFileName, outManifestName],
 		outFolder: outFolderName,
-		outFolderURL: outFolder.getUrl(),
-	}
+		outFolderURL: outFolder.getUrl()
+	};
 }

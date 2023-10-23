@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "module": "commonjs",
-        "target": "es2022",
+        "target": "ES5",
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",

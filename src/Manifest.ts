@@ -1,5 +1,4 @@
-import {Parser} from "./Parser";
-import {Payload} from "./Payload";
+import { Payload } from './Payload';
 
 export module Manifest {
 	interface Manifest {
@@ -11,7 +10,13 @@ export module Manifest {
 		notes: string | undefined;
 	}
 
-	export function GenerateManifest(userID : string, documentID : string, documentName : string, documentText : string, notes? : string): Manifest {
+	export function GenerateManifest(
+		userID: string,
+		documentID: string,
+		documentName: string,
+		documentText: string,
+		notes?: string
+	): Manifest {
 		const hash = Payload.Sha256Hash(documentText);
 
 		return {

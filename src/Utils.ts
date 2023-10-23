@@ -1,9 +1,12 @@
-import {WatermarkingTools} from "./TOW/watermarkingTools";
-import {Parser} from "./Parser";
-import {Payload} from "./Payload";
+import { Parser } from './Parser';
+import { Payload } from './Payload';
+import { WatermarkingTools } from './TOW/src/watermarkingTools';
 
 export module Utils {
-	export function applyWatermark(content : GoogleAppsScript.Document.Document, payload : string): string {
+	export function applyWatermark(
+		content: GoogleAppsScript.Document.Document,
+		payload: string
+	): string {
 		// Generate document tree
 		const [tree, textElements] = Parser.ParseDocument(content.getBody());
 		WatermarkingTools.encodeTree(textElements, payload);
@@ -14,18 +17,34 @@ export module Utils {
 		return outHTML;
 	}
 
-	export function saveToHTMLFile(content : string, path : GoogleAppsScript.Drive.Folder, name : string): GoogleAppsScript.Drive.File {
+	export function saveToHTMLFile(
+		content: string,
+		path: GoogleAppsScript.Drive.Folder,
+		name: string
+	): GoogleAppsScript.Drive.File {
 		// Generate out document
-		const outFile = DriveApp.createFile(name+".html", content, "text/html");
+		const outFile = DriveApp.createFile(
+			name + '.html',
+			content,
+			'text/html'
+		);
 		// Move to correct folder
 		DriveApp.getFileById(outFile.getId()).moveTo(path);
 
 		return outFile;
 	}
 
-	export function saveToJSONFile(content : string, path : GoogleAppsScript.Drive.Folder, name : string): GoogleAppsScript.Drive.File {
+	export function saveToJSONFile(
+		content: string,
+		path: GoogleAppsScript.Drive.Folder,
+		name: string
+	): GoogleAppsScript.Drive.File {
 		// Generate out document
-		const outFile = DriveApp.createFile(name+".json", content, "text/json");
+		const outFile = DriveApp.createFile(
+			name + '.json',
+			content,
+			'text/json'
+		);
 		// Move to correct folder
 		DriveApp.getFileById(outFile.getId()).moveTo(path);
 
@@ -34,16 +53,29 @@ export module Utils {
 }
 
 export function testApply() {
-	const doc = DocumentApp.openById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8");
-	const payload = Payload.GeneratePayload("test1", "123456");
+	const doc = DocumentApp.openById(
+		'1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8'
+	);
+	const payload = Payload.GeneratePayload('test1', '123456');
 	const payloadStr = Payload.StringToBinStr(payload);
 	const outHTML = Utils.applyWatermark(doc, payloadStr);
-	Utils.saveToHTMLFile(outHTML, DriveApp.getFileById(doc.getId()).getParents().next(), "test_wm");
+	Utils.saveToHTMLFile(
+		outHTML,
+		DriveApp.getFileById(doc.getId()).getParents().next(),
+		'test_wm'
+	);
 }
 
-
 export function testSave() {
-	const folder = DriveApp.getFileById("1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8").getParents().next();
-	Utils.saveToJSONFile(JSON.stringify({"test": true}), folder, "test");
-	Utils.saveToHTMLFile("<html><body><h1>Test</h1></body></html>", folder, "test");
+	const folder = DriveApp.getFileById(
+		'1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8'
+	)
+		.getParents()
+		.next();
+	Utils.saveToJSONFile(JSON.stringify({ test: true }), folder, 'test');
+	Utils.saveToHTMLFile(
+		'<html><body><h1>Test</h1></body></html>',
+		folder,
+		'test'
+	);
 }

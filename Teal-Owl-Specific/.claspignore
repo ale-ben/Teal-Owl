@@ -1,6 +1,0 @@
-TOW/tests/**
-TOW/jest.config.js
-TOW/node_modules/**
-jest.config.js
-node_modules/**
-dist/**
