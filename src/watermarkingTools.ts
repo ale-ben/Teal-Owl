@@ -169,7 +169,7 @@ export module WatermarkingTools {
 		// Initialize output string
 		let outText = '';
 		// Flag to add the NPC at the beginning of the text
-		let addInitNPC = true;
+		let addInitNPC = binIter === 0;
 		for (const c of text) {
 			if (addInitNPC) {
 				outText = outText.concat(WatermarkingTools.NPC);
