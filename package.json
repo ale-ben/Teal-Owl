@@ -13,7 +13,12 @@
     "tw-build": "tailwindcss -i ./src/input.css -o ./static/outputMin.css --minify",
     "test": "jest",
     "push": "clasp push",
-    "compile": "tsc"
+    "compile": "tsc",
+	"style": "prettier --write 'src/**/*.{ts,tsx}'",
+	"lint": "eslint . --ext .ts",
+	"lint-fix": "eslint . --ext .ts --fix",
+	"prepare": "husky install",
+	"clean": "rimraf dist"
   },
   "dependencies": {
     "@types/gapi": "^0.0.45",
@@ -26,7 +31,15 @@
   "devDependencies": {
     "@google/clasp": "^2.4.2",
     "@types/jest": "^29.5.3",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "jest": "^29.6.2",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
     "tailwindcss": "^3.3.3",
     "ts-jest": "^29.0.5"
   }
