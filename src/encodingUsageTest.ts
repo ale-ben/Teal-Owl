@@ -1,4 +1,4 @@
-import { encodeText } from "./watermarkingTools";
+import { WatermarkingTools } from './watermarkingTools';
 
 const text = `Deserunt nulla dolor incididunt fugiat culpa aliquip. Laborum reprehenderit sunt nisi id laboris dolor occaecat aliquip irure aliquip. Labore laborum culpa adipisicing eiusmod commodo. Est magna enim laborum ullamco eu amet nisi. Consequat aute enim magna nisi minim pariatur consequat nostrud aute et ex. Incididunt commodo sunt veniam sit aute cupidatat sunt excepteur ipsum cillum magna.
 
@@ -8,8 +8,8 @@ Ad labore culpa nisi non eu cupidatat reprehenderit adipisicing do quis aliquip 
 
 Duis nulla aliqua ullamco Lorem sit ex adipisicing esse veniam adipisicing eiusmod minim commodo. Officia enim magna amet nisi magna ad velit aliquip sunt elit in magna et. Eu exercitation cillum amet laborum pariatur consectetur laboris non Lorem enim dolor do non. Consectetur quis eiusmod occaecat occaecat dolor ex deserunt qui et voluptate ipsum irure ut cillum. Amet aute ullamco consectetur amet est commodo deserunt. Nisi ex labore ullamco aliquip.`;
 
-const payload = "0110011101";
+const payload = '0110011101';
 
-const encoded = encodeText(text, payload);
+const encoded = WatermarkingTools.encodeText(text, payload);
 
 console.log(encoded);

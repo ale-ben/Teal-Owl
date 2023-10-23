@@ -1,4 +1,4 @@
-import * as WatermarkingTools from '../watermarkingTools';
+import { WatermarkingTools } from '../watermarkingTools';
 
 describe('Testing single character encoding', () => {
 	for (
