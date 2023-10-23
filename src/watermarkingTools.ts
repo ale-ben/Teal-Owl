@@ -10,8 +10,14 @@ interface Paragraph {
 	payload: string;
 }
 
+/**
+ * Non printable character used to separate the paragraphs
+ */
 export const NPC: string = '\u00a7'; // <>; TODO: Change this to the real NPC
 
+/**
+ * Conversion table for characters and their homoglyphs
+ */
 export const TableCharacters: {
 	original: string[];
 	homoglyph: string[];
@@ -54,6 +60,9 @@ export const TableCharacters: {
 	]
 };
 
+/**
+ * Conversion table for spaces
+ */
 export const TableSpaces: string[] = [
 	'\u0020',
 	'\u2000',
@@ -65,6 +74,11 @@ export const TableSpaces: string[] = [
 	'\u205f'
 ];
 
+/**
+ * Given a space, returns the binary code it represents (if any)
+ * @param space The space to get the code from
+ * @returns The binary code represented by the space as a string
+ */
 function getSpaceCode(space: string): string {
 	// Find the element in the array
 	const index = TableSpaces.indexOf(space);
@@ -83,6 +97,11 @@ function getSpaceCode(space: string): string {
 	return binary;
 }
 
+/**
+ * Given a binary code, returns the space it represents (if any)
+ * @param code The binary code to get the space from (composed of 3 bits)
+ * @returns The space represented by the binary code
+ */
 function getSpaceFromCode(code: string): string {
 	// Convert the binary to an integer
 	const index = parseInt(code, 2);
@@ -98,6 +117,12 @@ function getSpaceFromCode(code: string): string {
 	return TableSpaces[index];
 }
 
+/**
+ * Given a character and a value, returns the homoglyph of the character according to the binary value
+ * @param character The character to apply the homoglyph to
+ * @param value The binary value to apply to the character
+ * @returns The homoglyph of the character according to the binary value as a string
+ */
 function getCharacterWithHomoglyph(character: string, value: string): string {
 	const charSet: string[] =
 		value == '1' ? TableCharacters.homoglyph : TableCharacters.original;
@@ -130,17 +155,22 @@ function getCodeFromCharacter(character: string): string {
 	return '';
 }
 
-export function encodeText(text: string, binaryCode: string): string {
-	// Initializa output string with the NPC
-	let outText = NPC;
-
-	// Iterator index for binary code
-	let binIter = 0;
+function encodeString(
+	text: string,
+	binaryCode: string,
+	binIter: number = 0
+): { binIter: number; outText: string } {
 	// Length of the binary code
 	const binLen = binaryCode.length;
-
-	// Iterate over the text
+	// Initialize output string
+	let outText = '';
+	// Flag to add the NPC at the beginning of the text
+	let addInitNPC = true;
 	for (const c of text) {
+		if (addInitNPC) {
+			outText = outText.concat(NPC);
+			addInitNPC = false;
+		}
 		if (TableCharacters.original.includes(c)) {
 			outText = outText.concat(
 				getCharacterWithHomoglyph(c, binaryCode.charAt(binIter))
@@ -166,64 +196,36 @@ export function encodeText(text: string, binaryCode: string): string {
 		if (binIter >= binLen) {
 			outText = outText.concat(NPC);
 			binIter = 0;
+			addInitNPC = true;
 		}
 	}
 
-	return outText.concat(NPC).replaceAll(NPC + NPC, NPC);
+	return { binIter: binIter, outText: outText };
+}
+
+/**
+ * Given a text and a binary code, returns the text encoded with the binary code
+ * @param text The text to encode
+ * @param binaryCode The binary code to encode the text with
+ * @returns The encoded text as a string
+ */
+export function encodeText(text: string, binaryCode: string): string {
+	return encodeString(text, binaryCode).outText;
 }
 
 export function encodeTree(tree: TreeStruct[], binaryCode: string) {
-	// Initializa output string with the NPC
-
 	// Iterator index for binary code
 	let binIter = 0;
-	// Length of the binary code
-	const binLen = binaryCode.length;
 
-	// Iterate over the text
+	// Iterate over the tree and apply the watermark to each text
 	for (const text of tree) {
 		if (text.text === undefined) continue;
-		let outText = '';
-		for (const c of text.text) {
-			if (TableCharacters.original.includes(c)) {
-				outText = outText.concat(
-					getCharacterWithHomoglyph(c, binaryCode.charAt(binIter))
-				);
-				binIter += 1;
-			} else if (TableSpaces.includes(c)) {
-				// Get the binary code for the space (composed of 3 bits with eventual 0 padding)
-				let bitStr = '';
-				for (let i = binIter; i < binIter + 3; i++) {
-					if (i < binLen) {
-						bitStr = bitStr.concat(binaryCode[i]);
-					} else {
-						bitStr = bitStr.concat('0');
-					}
-				}
-				outText = outText.concat(getSpaceFromCode(bitStr));
-				binIter += 3;
-			} else {
-				outText = outText.concat(c);
-			}
 
-			// If the binary code is over, add the NPC and restart from 0
-			if (binIter >= binLen) {
-				outText = outText.concat(NPC);
-				binIter = 0;
-			}
-		}
+		// Encode the text
+		const encoded = encodeString(text.text, binaryCode, binIter);
 
-		text.text = outText;
-	}
-
-	// Add NPC at beginning of first text and end of last text
-	tree[0].text = NPC + tree[0].text;
-	tree[tree.length - 1].text = tree[tree.length - 1].text + NPC;
-
-	// Remove double NPC
-	for (const text of tree) {
-		if (text.text === undefined) continue;
-		text.text = text.text.replaceAll(NPC + NPC, NPC);
+		text.text = encoded.outText;
+		binIter = encoded.binIter;
 	}
 }
 
@@ -256,7 +258,9 @@ export function decodeParagraphs(text: string): Paragraph[] {
  * @param text The text to decode
  * @returns
  */
-export function decodeText(text: string): {
+export function decodeText(
+	text: string
+): {
 	payload: string;
 	text: string;
 } {
