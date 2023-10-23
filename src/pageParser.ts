@@ -11,77 +11,83 @@ interface WMSubParagraph {
 	status: number;
 }
 
-/*
- * Status codes:
- * 0 - Empty
- * 1 - Parsed
- * 1 - Validated
- * 3 - Showing
- */
+enum Status {
+	EMPTY,
+	PARSED,
+	VALIDATED,
+	SHOWING
+}
 
 let wmParagraphs: WMParagraph[] = [];
+let status: Status = Status.EMPTY;
 
 /**
  * Entrypoint for the page parser, called by onClicked event in background.ts
  */
 export function toggleReader() {
-	let status: number;
-
 	// Check if meta tag exists
 	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
 
 	// If meta tag exists, check and update status
-	if (meta) {
-		status = getStatus(meta);
-	} else {
+	if (!meta) {
 		meta = document.createElement('watermarking-meta');
 		document.head.appendChild(meta);
-		status = setStatus(meta, 0);
+		const style = document.createElement('style');
+		document.head.appendChild(style);
+		style.innerHTML = `
+			.wm-valid {
+				background-color: green;
+				color: black;
+			}
+
+			.wm-invalid {
+				background-color: red;
+				color: black;
+			}
+
+			.wm-marked {
+				background-color: yellow;
+				color: black;
+			}
+		`;
 	}
 
 	switch (status) {
-		case 1:
+		case Status.PARSED:
 			// TODO
+			updateTimestamp(meta);
 			break;
-		case 2:
-			// TODO
+		case Status.VALIDATED:
+			showWatermarking();
+			status = Status.SHOWING;
 			break;
-		case 3:
-			// TODO
+		case Status.SHOWING:
+			hideWatermarking();
+			status = Status.VALIDATED;
 			break;
 		default:
 			// Page has not been parsed yet
 			parsePage();
-			setStatus(meta, 1);
+			populateParagraphList();
+			status = Status.VALIDATED;
+
 			break;
 	}
 }
 
 /**
- * Reads the status tag from header and returns the status code
- * @param meta the watermarking-meta tag
- * @returns the status code of the page (0-3) or 0 if no status tag exists
+ * Updates the timestamp in the meta tag
+ * @param meta The meta tag to update
  */
-function getStatus(meta: Element): number {
-	const metaStatus = meta.getElementsByTagName('status')[0]?.textContent;
-	if (metaStatus) {
-		return parseInt(metaStatus);
+function updateTimestamp(meta: Element) {
+	const ts = meta.getElementsByTagName('timestamp');
+	if (ts.length > 0) {
+		ts[0].textContent = new Date().toISOString();
+	} else {
+		const stat = document.createElement('timestamp');
+		stat.textContent = new Date().toISOString();
+		meta.appendChild(stat);
 	}
-	return 0;
-}
-
-/**
- * Writes the status tag to header and returns the status code
- * @param meta the watermarking-meta tag
- * @param status the status code of the page (0-3)
- * @returns the status code of the page (0-3)
- */
-function setStatus(meta: Element, status: number): number {
-	//FIXME: If status already exists, DO NOT RECREATE IT
-	const stat = document.createElement('status');
-	stat.textContent = status.toString();
-	meta.appendChild(stat);
-	return status;
 }
 
 /**
@@ -191,14 +197,14 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				newString = paragraph.substring(0, firstClosingTag);
 
 				// Add closing tag to newString
-				newString += '</mark>';
+				newString += '</wm>';
 
 				// Add actual tag to newString
 				newString += closingTags[0];
 
 				// Add opening tag to newString
 				newString +=
-					'<mark class="watermark-marktag" id="watermark-' +
+					'<wm class="watermark-marktag" id="watermark-' +
 					wmIndex +
 					'-' +
 					subParIndex +
@@ -238,14 +244,14 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				newString += paragraph.substring(lastIndex, lastOpeningTag);
 
 				// Add closing tag to newString
-				newString += '</mark>';
+				newString += '</wm>';
 
 				// Add actual tag to newString
 				newString += openingTags[openingTagsLength - 1];
 
 				// Add opening tag to newString
 				newString +=
-					'<mark class="watermark-marktag" id="watermark-' +
+					'<wm class="watermark-marktag" id="watermark-' +
 					wmIndex +
 					'-' +
 					subParIndex +
@@ -297,7 +303,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 
 				// Add opening tag to newString
 				newString +=
-					'<mark class="watermark-marktag" id="watermark-' +
+					'<wm class="watermark-marktag" id="watermark-' +
 					wmIndex +
 					'-' +
 					subParIndex +
@@ -322,7 +328,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				newString += paragraph.substring(beginIndex, endIndex + 1);
 
 				// Add closing tag to newString
-				newString += '</mark>';
+				newString += '</wm>';
 
 				// Increase lastIndex to current index
 				lastIndex = endIndex + 1;
@@ -346,7 +352,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 
 				// Add opening tag to newString
 				newString =
-					'<mark class="watermark-marktag" id="watermark-' +
+					'<wm class="watermark-marktag" id="watermark-' +
 					wmIndex +
 					'-' +
 					subParIndex +
@@ -373,7 +379,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 					paragraph.substring(beginIndex, endIndex + 1) + newString;
 
 				// Add closing tag to newString
-				newString = '</mark>' + newString;
+				newString = '</wm>' + newString;
 
 				// Increase lastIndex to current index
 				lastIndex = beginIndex;
@@ -387,38 +393,43 @@ export function parseString(paragraph: string, wmIndex: number): string {
 	// Add external marks
 	// Add opening tag to newString
 	newString =
-		'<mark class="watermark-marktag" id="watermark-' +
+		'<wm class="watermark-marktag" id="watermark-' +
 		wmIndex +
 		'-0">' +
 		newString;
 
-	newString += '</mark>';
+	newString += '</wm>';
 	return removeEmptyTags(newString);
 }
 
+/**
+ * Removes tags with no inner body from a string
+ * @param str The string to parse
+ * @returns The parsed string
+ */
 function removeEmptyTags(str: string): string {
 	// Regular expression to match mark tags that have no content
 	const emptyTagRegex =
-		/<mark[^<]*id="watermark-(\d+)-(\d+)"[^>]*(?<!\/)>[\s\n\t\t]*<\/mark>/;
+		/<wm[^<]*id="watermark-(\d+)-(\d+)"[^>]*(?<!\/)>[\s\n\t\t]*<\/wm>/;
 
 	// Find all empty tags
 	let emptyTag = str.match(emptyTagRegex);
 
 	// Remove empty opening tags
 	while (emptyTag) {
-		console.log(emptyTag)
+		console.log(emptyTag);
 		const [fullMatch, wmIndex, subParIndex] = emptyTag;
 
 		// Delete empty tag from WMParagraphs
 		if (subParIndex === '0') {
 			// Delete entire paragraph
-			console.log("Deleting paragraph", wmIndex);
+			console.log('Deleting paragraph', wmIndex);
 			wmParagraphs = wmParagraphs.filter(
 				(el) => el.id !== `watermark-${wmIndex}-0`
 			);
 		} else {
 			// Delete sub paragraph
-			console.log("Deleting sub paragraph", wmIndex, subParIndex);
+			console.log('Deleting sub paragraph', wmIndex, subParIndex);
 			wmParagraphs = wmParagraphs.map((el) => {
 				if (el.id !== `watermark-${wmIndex}-0`) return el;
 				else {
@@ -435,10 +446,81 @@ function removeEmptyTags(str: string): string {
 		}
 
 		// Delete empty tag
-		console.log("Deleting empty tag", fullMatch)
+		console.log('Deleting empty tag', fullMatch);
 		str = str.replace(fullMatch, '');
 		emptyTag = str.match(emptyTagRegex);
 	}
 
 	return str;
+}
+
+/**
+ * Scan the HTML body and look for watermarking tags, then populate the wmParagraphs array
+ */
+function populateParagraphList() {
+	// Get all watermarking tags
+	const markTags = document.getElementsByClassName('watermark-marktag');
+
+	// Get all watermarking tags with id
+	const markTagsWithId = Array.from(markTags).filter(
+		(el) => el.id !== undefined
+	);
+
+	// Save last paragraph to add sub paragraphs to
+	let lastParagraph: WMParagraph | undefined;
+	markTagsWithId.forEach((el) => {
+		// Get id of tag
+		const id = el.id;
+
+		// Get index of sub paragraph
+		const subParIndex = parseInt(
+			id.substring(id.lastIndexOf('-') + 1, id.length)
+		);
+
+		if (subParIndex === 0) {
+			// This is a paragraph tag, create new paragraph object, add it to wmParagraphs and save it to lastParagraph
+			const tmp: WMParagraph = {
+				id: id,
+				openTag: el,
+				subTags: undefined,
+				status: 0
+			};
+			wmParagraphs.push(tmp);
+			lastParagraph = tmp;
+		} else {
+			// This is a sub paragraph tag, create new sub paragraph object and add it to lastParagraph's subTags
+			const tmp: WMSubParagraph = {
+				id: id,
+				openTag: el,
+				status: 0
+			};
+			if (lastParagraph) {
+				if (lastParagraph.subTags) {
+					lastParagraph.subTags.push(tmp);
+				} else {
+					lastParagraph.subTags = [tmp];
+				}
+			} else {
+				console.error('No paragraph found for sub paragraph', id);
+			}
+		}
+	});
+}
+
+function hideWatermarking() {
+	wmParagraphs.forEach((el) => {
+		el.openTag?.classList.remove('wm-marked');
+		el.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.remove('wm-marked');
+		});
+	});
+}
+
+function showWatermarking() {
+	wmParagraphs.forEach((el) => {
+		el.openTag?.classList.add('wm-marked');
+		el.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.add('wm-marked');
+		});
+	});
 }
