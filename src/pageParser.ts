@@ -2,20 +2,24 @@ interface WMParagraph {
 	id: string;
 	openTag: Element | undefined;
 	subTags: WMSubParagraph[] | undefined;
-	status: number;
+	status: VerificationStatus;
 }
 
 interface WMSubParagraph {
 	id: string;
 	openTag: Element | undefined;
-	status: number;
 }
 
 enum Status {
 	EMPTY,
-	PARSED,
 	VALIDATED,
 	SHOWING
+}
+
+enum VerificationStatus {
+	VALID,
+	INVALID,
+	UNKNOWN
 }
 
 let wmParagraphs: WMParagraph[] = [];
@@ -36,27 +40,18 @@ export function toggleReader() {
 		document.head.appendChild(style);
 		style.innerHTML = `
 			.wm-valid {
-				background-color: green;
+				background-color: #cefad0;
 				color: black;
 			}
 
 			.wm-invalid {
-				background-color: red;
-				color: black;
-			}
-
-			.wm-marked {
-				background-color: yellow;
+				background-color: #ffc8c9;
 				color: black;
 			}
 		`;
 	}
 
 	switch (status) {
-		case Status.PARSED:
-			// TODO
-			updateTimestamp(meta);
-			break;
 		case Status.VALIDATED:
 			showWatermarking();
 			status = Status.SHOWING;
@@ -67,10 +62,18 @@ export function toggleReader() {
 			break;
 		default:
 			// Page has not been parsed yet
-			parsePage();
-			populateParagraphList();
-			status = Status.VALIDATED;
 
+			// Add tags to the page
+			parsePage();
+			// Parse tags and populate wmParagraphs
+			populateParagraphList();
+			// Verify watermarking in each tag
+			verifyWatermarking();
+			// Update timestamp in meta tag
+			updateTimestamp(meta);
+			// Show watermarking
+			showWatermarking();
+			status = Status.SHOWING;
 			break;
 	}
 }
@@ -213,8 +216,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				// Create new subParagraph object and add it to current paragraph
 				const subParStruct: WMSubParagraph = {
 					id: 'watermark-' + wmIndex + '-' + subParIndex,
-					openTag: undefined,
-					status: 0
+					openTag: undefined
 				};
 				if (parStruct.subTags) {
 					parStruct.subTags.push(subParStruct);
@@ -260,8 +262,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				// Create new subParagraph object and add it to current paragraph
 				const subParStruct: WMSubParagraph = {
 					id: 'watermark-' + wmIndex + '-' + subParIndex,
-					openTag: undefined,
-					status: 0
+					openTag: undefined
 				};
 				if (parStruct.subTags) {
 					parStruct.subTags.push(subParStruct);
@@ -312,8 +313,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				// Create new subParagraph object and add it to current paragraph
 				const subParStruct: WMSubParagraph = {
 					id: 'watermark-' + wmIndex + '-' + subParIndex,
-					openTag: undefined,
-					status: 0
+					openTag: undefined
 				};
 				if (parStruct.subTags) {
 					parStruct.subTags.push(subParStruct);
@@ -362,8 +362,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 				// Create new subParagraph object and add it to current paragraph
 				const subParStruct: WMSubParagraph = {
 					id: 'watermark-' + wmIndex + '-' + subParIndex,
-					openTag: undefined,
-					status: 0
+					openTag: undefined
 				};
 				if (parStruct.subTags) {
 					parStruct.subTags.push(subParStruct);
@@ -483,7 +482,7 @@ function populateParagraphList() {
 				id: id,
 				openTag: el,
 				subTags: undefined,
-				status: 0
+				status: VerificationStatus.UNKNOWN
 			};
 			wmParagraphs.push(tmp);
 			lastParagraph = tmp;
@@ -491,8 +490,7 @@ function populateParagraphList() {
 			// This is a sub paragraph tag, create new sub paragraph object and add it to lastParagraph's subTags
 			const tmp: WMSubParagraph = {
 				id: id,
-				openTag: el,
-				status: 0
+				openTag: el
 			};
 			if (lastParagraph) {
 				if (lastParagraph.subTags) {
@@ -507,20 +505,62 @@ function populateParagraphList() {
 	});
 }
 
+function verifyWatermarking() {
+	wmParagraphs.forEach((el) => {
+		if (el.openTag) {
+			// Get text of paragraph
+			let fullText: string = el.openTag.textContent ?? '';
+
+			// Get text of sub paragraphs
+			el.subTags?.forEach((subEl) => {
+				fullText += subEl.openTag?.textContent ?? '';
+			});
+
+			// Extract payload from text
+			// TODO
+
+			// Verify payload locally
+			// TODO
+			let verificationStatus = VerificationStatus.UNKNOWN;
+
+			// Verify payload on blockchain
+			// TODO
+			// Generate random status
+			const random = Math.random();
+			if (random < 0.5) verificationStatus = VerificationStatus.VALID;
+			else verificationStatus = VerificationStatus.INVALID;
+
+			// Update status
+			el.status = verificationStatus;
+			console.log(fullText);
+		}
+	});
+}
+
 function hideWatermarking() {
 	wmParagraphs.forEach((el) => {
 		el.openTag?.classList.remove('wm-marked');
+		el.openTag?.classList.remove('wm-valid');
+		el.openTag?.classList.remove('wm-invalid');
 		el.subTags?.forEach((subEl) => {
 			subEl.openTag?.classList.remove('wm-marked');
+			subEl.openTag?.classList.remove('wm-valid');
+			subEl.openTag?.classList.remove('wm-invalid');
 		});
 	});
 }
 
 function showWatermarking() {
 	wmParagraphs.forEach((el) => {
-		el.openTag?.classList.add('wm-marked');
-		el.subTags?.forEach((subEl) => {
-			subEl.openTag?.classList.add('wm-marked');
-		});
+		if (el.status !== VerificationStatus.UNKNOWN) {
+			const className =
+				el.status === VerificationStatus.VALID
+					? 'wm-valid'
+					: 'wm-invalid';
+			el.openTag?.classList.add(className);
+			el.subTags?.forEach((subEl) => {
+				subEl.openTag?.classList.add(className);
+			});
+		}
 	});
 }
