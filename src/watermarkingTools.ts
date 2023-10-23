@@ -82,7 +82,7 @@ export module WatermarkingTools {
 	 */
 	function getSpaceCode(space: string): string {
 		// Find the element in the array
-		const index = TableSpaces.indexOf(space);
+		const index = WatermarkingTools.TableSpaces.indexOf(space);
 
 		// If not found, return an empty string
 		if (index == -1) {
@@ -115,7 +115,7 @@ export module WatermarkingTools {
 			return '';
 		}
 
-		return TableSpaces[index];
+		return WatermarkingTools.TableSpaces[index];
 	}
 
 	/**
@@ -129,10 +129,10 @@ export module WatermarkingTools {
 		value: string
 	): string {
 		const charSet: string[] =
-			value == '1' ? TableCharacters.homoglyph : TableCharacters.original;
+			value == '1' ? WatermarkingTools.TableCharacters.homoglyph : WatermarkingTools.TableCharacters.original;
 
 		// Find the element in the array
-		const index = TableCharacters.original.indexOf(character);
+		const index = WatermarkingTools.TableCharacters.original.indexOf(character);
 
 		// If not found, return an empty string
 		if (index == -1) {
@@ -151,9 +151,9 @@ export module WatermarkingTools {
 	 * @returns The payload represented by the character
 	 */
 	function getCodeFromCharacter(character: string): string {
-		if (TableCharacters.original.includes(character)) return '0';
-		if (TableCharacters.homoglyph.includes(character)) return '1';
-		if (TableSpaces.includes(character)) {
+		if (WatermarkingTools.TableCharacters.original.includes(character)) return '0';
+		if (WatermarkingTools.TableCharacters.homoglyph.includes(character)) return '1';
+		if (WatermarkingTools.TableSpaces.includes(character)) {
 			return getSpaceCode(character);
 		}
 		return '';
@@ -172,15 +172,15 @@ export module WatermarkingTools {
 		let addInitNPC = true;
 		for (const c of text) {
 			if (addInitNPC) {
-				outText = outText.concat(NPC);
+				outText = outText.concat(WatermarkingTools.NPC);
 				addInitNPC = false;
 			}
-			if (TableCharacters.original.includes(c)) {
+			if (WatermarkingTools.TableCharacters.original.includes(c)) {
 				outText = outText.concat(
 					getCharacterWithHomoglyph(c, binaryCode.charAt(binIter))
 				);
 				binIter += 1;
-			} else if (TableSpaces.includes(c)) {
+			} else if (WatermarkingTools.TableSpaces.includes(c)) {
 				// Get the binary code for the space (composed of 3 bits with eventual 0 padding)
 				let bitStr = '';
 				for (let i = binIter; i < binIter + 3; i++) {
@@ -198,7 +198,7 @@ export module WatermarkingTools {
 
 			// If the binary code is over, add the NPC and restart from 0
 			if (binIter >= binLen) {
-				outText = outText.concat(NPC);
+				outText = outText.concat(WatermarkingTools.NPC);
 				binIter = 0;
 				addInitNPC = true;
 			}
@@ -241,7 +241,7 @@ export module WatermarkingTools {
 	export function decodeParagraphs(text: string): Paragraph[] {
 		const paragraphs: Paragraph[] = [];
 
-		const split = text.split(NPC);
+		const split = text.split(WatermarkingTools.NPC);
 
 		split.forEach((par) => {
 			if (par.length == 0) return;
@@ -279,12 +279,12 @@ export module WatermarkingTools {
 				outText = outText.concat(c);
 			} else if (code == '1') {
 				outText = outText.concat(
-					TableCharacters.original[
-						TableCharacters.homoglyph.indexOf(c)
+					WatermarkingTools.TableCharacters.original[
+						WatermarkingTools.TableCharacters.homoglyph.indexOf(c)
 					]
 				);
 			} else {
-				outText = outText.concat(TableSpaces[0]);
+				outText = outText.concat(WatermarkingTools.TableSpaces[0]);
 			}
 		}
 
