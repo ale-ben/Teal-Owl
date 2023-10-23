@@ -48,6 +48,11 @@ export function toggleReader() {
 				background-color: #ffc8c9;
 				color: black;
 			}
+
+			p {
+				background-color: inherit;
+				color: inherit;
+			}
 		`;
 	}
 
