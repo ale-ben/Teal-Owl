@@ -270,6 +270,13 @@ export module WatermarkingTools {
 			}
 		}
 
+		// Since unicode uses 8 bits for each character, the binary code must be a multiple of 8. If not, remove the last bits
+		const len = outCode.length % 8;
+		if (len != 0) {
+			// Remove the last len bits from the binary code
+			outCode = outCode.substring(0, outCode.length - len);
+		}
+
 		return { payload: outCode, text: outText };
 	}
 
