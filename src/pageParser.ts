@@ -1,13 +1,22 @@
+import { VerifyPayload } from './Payload';
+import { WatermarkingTools } from './TOW/src/watermarkingTools';
+
 interface WMParagraph {
 	id: string;
 	openTag: Element | undefined;
 	subTags: WMSubParagraph[] | undefined;
-	status: VerificationStatus;
+	watermark: WatermarkInfo | undefined;
 }
 
 interface WMSubParagraph {
 	id: string;
 	openTag: Element | undefined;
+}
+
+interface WatermarkInfo {
+	author: string;
+	document: string;
+	verificationStatus: VerificationStatus;
 }
 
 enum Status {
@@ -161,7 +170,7 @@ export function parseString(paragraph: string, wmIndex: number): string {
 		id: 'watermark-' + wmIndex + '-0',
 		openTag: undefined,
 		subTags: undefined,
-		status: 0
+		watermark: undefined
 	};
 	wmParagraphs.push(parStruct);
 
@@ -421,19 +430,16 @@ function removeEmptyTags(str: string): string {
 
 	// Remove empty opening tags
 	while (emptyTag) {
-		console.log(emptyTag);
 		const [fullMatch, wmIndex, subParIndex] = emptyTag;
 
 		// Delete empty tag from WMParagraphs
 		if (subParIndex === '0') {
 			// Delete entire paragraph
-			console.log('Deleting paragraph', wmIndex);
 			wmParagraphs = wmParagraphs.filter(
 				(el) => el.id !== `watermark-${wmIndex}-0`
 			);
 		} else {
 			// Delete sub paragraph
-			console.log('Deleting sub paragraph', wmIndex, subParIndex);
 			wmParagraphs = wmParagraphs.map((el) => {
 				if (el.id !== `watermark-${wmIndex}-0`) return el;
 				else {
@@ -450,7 +456,6 @@ function removeEmptyTags(str: string): string {
 		}
 
 		// Delete empty tag
-		console.log('Deleting empty tag', fullMatch);
 		str = str.replace(fullMatch, '');
 		emptyTag = str.match(emptyTagRegex);
 	}
@@ -487,7 +492,7 @@ function populateParagraphList() {
 				id: id,
 				openTag: el,
 				subTags: undefined,
-				status: VerificationStatus.UNKNOWN
+				watermark: undefined
 			};
 			wmParagraphs.push(tmp);
 			lastParagraph = tmp;
@@ -511,7 +516,7 @@ function populateParagraphList() {
 }
 
 function verifyWatermarking() {
-	wmParagraphs.forEach((el) => {
+	wmParagraphs.forEach(async (el) => {
 		if (el.openTag) {
 			// Get text of paragraph
 			let fullText: string = el.openTag.textContent ?? '';
@@ -522,22 +527,27 @@ function verifyWatermarking() {
 			});
 
 			// Extract payload from text
-			// TODO
+			// Get the binary payload
+			const payload = WatermarkingTools.decodeText(fullText).payload;
 
-			// Verify payload locally
-			// TODO
+			// Decode and verify payload locally
 			let verificationStatus = VerificationStatus.UNKNOWN;
+			const payloadVerification = await VerifyPayload(payload);
+			console.log(payloadVerification);
+
+			if (payloadVerification.valid)
+				verificationStatus = VerificationStatus.VALID;
+			else verificationStatus = VerificationStatus.INVALID;
 
 			// Verify payload on blockchain
 			// TODO
-			// Generate random status
-			const random = Math.random();
-			if (random < 0.5) verificationStatus = VerificationStatus.VALID;
-			else verificationStatus = VerificationStatus.INVALID;
 
 			// Update status
-			el.status = verificationStatus;
-			console.log(fullText);
+			el.watermark = {
+				author: payloadVerification.author ?? 'Unknown Author',
+				document: payloadVerification.document ?? 'Unknown Document',
+				verificationStatus: verificationStatus
+			};
 		}
 	});
 }
@@ -557,15 +567,19 @@ function hideWatermarking() {
 
 function showWatermarking() {
 	wmParagraphs.forEach((el) => {
-		if (el.status !== VerificationStatus.UNKNOWN) {
-			const className =
-				el.status === VerificationStatus.VALID
-					? 'wm-valid'
-					: 'wm-invalid';
-			el.openTag?.classList.add(className);
-			el.subTags?.forEach((subEl) => {
-				subEl.openTag?.classList.add(className);
-			});
+		if (el.watermark) {
+			if (
+				el.watermark.verificationStatus !== VerificationStatus.UNKNOWN
+			) {
+				const className =
+					el.watermark.verificationStatus === VerificationStatus.VALID
+						? 'wm-valid'
+						: 'wm-invalid';
+				el.openTag?.classList.add(className);
+				el.subTags?.forEach((subEl) => {
+					subEl.openTag?.classList.add(className);
+				});
+			}
 		}
 	});
 }

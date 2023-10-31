@@ -5,3 +5,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		toggleReader();
 	sendResponse({ farewell: 'goodbye' });
 });
+
+console.log('content_script.tsx loaded');
