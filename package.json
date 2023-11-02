@@ -1,52 +1,53 @@
 {
-  "name": "teal-owl_reader",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",
-    "test": "jest",
-    "style": "prettier --write 'src/**/*.{ts,tsx}'",
-    "lint": "eslint . --ext .ts --ext .tsx",
-    "lint-fix": "eslint . --ext .ts --ext .tsx --fix",
-    "prepare": "husky install",
-    "clean": "rimraf dist"
-  },
-  "author": "Alessandro Benetton (aleben98@gmail.com)",
-  "license": "GPL-3.0-or-later",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ale-ben/Teal-Owl_Reader"
-  },
-  "dependencies": {
-    "js-sha256": "^0.10.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "ts-node": "^10.9.1"
-  },
-  "devDependencies": {
-    "@types/chrome": "^0.0.246",
-    "@types/jest": "^29.5.0",
-    "@types/node": "^20.8.9",
-    "@types/react": "^18.0.29",
-    "@types/react-dom": "^18.0.11",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
-    "copy-webpack-plugin": "^11.0.0",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "glob": "^7.1.6",
-    "husky": "^8.0.3",
-    "jest": "^29.5.0",
-    "prettier": "^3.0.3",
-    "rimraf": "^3.0.2 ",
-    "ts-jest": "^29.1.0",
-    "ts-loader": "^9.5.0",
-    "typescript": "^5.2.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-merge": "^5.0.0"
-  }
+	"name": "teal-owl_reader",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"test": "jest",
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"style": "prettier --write 'src/**/*.{ts,tsx}'",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives ",
+		"lint-fix": "eslint . --ext .ts --ext .tsx --fix"
+	},
+	"author": "Alessandro Benetton (aleben98@gmail.com)",
+	"license": "GPL-3.0-or-later",
+	"dependencies": {
+		"js-sha256": "^0.10.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ale-ben/Teal-Owl_Reader"
+	},
+	"devDependencies": {
+		"@crxjs/vite-plugin": "2.0.0-beta.19",
+		"@types/chrome": "^0.0.246",
+		"@types/jest": "^29.5.0",
+		"@types/node": "^20.8.9",
+		"@types/react": "^18.2.15",
+		"@types/react-dom": "^18.2.7",
+		"@typescript-eslint/eslint-plugin": "^6.8.0",
+		"@typescript-eslint/parser": "^6.8.0",
+		"@vitejs/plugin-react": "^4.0.3",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.51.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-prettier": "^5.0.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"husky": "^8.0.3",
+		"jest": "^29.5.0",
+		"postcss": "^8.4.31",
+		"prettier": "^3.0.3",
+		"prettier-plugin-tailwindcss": "^0.5.6",
+		"tailwindcss": "^3.3.5",
+		"ts-jest": "^29.1.0",
+		"ts-loader": "^9.5.0",
+		"typescript": "^5.2.2",
+		"vite": "^4.4.5"
+	}
 }

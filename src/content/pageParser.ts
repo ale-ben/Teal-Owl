@@ -1,5 +1,5 @@
 import { VerifyPayload } from './Payload';
-import { WatermarkingTools } from './TOW/src/watermarkingTools';
+import { WatermarkingTools } from '../TOW/src/watermarkingTools';
 
 interface WMParagraph {
 	id: string;
