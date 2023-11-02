@@ -50,10 +50,12 @@ describe('Testing single character decoding', () => {
 	) {
 		test(`Decoding character ${WatermarkingTools.TableCharacters.original[i]}`, () => {
 			const orig = WatermarkingTools.decodeText(
-				WatermarkingTools.TableCharacters.original[i]
+				WatermarkingTools.TableCharacters.original[i],
+				false
 			);
 			const wm = WatermarkingTools.decodeText(
-				WatermarkingTools.TableCharacters.homoglyph[i]
+				WatermarkingTools.TableCharacters.homoglyph[i],
+				false
 			);
 			expect(orig.payload).toBe('0');
 			expect(orig.text).toBe(
@@ -69,7 +71,8 @@ describe('Testing single space decoding', () => {
 	for (let i = 0; i < WatermarkingTools.TableSpaces.length; i++) {
 		test(`Decoding space |${WatermarkingTools.TableSpaces[i]}|`, () => {
 			const space = WatermarkingTools.decodeText(
-				WatermarkingTools.TableSpaces[i]
+				WatermarkingTools.TableSpaces[i],
+				false
 			);
 			expect(space.payload).toBe(i.toString(2).padStart(3, '0'));
 			expect(space.text).toBe(WatermarkingTools.TableSpaces[0]);
@@ -85,8 +88,8 @@ describe('Testing text encoding', () => {
 		'All these platforms have introduced changes in the user habits with respect to digital contents by increasing the copying and sharing of text, audio, images, and video, namely digital contents'
 	];
 	const encodedText = [
-		'§The ⅼast decaⅾes are charaⅽterⅰzeⅾ by the easy avaiⅼability of miⅼⅼⅰons upon miⅼlⅰons of dⅰgⅰtal ⅽontents that meet seⅴeraⅼ kinⅾ of users’ neeⅾs both in professⅰonal aⅽtⅰvⅰties anⅾ soⅽⅰal§',
-		'§Alⅼ these platforms have introⅾuⅽeⅾ changes ⅰn the user habits wⅰth respeⅽt to digitaⅼ ⅽontents by ⅰncreasing the ⅽopying and sharⅰng of text, auⅾio, images, and ⅴiⅾeo, nameⅼy dⅰgitaⅼ ⅽontents§'
+		'§The ⅼast decaⅾes are charaⅽterⅰzeⅾ by the easy avaiⅼability of miⅼⅼⅰons upon miⅼlⅰons of dⅰgⅰtal ⅽontents that meet seⅴeraⅼ kinⅾ of users’ neeⅾs both in professⅰonal aⅽtⅰvⅰties anⅾ soⅽⅰal',
+		'§Alⅼ these platforms have introⅾuⅽeⅾ changes ⅰn the user habits wⅰth respeⅽt to digitaⅼ ⅽontents by ⅰncreasing the ⅽopying and sharⅰng of text, auⅾio, images, and ⅴiⅾeo, nameⅼy dⅰgitaⅼ ⅽontents'
 	];
 
 	test('Encoding paragraph', () => {
@@ -100,7 +103,7 @@ describe('Testing text encoding', () => {
 
 describe('Testing text decoding', () => {
 	const payload =
-		'010101000110010101111000011101000010000001110111011000010111010001100101011100100110110101100001011100100110101101101001011011';
+		'010101000110010101111000011101000010000001110111011000010111010001100101011100100110110101100001011100100110101101101001';
 	const originalText = [
 		'The last decades are characterized by the easy availability of millions upon millions of digital contents that meet several kind of users’ needs both in professional activities and social',
 		'All these platforms have introduced changes in the user habits with respect to digital contents by increasing the copying and sharing of text, audio, images, and video, namely digital contents'
