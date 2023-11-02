@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@types/google-apps-script':
-    specifier: ^1.0.75
-    version: 1.0.75
+    specifier: ^1.0.76
+    version: 1.0.76
   '@types/jest':
     specifier: ^29.5.5
     version: 29.5.5
@@ -836,8 +836,8 @@ packages:
       '@babel/types': 7.23.0
     dev: true
 
-  /@types/google-apps-script@1.0.75:
-    resolution: {integrity: sha512-igNG4fuC+MJyOEFHhVLAU7psZX7NlsamuRXA49M0wR6bzN7XRzhPF4IO7NPOjguHvNKaKxUG665FFE7OkgMQKQ==}
+  /@types/google-apps-script@1.0.76:
+    resolution: {integrity: sha512-mFjMHffMXoWLfFp7GthjiFQlctjzW2UOTqrTntfeqQHtGfv8WOps1zY+mA1IKHmoZCtTOdQuiONfM3Zu1NPjWQ==}
     dev: true
 
   /@types/graceful-fs@4.1.7:
@@ -862,8 +862,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.1
     dev: true
 
-  /@types/jest@29.5.5:
-    resolution: {integrity: sha512-ebylz2hnsWR9mYvmBFbXJXr+33UPc4+ZdxyDXh5w0FlPBTfCVN3wPL+kuOiQt3xvrK419v7XWeAs+AeOksafXg==}
+  /@types/jest@29.5.7:
+    resolution: {integrity: sha512-HLyetab6KVPSiF+7pFcUyMeLsx25LDNDemw9mGsJBkai/oouwrjTycocSDYopMEwFhN2Y4s9oPyOCZNofgSt2g==}
     dependencies:
       expect: 29.7.0
       pretty-format: 29.7.0
