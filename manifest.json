@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Teal-Owl Reader",
+    "description": "This extension is part of the Teal-Owl project. It allows to verify watermarked text while reading a document.",
+    "version": "1.0",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "icon.png"
+    },
+    "content_scripts": [{
+        "js": ["src/content/content.ts"],
+        "matches": ["<all_urls>"]
+    }]
+}
