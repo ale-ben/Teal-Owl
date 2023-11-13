@@ -1,24 +1,31 @@
-"use server"
+'use server';
 
-import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
-const apiKey = "7pczWSx3zUjnuPxVyT-IrIwD4cp47JrrGRj2ZX5wvsVLhMJhnne6tec2fYA6sm-JPXfNBiY0hmCkI18kPuphsA";
-const storage = new ThirdwebStorage({secretKey: apiKey});
+const storage = new ThirdwebStorage({ secretKey: process.env.THIRDWEB_API_KEY });
 
-export async function uploadObjectToIPFS(obj: Object): Promise<string> {
-	const cid = await storage.upload(obj, {
-		alwaysUpload: false
-	});
-	return cid;
+export interface IPFSObject {
+	uri: string | undefined;
+	name: string | undefined;
+	content: object;
 }
 
-export async function downloadObjectFromIPFS(cid: string): Promise<string> {
-	if (!cid.startsWith("ipfs://")) cid = "ipfs://" + cid;
+export async function uploadObjectToIPFS(obj: IPFSObject): Promise<IPFSObject> {
+	const uri = await storage.upload(obj.content, {
+		alwaysUpload: false
+	});
+	return { ...obj, uri: uri };
+}
+
+export async function downloadObjectFromIPFS(
+	uri: string
+): Promise<IPFSObject | undefined> {
+	if (!uri.startsWith('ipfs://')) uri = 'ipfs://' + uri;
 	try {
-		const obj = await storage.downloadJSON(cid);
-		return JSON.stringify(obj);
+		const obj = await storage.downloadJSON(uri);
+		return { uri: uri, content: obj, name: undefined };
 	} catch (e) {
-		console.log("Error while retrieving file " + cid, e);
-		return "";
+		console.log('Error while retrieving file ' + uri, e);
+		return;
 	}
 }
