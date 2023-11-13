@@ -1,0 +1,29 @@
+{
+  "name": "teal-owl_contract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ale-ben/Teal-Owl_Contract.git"
+  },
+  "author": "Alessandro Benetton (aleben98@gmail.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ale-ben/Teal-Owl_Contract/issues"
+  },
+  "homepage": "https://github.com/ale-ben/Teal-Owl_Contract#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^0.11.0",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "eslint": "^8.52.0",
+    "hardhat": "^2.18.3",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
