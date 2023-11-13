@@ -9,3 +9,7 @@ updates:
     directory: "/ManifestUploader/" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "pnpm" # See documentation for possible values
+    directory: "/Contract/" # Location of package manifests
+    schedule:
+      interval: "weekly"
