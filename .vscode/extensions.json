@@ -4,6 +4,8 @@
 		"dbaeumer.vscode-eslint",
 		"esbenp.prettier-vscode",
 		"yzhang.markdown-all-in-one",
-		"bradlc.vscode-tailwindcss"
+		"bradlc.vscode-tailwindcss",
+		"dsznajder.es7-react-js-snippets",
+		"msjsdiag.vscode-react-native"
 	]
 }
