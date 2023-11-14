@@ -11,6 +11,7 @@
 		"style": "prettier --write 'src/**/*.{ts,tsx}'"
 	},
 	"dependencies": {
+		"@metamask/sdk": "^0.12.1",
 		"@nextui-org/react": "^2.2.9",
 		"@thirdweb-dev/storage": "^2.0.2",
 		"@typescript-eslint/eslint-plugin": "^6.10.0",
