@@ -1,5 +1,6 @@
 'use client';
 import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfs';
+import { Button } from '@nextui-org/button';
 import { useState, useEffect } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
@@ -22,44 +23,46 @@ export function UploadComponent() {
 	});
 
 	useEffect(() => {
-		let tmpNameDict: Map< string, boolean> = new Map();
+		let tmpNameDict: Map<string, boolean> = new Map();
 		// Load already accepted files
 		acceptedList.forEach((file) => {
 			tmpNameDict.set(file.name, true);
 		});
 
 		// Try to add new files
-		const newFiles = acceptedFiles.map(
-			(file) => {
+		const newFiles = acceptedFiles
+			.map((file) => {
 				if (tmpNameDict.has(file.name)) {
 					alert('File with name ' + file.name + ' already added');
 					return null;
 				}
 				tmpNameDict.set(file.name, true);
 				return file;
-			}
-		).filter((file) => file !== null) as File[];
+			})
+			.filter((file) => file !== null) as File[];
 		setAcceptedList([...acceptedList, ...newFiles]);
 	}, [acceptedFiles]);
 
 	useEffect(() => {
-		let tmpNameDict: Map< string, boolean> = new Map();
+		let tmpNameDict: Map<string, boolean> = new Map();
 		// Load already accepted files
 		rejectedList.forEach((file) => {
 			tmpNameDict.set(file.file.name, true);
 		});
 
 		// Try to add new files
-		const newFiles = fileRejections.map(
-			(file) => {
+		const newFiles = fileRejections
+			.map((file) => {
 				if (tmpNameDict.has(file.file.name)) {
-					alert('File with name ' + file.file.name + ' already added');
+					alert(
+						'File with name ' + file.file.name + ' already added'
+					);
 					return null;
 				}
 				tmpNameDict.set(file.file.name, true);
 				return file;
-			}
-		).filter((file) => file !== null) as FileRejection[];
+			})
+			.filter((file) => file !== null) as FileRejection[];
 		setRejectedList([...rejectedList, ...newFiles]);
 	}, [fileRejections]);
 
@@ -119,65 +122,84 @@ export function UploadComponent() {
 					<input {...getInputProps()} />
 				</label>
 			</div>
-			<div className="mt-5">
-				<p className="text-xl">Accepted files:</p>
-				<ul className="max-w-md list-inside list-disc space-y-1 ">
-					{acceptedList.map((file) => (
-						<li key={file.name+file.size+file.type}>
-							{' '}
-							{file.name}
-						</li>
-					))}
-				</ul>
-			</div>
-			<div className="mt-5">
-				<p className="text-xl">Rejected files:</p>
-				<ul className="max-w-md list-inside list-disc space-y-1 ">
-					{rejectedList.map((file) => (
-						<li key={file.file.name+file.file.size+file.file.type}>
-							{' '}
-							{file.file.name}:
-							<ol className="mt-2 list-inside list-disc space-y-1 pl-5">
-								{file.errors.map((error) => (
-									<li key={error.code}>{error.message}</li>
-								))}
-							</ol>
-						</li>
-					))}
-				</ul>
-			</div>
-			<hr className="my-8 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-			<div className="mt-5">
-				<button
-					type="button"
-					className="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800"
-					onClick={onSubmit}
-				>
-					Upload
-				</button>
-				<button
-					type="button"
-					className="mb-2 mr-2 rounded-lg  bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 "
-					onClick={() => {
-						setAcceptedList([]);
-						setRejectedList([]);
-					}}
-				>
-					Clear
-				</button>
+			<div className="grid grid-cols-2">
+				<div className="mt-5">
+					<p className="text-xl">Accepted files:</p>
+					<ul className="max-w-md list-inside list-disc space-y-1 ">
+						{acceptedList.map((file) => (
+							<li key={file.name + file.size + file.type}>
+								{' '}
+								{file.name}
+							</li>
+						))}
+					</ul>
+				</div>
+				<div className="mt-5">
+					<p className="text-xl">Rejected files:</p>
+					<ul className="max-w-md list-inside list-disc space-y-1 ">
+						{rejectedList.map((file) => (
+							<li
+								key={
+									file.file.name +
+									file.file.size +
+									file.file.type
+								}
+							>
+								{' '}
+								{file.file.name}:
+								<ol className="mt-2 list-inside list-disc space-y-1 pl-5">
+									{file.errors.map((error) => (
+										<li key={error.code}>
+											{error.message}
+										</li>
+									))}
+								</ol>
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 			<hr className="my-8 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-			<p className="text-xl">Uploaded files:</p>
-			<ul className="max-w-md list-inside list-disc space-y-1 ">
-				{uploadedOBJs.map((obj) => (
-					<li key={obj.uri}>
-						{obj.name} -{' '}
-						<a href={obj.uri} className="italic text-blue-600">
-							{obj.uri}
-						</a>
-					</li>
-				))}
-			</ul>
+			<div className="grid grid-cols-3">
+				<div className="col-span-2">
+					<p className="text-xl">Uploaded files:</p>
+					<ul className="max-w-md list-inside list-disc space-y-1 ">
+						{uploadedOBJs.map((obj) => (
+							<li key={obj.uri}>
+								{obj.name} -{' '}
+								<a
+									href={obj.uri}
+									className="italic text-blue-600"
+								>
+									{obj.uri}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+				<div className="flex flex-col gap-2">
+					<Button
+						isDisabled={acceptedList.length === 0}
+						color="primary"
+						onClick={onSubmit}
+					>
+						Upload
+					</Button>
+					<Button
+						isDisabled={
+							acceptedList.length === 0 &&
+							rejectedList.length === 0
+						}
+						color="danger"
+						onClick={() => {
+							setAcceptedList([]);
+							setRejectedList([]);
+						}}
+					>
+						Clear
+					</Button>
+				</div>
+			</div>
 		</div>
 	);
 }

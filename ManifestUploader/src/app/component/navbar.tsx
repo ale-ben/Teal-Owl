@@ -10,7 +10,7 @@ import MetamaskLogo from './metamaskLogo';
 
 export default function TONavbar() {
 	return (
-		<Navbar>
+		<Navbar isBordered>
 			<NavbarBrand>
 				<p className="font-bold text-inherit">Teal Owl</p>
 			</NavbarBrand>
