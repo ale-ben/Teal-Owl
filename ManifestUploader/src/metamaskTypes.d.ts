@@ -1,5 +1,7 @@
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
 declare global {
-	interface Window {
-	  ethereum?: SDKProvider;
-	}
+  interface Window{
+    ethereum?:MetaMaskInpageProvider
   }
+}
