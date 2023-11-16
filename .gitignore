@@ -2,3 +2,7 @@
 .DS_Store
 /ManifestUploader/.env
 /Contract/node_modules
+/Contract/artifacts
+/Contract/cache
+/Contract/ignition/deployments
+/Contract/typechain-types
