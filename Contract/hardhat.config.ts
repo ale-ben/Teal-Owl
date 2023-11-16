@@ -15,7 +15,7 @@ const INFURA_API_KEY = "f59b7e6611db42eca5466757b3ed27f7";
 const SEPOLIA_PRIVATE_KEY = "2714478a37578c1246c578ee38ca849214c480cecf6fb882b2dd64120ced4aa0";
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.19",
+  solidity: "0.8.23",
   networks: {
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
