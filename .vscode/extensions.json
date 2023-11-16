@@ -6,6 +6,8 @@
 		"yzhang.markdown-all-in-one",
 		"bradlc.vscode-tailwindcss",
 		"dsznajder.es7-react-js-snippets",
-		"msjsdiag.vscode-react-native"
+		"msjsdiag.vscode-react-native",
+		"nomicfoundation.hardhat-solidity",
+		"juanblanco.solidity"
 	]
 }
