@@ -4,3 +4,5 @@ webpack
 dist
 docs
 src/TOW
+jest.config.ts
+vite.config.ts
