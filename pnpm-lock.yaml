@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@types/gapi':
-        specifier: ^0.0.45
-        version: 0.0.45
+        specifier: ^0.0.47
+        version: 0.0.47
       '@types/gapi.auth2':
         specifier: ^0.0.58
         version: 0.0.58
@@ -1012,6 +1012,10 @@ packages:
 
   /@types/gapi@0.0.45:
     resolution: {integrity: sha512-xc8X9FrdZcWoOd4tMhLenYbnmaxCgy2FBt+SOI7xv9Efy/7Jk2V9gBZiufFBLIfDUUvpWY7DN3x4lrdL1I9y0Q==}
+    dev: false
+
+  /@types/gapi@0.0.47:
+    resolution: {integrity: sha512-/ZsLuq6BffMgbKMtZyDZ8vwQvTyKhKQ1G2K6VyWCgtHHhfSSXbk4+4JwImZiTjWNXfI2q1ZStAwFFHSkNoTkHA==}
     dev: false
 
   /@types/google-apps-script@1.0.74:
