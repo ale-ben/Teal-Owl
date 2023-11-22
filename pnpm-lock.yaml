@@ -18,8 +18,8 @@ importers:
         specifier: ^1.0.74
         version: 1.0.74
       '@types/google.picker':
-        specifier: ^0.0.40
-        version: 0.0.40
+        specifier: ^0.0.42
+        version: 0.0.42
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@20.4.2)(typescript@5.2.2)
@@ -1018,8 +1018,8 @@ packages:
     resolution: {integrity: sha512-FmPMEzvOWksxlF09DtCoB22GqVTipZph26nl6YsJ5HV6pQNZx2pjFiUTkxxpj2y+a6QlDnwYz/+b+0ILNClybQ==}
     dev: false
 
-  /@types/google.picker@0.0.40:
-    resolution: {integrity: sha512-+voh8AslhzY4kfm0V6XhX6d2RRMpmzTKrhtF0G7U9rtdu60gqBRUyzpqhK5ZlRZPdOfZiCVhRa2dH5g/FezufQ==}
+  /@types/google.picker@0.0.42:
+    resolution: {integrity: sha512-7Ut1zDLCGNhyN+0fuIcncpBP9eUsIjLKz6qmVKvdkBUi1EzAskxTcIZcU/w2cO1ens/hEXlqeLd5qAKs/Kqqyw==}
     dev: false
 
   /@types/graceful-fs@4.1.6:
