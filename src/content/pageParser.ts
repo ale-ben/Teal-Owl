@@ -172,7 +172,6 @@ export function parseString(paragraph: string, wmIndex: number): string {
 		subTags: undefined,
 		watermark: undefined
 	};
-	wmParagraphs.push(parStruct);
 
 	// Index of the last subparagraph added to newString
 	let subParIndex = 1;
@@ -533,7 +532,6 @@ function verifyWatermarking() {
 			// Decode and verify payload locally
 			let verificationStatus = VerificationStatus.UNKNOWN;
 			const payloadVerification = await VerifyPayload(payload);
-			console.log(payloadVerification);
 
 			if (payloadVerification.valid)
 				verificationStatus = VerificationStatus.VALID;
