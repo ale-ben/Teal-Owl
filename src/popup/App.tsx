@@ -8,15 +8,15 @@ function App() {
 	chrome.runtime.onMessage.addListener(function (request) {
 		if (request.event === 'statusChange') {
 			switch (request.status) {
-				case 'Not Validated':
+				case 'EMPTY':
 					setValidationState(request.status);
 					setActionLabel('Validate');
 					break;
-				case 'Validated':
+				case 'VALIDATED':
 					setValidationState(request.status);
 					setActionLabel('Show');
 					break;
-				case 'Showing':
+				case 'SHOWING':
 					setValidationState(request.status);
 					setActionLabel('Hide');
 					break;
