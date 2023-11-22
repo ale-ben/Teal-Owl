@@ -86,8 +86,8 @@ export function toggleReader() {
 			// Update timestamp in meta tag
 			updateTimestamp(meta);
 			// Show watermarking
-			showWatermarking();
-			status = Status.SHOWING;
+			//showWatermarking(); FIXME: This does not work
+			status = Status.VALIDATED;
 			break;
 	}
 }
