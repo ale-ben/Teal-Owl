@@ -7,7 +7,7 @@ export function VerifyPayload(payload: string): {
 } {
 	const payloadParts = binStrToString(payload).split(',');
 	if (payloadParts.length !== 3) {
-		console.warn("Invalid payload length!", payloadParts)
+		console.warn('Invalid payload length!', payloadParts);
 		return { valid: false, author: undefined, document: undefined };
 	}
 
