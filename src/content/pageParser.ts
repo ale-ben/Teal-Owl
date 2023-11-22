@@ -87,9 +87,21 @@ export function toggleReader() {
 			updateTimestamp(meta);
 			// Show watermarking
 			//showWatermarking(); FIXME: This does not work
-			status = Status.VALIDATED;
+			updateStatus(Status.VALIDATED);
 			break;
 	}
+}
+
+/**
+ * Updates the status and sends a message to the popup script
+ * @param newStatus The new status
+ */
+function updateStatus(newStatus: Status) {
+	status = newStatus;	
+	chrome.runtime.sendMessage({
+		event: 'statusChange',
+		status: Status[newStatus]
+	});
 }
 
 /**
@@ -561,6 +573,7 @@ function hideWatermarking() {
 			subEl.openTag?.classList.remove('wm-invalid');
 		});
 	});
+	updateStatus(Status.VALIDATED);
 }
 
 function showWatermarking() {
@@ -580,4 +593,5 @@ function showWatermarking() {
 			}
 		}
 	});
+	updateStatus(Status.SHOWING);
 }
