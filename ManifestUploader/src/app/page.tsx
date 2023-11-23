@@ -10,7 +10,7 @@ import { connectWallet, getBalance } from '@/models/MetaMaskUtils';
 const initialState: MetaMaskState = {
 	account: '',
 	connected: false,
-	balance: 0,
+	balance: 0
 };
 
 export default function Home() {
@@ -18,11 +18,14 @@ export default function Home() {
 
 	return (
 		<div className="m-5">
-			{
-				// <p className="pb-3 text-center text-3xl">Upload a new manifest</p>
-				//<UploadComponent />
-			}
-			<div>
+			<p className="pb-3 text-center text-3xl">Upload a new manifest</p>
+			<UploadComponent />
+		</div>
+	);
+}
+
+/*
+<div>
 				<p className='text-3xl'>Metamask status</p>
 				<p>Connected: {state.connected ? 'true' : 'false'}</p>
 				<p>Account: {state.account}</p>
@@ -49,6 +52,4 @@ export default function Home() {
 					Disconnect
 				</Button>
 			</div>
-		</div>
-	);
-}
+			*/
