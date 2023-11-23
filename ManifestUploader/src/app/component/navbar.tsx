@@ -31,7 +31,7 @@ export default function TONavbar() {
 						Connect with MetaMask
 					</Button>
 				</NavbarItem>
-				<DarkModeToggle />
+				<DarkModeToggle/>
 			</NavbarContent>
 		</Navbar>
 	);

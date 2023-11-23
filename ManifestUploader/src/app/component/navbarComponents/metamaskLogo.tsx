@@ -3,10 +3,10 @@ import React from 'react';
 
 const MetamaskLogo = () => {
 	return (
-		< Image 
+		<Image
 			src="images/metamask.svg"
-			className='w-6 h-6'
-			alt='Metamask Logo'
+			className="h-6 w-6"
+			alt="Metamask Logo"
 			width={24}
 			height={24}
 		/>
