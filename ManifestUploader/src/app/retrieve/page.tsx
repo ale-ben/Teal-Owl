@@ -1,7 +1,7 @@
-import RetrieveDoc from './[cid]/page'
+import RetrieveDoc from './[cid]/page';
 
 const Retrieve = () => {
-  return RetrieveDoc()
-}
+	return RetrieveDoc();
+};
 
-export default Retrieve
+export default Retrieve;

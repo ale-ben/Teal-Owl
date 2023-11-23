@@ -1,8 +1,5 @@
-
 const RetrieveDoc = () => {
-  return (
-	<div>RetrieveDoc</div>
-  )
-}
+	return <div>RetrieveDoc</div>;
+};
 
-export default RetrieveDoc
+export default RetrieveDoc;
