@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ale-ben/Teal-Owl_Contract#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^0.11.2",
-    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "eslint": "^8.53.0",
     "hardhat": "^2.19.1",
     "husky": "^8.0.3",
