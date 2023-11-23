@@ -6,7 +6,8 @@ import {
 } from '@nextui-org/navbar';
 import { Button } from '@nextui-org/button';
 import { Link } from '@nextui-org/link';
-import MetamaskLogo from './metamaskLogo';
+import MetamaskLogo from './navbarComponents/metamaskLogo';
+import NavbarButton from './navbarComponents/navbarButton';
 
 export default function TONavbar() {
 	return (
@@ -15,20 +16,17 @@ export default function TONavbar() {
 				<p className="font-bold text-inherit">Teal Owl</p>
 			</NavbarBrand>
 			<NavbarContent className="hidden gap-4 sm:flex" justify="center">
-				<NavbarItem>
-					<Link color="foreground" href="#">
-						Upload Manifest
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive>
-					<Link href="#" aria-current="page">
-						Retrieve Manifest
-					</Link>
-				</NavbarItem>
+				<NavbarButton href="/" text="Upload Manifest" />
+				<NavbarButton href="/retrieve" text="Retrieve Manifest" />
 			</NavbarContent>
 			<NavbarContent justify="end">
 				<NavbarItem>
-					<Button color="primary" href="#" variant="flat" startContent={MetamaskLogo()}>
+					<Button
+						color="primary"
+						href="#"
+						variant="flat"
+						startContent={MetamaskLogo()}
+					>
 						Connect with MetaMask
 					</Button>
 				</NavbarItem>
