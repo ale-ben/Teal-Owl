@@ -8,6 +8,7 @@ import { Button } from '@nextui-org/button';
 import { Link } from '@nextui-org/link';
 import MetamaskLogo from './navbarComponents/metamaskLogo';
 import NavbarButton from './navbarComponents/navbarButton';
+import DarkModeToggle from './navbarComponents/darkModeToggle';
 
 export default function TONavbar() {
 	return (
@@ -30,6 +31,7 @@ export default function TONavbar() {
 						Connect with MetaMask
 					</Button>
 				</NavbarItem>
+				<DarkModeToggle />
 			</NavbarContent>
 		</Navbar>
 	);
