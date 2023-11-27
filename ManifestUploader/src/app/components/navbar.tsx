@@ -12,7 +12,7 @@ import DarkModeToggle from './navbarComponents/darkModeToggle';
 
 export default function TONavbar() {
 	return (
-		<Navbar isBordered>
+		<Navbar isBordered maxWidth='full'>
 			<NavbarBrand>
 				<p className="font-bold text-inherit">Teal Owl</p>
 			</NavbarBrand>
@@ -31,7 +31,7 @@ export default function TONavbar() {
 						Connect with MetaMask
 					</Button>
 				</NavbarItem>
-				<DarkModeToggle/>
+				<DarkModeToggle />
 			</NavbarContent>
 		</Navbar>
 	);
