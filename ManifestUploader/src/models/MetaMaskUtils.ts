@@ -1,4 +1,4 @@
-export async function connectWallet(): Promise<string | undefined> {
+export async function ConnectWallet(): Promise<string | undefined> {
 	if (!window.ethereum) {
 		throw new Error(`invalid ethereum provider`);
 	}
@@ -17,7 +17,7 @@ export async function connectWallet(): Promise<string | undefined> {
 	return undefined;
 }
 
-export async function getBalance(account: string): Promise<number> {
+export async function GetBalance(account: string): Promise<number> {
 	if (!window.ethereum) {
 		throw new Error(`invalid ethereum provider`);
 	}
@@ -28,4 +28,38 @@ export async function getBalance(account: string): Promise<number> {
 	});
 
 	return parseInt(balance as string, 16);
+}
+
+export function FormatBalance(balance: number): string {
+	const units = [
+		'wei',
+		'kwei',
+		'mwei',
+		'gwei',
+		'microeth',
+		'millieth',
+		'eth'
+	];
+	const accuracy = 4;
+	// This loops goes through the units array and checks if the balance is less than the current unit.
+	for (let i = 0; i <= units.length; i++) {
+		if (i === units.length) {
+			// last unit
+			return `${(balance / Math.pow(10, 3 * i)).toFixed(accuracy)} ${
+				units[i - 1]
+			}`;
+		}
+
+		if (balance / Math.pow(10, 3 * i) < 1) {
+			if (i === 0) {
+				return `${balance} ${units[i]}`;
+			}
+
+			return `${(balance / Math.pow(10, 3 * (i - 1))).toFixed(
+				accuracy
+			)} ${units[i - 1]}`;
+		}
+	}
+
+	return 'ERROR';
 }
