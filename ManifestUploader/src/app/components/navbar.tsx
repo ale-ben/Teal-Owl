@@ -12,7 +12,7 @@ import DarkModeToggle from './navbarComponents/darkModeToggle';
 
 export default function TONavbar() {
 	return (
-		<Navbar isBordered maxWidth='full'>
+		<Navbar isBordered maxWidth="full">
 			<NavbarBrand>
 				<p className="font-bold text-inherit">Teal Owl</p>
 			</NavbarBrand>

@@ -1,10 +1,10 @@
-import { IPFSObject } from "@/serverActions/ipfs";
+import { IPFSObject } from '@/serverActions/ipfs';
 
 interface ResultsProps {
 	retrievedObj: IPFSObject;
 }
 
-const Results = ({retrievedObj}: ResultsProps) => {
+const Results = ({ retrievedObj }: ResultsProps) => {
 	return (
 		<div className="relative overflow-x-auto">
 			<table className="w-full text-left text-sm rtl:text-right">
