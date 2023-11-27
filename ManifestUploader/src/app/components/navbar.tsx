@@ -1,14 +1,13 @@
+import { Button } from '@nextui-org/button';
 import {
 	Navbar,
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem
 } from '@nextui-org/navbar';
-import { Button } from '@nextui-org/button';
-import { Link } from '@nextui-org/link';
+import DarkModeToggle from './navbarComponents/darkModeToggle';
 import MetamaskLogo from './navbarComponents/metamaskLogo';
 import NavbarButton from './navbarComponents/navbarButton';
-import DarkModeToggle from './navbarComponents/darkModeToggle';
 
 export default function TONavbar() {
 	return (

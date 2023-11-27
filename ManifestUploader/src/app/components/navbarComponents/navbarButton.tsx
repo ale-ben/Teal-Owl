@@ -1,7 +1,7 @@
 'use client';
 
-import { NavbarItem } from '@nextui-org/navbar';
 import { Link } from '@nextui-org/link';
+import { NavbarItem } from '@nextui-org/navbar';
 import { usePathname } from 'next/navigation';
 
 interface NavbarButtonProps {

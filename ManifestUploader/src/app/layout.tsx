@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import TONavbar from './components/navbar';
 import './globals.css';
 import { Providers } from './providers';
-import TONavbar from './components/navbar';
 
 export const metadata: Metadata = {
 	title: 'Teal Owl',

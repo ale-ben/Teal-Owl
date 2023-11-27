@@ -1,11 +1,8 @@
 'use client';
 
-import { useReducer } from 'react';
-import { RetrieveComponent } from './components/retrieve';
-import { UploadComponent } from './components/upload';
 import { MetaMaskReducer, MetaMaskState } from '@/models/MetaMaskReducer';
-import { Button } from '@nextui-org/react';
-import { connectWallet, getBalance } from '@/models/MetaMaskUtils';
+import { useReducer } from 'react';
+import { UploadComponent } from './components/upload';
 
 const initialState: MetaMaskState = {
 	account: '',

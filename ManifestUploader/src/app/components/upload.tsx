@@ -1,7 +1,7 @@
 'use client';
 import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfs';
 import { Button } from '@nextui-org/button';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 

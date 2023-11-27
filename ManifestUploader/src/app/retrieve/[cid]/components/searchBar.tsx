@@ -1,10 +1,10 @@
 'use client';
 
+import { Button } from '@nextui-org/button';
+import { Input } from '@nextui-org/input';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import { Input } from '@nextui-org/input';
-import { Button } from '@nextui-org/button';
 
 interface SearchBarProps {
 	defaultValue: string;

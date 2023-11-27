@@ -1,9 +1,9 @@
 'use client';
 
-import { MdLightMode, MdDarkMode } from 'react-icons/md';
-import { useTheme } from 'next-themes';
 import { Button } from '@nextui-org/button';
-import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 const DarkModeToggle = () => {
 	const [mounted, setMounted] = useState(false);
