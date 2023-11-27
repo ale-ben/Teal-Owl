@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from './providers';
-import TONavbar from './component/navbar';
+import TONavbar from './components/navbar';
 
 export const metadata: Metadata = {
 	title: 'Teal Owl',
-	description: 'Manifest Uploader for Teal Owl Project',
+	description: 'Manifest Uploader for Teal Owl Project'
 };
 
 export default function RootLayout({
