@@ -15,8 +15,8 @@ importers:
         specifier: ^0.0.58
         version: 0.0.58
       '@types/google-apps-script':
-        specifier: ^1.0.74
-        version: 1.0.74
+        specifier: ^1.0.78
+        version: 1.0.78
       '@types/google.picker':
         specifier: ^0.0.42
         version: 0.0.42
@@ -1229,6 +1229,10 @@ packages:
 
   /@types/google-apps-script@1.0.74:
     resolution: {integrity: sha512-FmPMEzvOWksxlF09DtCoB22GqVTipZph26nl6YsJ5HV6pQNZx2pjFiUTkxxpj2y+a6QlDnwYz/+b+0ILNClybQ==}
+    dev: false
+
+  /@types/google-apps-script@1.0.78:
+    resolution: {integrity: sha512-JOTy4vjBQ+HfdtJMkfcNF5WM8RC3R6SVp90bd8BCFvNWSaQ7zzP3abOLuJSCwQHjt0hWftofckvhwEcZjZ4hcQ==}
     dev: false
 
   /@types/google.picker@0.0.42:
