@@ -12,8 +12,8 @@ importers:
         specifier: ^0.0.47
         version: 0.0.47
       '@types/gapi.auth2':
-        specifier: ^0.0.58
-        version: 0.0.58
+        specifier: ^0.0.60
+        version: 0.0.60
       '@types/google-apps-script':
         specifier: ^1.0.78
         version: 1.0.78
@@ -1213,14 +1213,10 @@ packages:
       '@types/responselike': 1.0.1
     dev: true
 
-  /@types/gapi.auth2@0.0.58:
-    resolution: {integrity: sha512-o1T+6M0DDGPRI+WJBJTEdcF6TRQLL+2rjIzwXrmpqRCLmErYcP9E17ScZHXoNsXBc/Z3V3zSgM+sdfkey4xlxw==}
+  /@types/gapi.auth2@0.0.60:
+    resolution: {integrity: sha512-KQiyTHRyAcat6marTRAixrkHhkS7mqclcbQvInfxyp7IeUDSUzLBlgH1s0SFaLl1m1jRY6b+qh4NMlmVm0wPEw==}
     dependencies:
-      '@types/gapi': 0.0.45
-    dev: false
-
-  /@types/gapi@0.0.45:
-    resolution: {integrity: sha512-xc8X9FrdZcWoOd4tMhLenYbnmaxCgy2FBt+SOI7xv9Efy/7Jk2V9gBZiufFBLIfDUUvpWY7DN3x4lrdL1I9y0Q==}
+      '@types/gapi': 0.0.47
     dev: false
 
   /@types/gapi@0.0.47:
