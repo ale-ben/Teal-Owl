@@ -4,7 +4,8 @@ import { MetaMaskContext } from '@/models/MetaMaskContext';
 import {
 	ConnectWallet,
 	FormatBalance,
-	GetBalance
+	GetBalance,
+	SetListeners
 } from '@/models/MetaMaskUtils';
 import { Button } from '@nextui-org/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover';
@@ -34,6 +35,7 @@ const MetamaskComponent = () => {
 					startContent={MetamaskLogo()}
 					onPress={async () => {
 						metaMaskContext.setAddress(await ConnectWallet());
+						SetListeners(metaMaskContext);
 					}}
 				>
 					Connect with MetaMask

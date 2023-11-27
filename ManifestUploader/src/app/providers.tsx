@@ -8,7 +8,7 @@ import { useMemo, useState } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
 	const [address, setAddress] = useState<string | undefined>(undefined);
-	const value = useMemo(() => ({ address, setAddress }), [address]);
+	const value = useMemo(() => ({ address, setAddress, onAddressChange: setAddress }), [address]);
 
 	return (
 		<NextUIProvider>

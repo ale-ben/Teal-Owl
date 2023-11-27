@@ -1,3 +1,5 @@
+import { MetaMaskContextStruct } from './MetaMaskContext';
+
 export async function ConnectWallet(): Promise<string | undefined> {
 	if (!window.ethereum) {
 		throw new Error(`invalid ethereum provider`);
@@ -62,4 +64,15 @@ export function FormatBalance(balance: number): string {
 	}
 
 	return 'ERROR';
+}
+
+export function SetListeners(metaMaskContext: MetaMaskContextStruct): void {
+	window.ethereum.on('accountsChanged', (accounts: string[]) => {
+		console.log(`accounts changed: ${accounts}`);
+		if (accounts.length > 0) {
+			metaMaskContext.setAddress(accounts[0]);
+		} else {
+			metaMaskContext.setAddress(undefined);
+		}
+	});
 }
