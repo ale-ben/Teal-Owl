@@ -23,7 +23,7 @@
   "dependencies": {
     "@types/gapi": "^0.0.47",
     "@types/gapi.auth2": "^0.0.58",
-    "@types/google-apps-script": "^1.0.74",
+    "@types/google-apps-script": "^1.0.78",
     "@types/google.picker": "^0.0.42",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
