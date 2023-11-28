@@ -15,6 +15,27 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className="dark" suppressHydrationWarning>
+			<head>
+				<link rel="icon" href="static/icons/favicon.ico" sizes="48x48" />
+				<link
+					rel="icon"
+					href="static/icons/icon32x32.png"
+					type="image/png"
+					sizes="32x32"
+				/>
+				<link
+					rel="icon"
+					href="static/icons/icon16x16.png"
+					type="image/png"
+					sizes="16x16"
+				/>
+				<link
+					rel="apple-touch-icon"
+					href="static/icons/apple-icon.png"
+					type="image/png"
+					sizes="180x180"
+				/>
+			</head>
 			<body>
 				<Providers>
 					<TONavbar />
