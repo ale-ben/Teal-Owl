@@ -2,7 +2,9 @@
 
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
-const storage = new ThirdwebStorage({ secretKey: process.env.THIRDWEB_API_KEY });
+const storage = new ThirdwebStorage({
+	secretKey: process.env.THIRDWEB_API_KEY
+});
 
 export interface IPFSObject {
 	uri: string | undefined;
