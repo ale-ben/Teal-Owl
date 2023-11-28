@@ -160,8 +160,8 @@ export function UploadComponent() {
 				</div>
 			</div>
 			<hr className="my-8 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-			<div className="grid grid-cols-3">
-				<div className="col-span-2">
+			<div className="flex flex-row justify-between">
+				<div>
 					<p className="text-xl">Uploaded files:</p>
 					<ul className="max-w-md list-inside list-disc space-y-1 ">
 						{uploadedOBJs.map((obj) => (
@@ -177,11 +177,12 @@ export function UploadComponent() {
 						))}
 					</ul>
 				</div>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 w-60">
 					<Button
 						isDisabled={acceptedList.length === 0}
 						color="primary"
 						onClick={onSubmit}
+						className="h-14"
 					>
 						Upload
 					</Button>
@@ -191,6 +192,7 @@ export function UploadComponent() {
 							rejectedList.length === 0
 						}
 						color="danger"
+						className="h-14"
 						onClick={() => {
 							setAcceptedList([]);
 							setRejectedList([]);

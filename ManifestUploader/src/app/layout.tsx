@@ -16,7 +16,11 @@ export default function RootLayout({
 	return (
 		<html lang="en" className="dark" suppressHydrationWarning>
 			<head>
-				<link rel="icon" href="static/icons/favicon.ico" sizes="48x48" />
+				<link
+					rel="icon"
+					href="static/icons/favicon.ico"
+					sizes="48x48"
+				/>
 				<link
 					rel="icon"
 					href="static/icons/icon32x32.png"
