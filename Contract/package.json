@@ -8,6 +8,8 @@
     "launch_local_node": "hardhat node",
     "deploy_localhost": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network localhost",
 	"console_localhost": "hardhat console --network localhost",
+    "deploy_sepolia": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network sepolia",
+	"console_sepolia": "hardhat console --network sepolia",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
