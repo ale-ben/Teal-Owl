@@ -3,7 +3,7 @@ import Image from 'next/image';
 const MetamaskLogo = () => {
 	return (
 		<Image
-			src="images/metamask.svg"
+			src="static/images/metamask.svg"
 			className="h-6 w-6"
 			alt="Metamask Logo"
 			width={24}

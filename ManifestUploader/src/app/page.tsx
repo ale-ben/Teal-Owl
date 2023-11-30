@@ -1,14 +1,18 @@
 'use client';
 
-import { useAccount, useNetwork } from '@metamask/sdk-react-ui';
 import { Button } from '@nextui-org/react';
-import { Contract, ethers } from 'ethers';
-import contract_info from '../../static/contractInfo/TealOwlDeploy#TealOwl.json';
+import { useAccount, useConnect, useContractRead, useNetwork } from 'wagmi';
 import contract_address from '../../static/contractInfo/deployed_addresses.json';
+
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import contract_info from '../../static/contractInfo/TealOwlDeploy#TealOwl.json';
 
 export default function Home() {
 	const { address, isConnected } = useAccount();
 	const { chain, chains } = useNetwork();
+	const { connect } = useConnect({
+		connector: new InjectedConnector()
+	});
 
 	const deployAddress = contract_address[
 		'TealOwlDeploy#TealOwl'
@@ -17,6 +21,12 @@ export default function Home() {
 	const minter = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
 	const tokenID = 0;
 	const uri = 'ipfs://QmP2bWnyqx3NWXJew15vBscbPzUvbWWKqesb8J5nBCeH4r';
+
+	const { data, isError, isLoading } = useContractRead({
+		address: deployAddress,
+		abi: contract_info.abi,
+		functionName: 'name'
+	});
 
 	return (
 		<div className="m-5">
@@ -32,26 +42,21 @@ export default function Home() {
 				<p>Deploy Address: {deployAddress}</p>
 			</div>
 			<Button
+				isDisabled={isConnected}
 				onPress={async () => {
 					console.log('pressed');
-					if (window && window.ethereum) {
-						const provider = new ethers.BrowserProvider(
-							window.ethereum
-						);
-						const signer = await provider.getSigner();
-						const contract = new Contract(
-							deployAddress,
-							contract_info.abi,
-							provider
-						);
-						const contractWithSigner = contract.connect(signer);
-						// @ts-ignore
-						const res = await contractWithSigner.name()	;
-						console.log('uri', res);
-					}
+					connect();
 				}}
 			>
-				a
+				Connect
+			</Button>
+			<Button
+				onPress={async () => {
+					console.log('pressed');
+					console.log('data', data);
+				}}
+			>
+				Read Wagmi
 			</Button>
 		</div>
 	);

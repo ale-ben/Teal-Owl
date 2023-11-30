@@ -11,17 +11,19 @@
 		"style": "prettier --write 'src/**/*.{ts,tsx}'"
 	},
 	"dependencies": {
-		"@metamask/sdk-react-ui": "^0.13.0",
+		"@metamask/sdk": "^0.14.1",
 		"@nextui-org/react": "^2.2.9",
 		"@thirdweb-dev/storage": "^2.0.5",
-		"ethers": "^6.9.0",
+		"encoding": "^0.1.13",
 		"framer-motion": "^10.16.5",
 		"next": "14.0.3",
 		"next-themes": "^0.2.1",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-dropzone": "^14.2.3",
-		"react-icons": "^4.12.0"
+		"react-icons": "^4.12.0",
+		"viem": "^1.19.10",
+		"wagmi": "^1.4.7"
 	},
 	"devDependencies": {
 		"@types/node": "^20",
