@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
@@ -20,7 +20,7 @@ interface InputComponentProps {
 /**
  * This component is used to upload files to the application.
  * @param props see InputComponentProps
- * @returns 
+ * @returns
  */
 export default function InputComponent(props: InputComponentProps) {
 	const {
@@ -100,7 +100,7 @@ export default function InputComponent(props: InputComponentProps) {
 		>
 			<label
 				htmlFor="dropzone-file"
-				className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed"
+				className="flex h-60 w-[60rem] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed"
 			>
 				<div className="flex flex-col items-center justify-center pb-6 pt-5">
 					<AiOutlineCloudUpload className="mb-4 h-8 w-8" />
