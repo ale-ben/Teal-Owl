@@ -1,6 +1,6 @@
 import { readContract } from 'wagmi/actions';
-import contract_info from '../static/contractInfo/TealOwlDeploy#TealOwl.json';
-import contract_address from '../static/contractInfo/deployed_addresses.json';
+import contract_info from '../static/contractInfo/sepolia/TealOwlDeploy#TealOwl.json';
+import contract_address from '../static/contractInfo/sepolia/deployed_addresses.json';
 
 const deployAddress = contract_address[
 	'TealOwlDeploy#TealOwl'
