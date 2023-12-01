@@ -9,7 +9,7 @@ import { WagmiConfig } from 'wagmi';
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
 
-if (!projectId) throw new Error('NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID not set')
+if (!projectId) throw new Error('NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID not set');
 
 // 2. Create wagmiConfig
 const metadata = {
@@ -30,9 +30,5 @@ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 createWeb3Modal({ wagmiConfig, projectId, chains });
 
 export function Web3Modal({ children }: { children: React.ReactNode }) {
-	return (
-		<WagmiConfig config={wagmiConfig}>
-			{children}
-		</WagmiConfig>
-	);
+	return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
 }
