@@ -40,6 +40,7 @@ export default function InputComponent(props: InputComponentProps) {
 	 * This effect is triggered when a file is accepted.
 	 * It checks if the file is already in the accepted list, if it isn't, the file is added to the list.
 	 * If the file is already in the list, an alert is shown.
+	 * TODO: This should be refactored to use a useMemo hook instead of a useEffect hook. This would allow to lower rerenders needed.
 	 */
 	useEffect(() => {
 		let tmpNameDict: Map<string, boolean> = new Map();
@@ -66,6 +67,7 @@ export default function InputComponent(props: InputComponentProps) {
 	 * This effect is triggered when a file is rejected.
 	 * It checks if the file is already in the rejected list, if it isn't, the file is added to the list.
 	 * If the file is already in the list, an alert is shown.
+	 * TODO: This should be refactored to use a useMemo hook instead of a useEffect hook. This would allow to lower rerenders needed.
 	 */
 	useEffect(() => {
 		let tmpNameDict: Map<string, boolean> = new Map();
