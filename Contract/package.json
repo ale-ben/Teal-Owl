@@ -4,6 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "launch_local_node": "hardhat node",
+    "deploy_localhost": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network localhost",
+	"console_localhost": "hardhat console --network localhost",
+    "deploy_sepolia": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network sepolia",
+	"console_sepolia": "hardhat console --network sepolia",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,11 +25,12 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^0.11.2",
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
-    "eslint": "^8.54.0",
     "hardhat": "^2.19.1",
-    "husky": "^8.0.3",
     "prettier": "^3.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
   }
 }

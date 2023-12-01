@@ -5,7 +5,6 @@ import {
 	NavbarItem
 } from '@nextui-org/navbar';
 import DarkModeToggle from './navbarComponents/darkModeToggle';
-import MetamaskComponent from './navbarComponents/metamaskComponent';
 import NavbarButton from './navbarComponents/navbarButton';
 
 export default function TONavbar() {
@@ -20,9 +19,11 @@ export default function TONavbar() {
 			</NavbarContent>
 			<NavbarContent justify="end">
 				<NavbarItem>
-					<MetamaskComponent />
+					<w3m-button />
 				</NavbarItem>
-				<DarkModeToggle />
+				<NavbarItem>
+					<DarkModeToggle />
+				</NavbarItem>
 			</NavbarContent>
 		</Navbar>
 	);
