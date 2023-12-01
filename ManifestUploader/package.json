@@ -11,10 +11,9 @@
 		"style": "prettier --write 'src/**/*.{ts,tsx}'"
 	},
 	"dependencies": {
-		"@metamask/sdk": "^0.14.1",
 		"@nextui-org/react": "^2.2.9",
 		"@thirdweb-dev/storage": "^2.0.5",
-		"encoding": "^0.1.13",
+		"@web3modal/wagmi": "^3.4.0",
 		"framer-motion": "^10.16.5",
 		"next": "14.0.3",
 		"next-themes": "^0.2.1",
