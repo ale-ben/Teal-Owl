@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    uint256 private _nextTokenId;
+    uint256 private _nextTokenId = 0;
 
 	// mapping for token IDs
     mapping(string toTokenID => uint256) private _tokenMapping;
