@@ -11,7 +11,7 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ defaultValue }: SearchBarProps) => {
-	let inputRef = useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
 
 	function submit() {

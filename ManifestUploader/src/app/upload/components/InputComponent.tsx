@@ -43,7 +43,7 @@ export default function InputComponent(props: InputComponentProps) {
 	 * TODO: This should be refactored to use a useMemo hook instead of a useEffect hook. This would allow to lower rerenders needed.
 	 */
 	useEffect(() => {
-		let tmpNameDict: Map<string, boolean> = new Map();
+		const tmpNameDict: Map<string, boolean> = new Map();
 		// Load already accepted files
 		props.accepted.list.forEach((file) => {
 			tmpNameDict.set(file.name, true);
@@ -70,7 +70,7 @@ export default function InputComponent(props: InputComponentProps) {
 	 * TODO: This should be refactored to use a useMemo hook instead of a useEffect hook. This would allow to lower rerenders needed.
 	 */
 	useEffect(() => {
-		let tmpNameDict: Map<string, boolean> = new Map();
+		const tmpNameDict: Map<string, boolean> = new Map();
 		// Load already accepted files
 		props.rejected.list.forEach((file) => {
 			tmpNameDict.set(file.file.name, true);
