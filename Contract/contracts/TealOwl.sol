@@ -10,15 +10,19 @@ contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     uint256 private _nextTokenId;
 
+	// mapping for token IDs
+    mapping(string toTokenID => uint256) private _tokenMapping;
+
     constructor(address defaultAdmin, address minter) ERC721("Teal-Owl", "TO") {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(MINTER_ROLE, minter);
     }
 
-    function safeMint(address to, string memory uri) public onlyRole(MINTER_ROLE) {
+    function safeMint(address to, string memory toTokenID, string memory uri) public onlyRole(MINTER_ROLE) {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+		_tokenMapping[toTokenID] = tokenId;
     }
 
     // The following functions are overrides required by Solidity.
@@ -45,6 +49,14 @@ contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         returns (string memory)
     {
         return super.tokenURI(tokenId);
+    }
+
+	 function tokenURIS(string memory toTokenID)
+        public
+        view
+        returns (string memory)
+    {
+        return tokenURI(_tokenMapping[toTokenID]);
     }
 
     function supportsInterface(bytes4 interfaceId)
