@@ -1,4 +1,6 @@
+import { isManifestModel } from '@/models/ManifestModel';
 import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfs';
+import { saveManifestInfo } from '@/utils/contractUtils';
 import { Button } from '@nextui-org/button';
 import { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
@@ -20,13 +22,45 @@ export default function ControlComponent({
 		acceptedFiles.forEach(async (file) => {
 			// Log to console file content
 			file.text().then(async (text) => {
+				const content = JSON.parse(text);
+
+				// Check if file is a valid ManifestModel
+				if (!isManifestModel(content)) {
+					console.error('File is not a valid ManifestModel', content);
+					return;
+				}
+
+				// Prepare object to upload to IPFS
 				let obj: IPFSObject = {
 					name: file.name,
-					content: JSON.parse(text),
+					content: content,
 					uri: undefined
 				};
+
+				// Upload object to IPFS
 				obj = await uploadObjectToIPFS(obj);
-				setUploadedOBJs([...uploadedOBJs, obj]);
+
+				// Save uploaded object to Smart Contract
+				if (obj.uri) {
+					saveManifestInfo(
+						content.author,
+						content.document,
+						obj.uri
+					).then((success) => {
+						if (success) setUploadedOBJs([...uploadedOBJs, obj]);
+						else
+							console.error(
+								'Error saving object to Smart Contract',
+								obj
+							);
+					});
+				} else {
+					console.error(
+						'Error uploading object to IPFS. URI is undefined',
+						obj
+					);
+					return;
+				}
 			});
 		});
 		resetLists();
@@ -57,7 +91,9 @@ export default function ControlComponent({
 					Upload
 				</Button>
 				<Button
-					isDisabled={acceptedFiles.length === 0 && rejectedFiles.length === 0}
+					isDisabled={
+						acceptedFiles.length === 0 && rejectedFiles.length === 0
+					}
 					color="danger"
 					className="h-14"
 					onClick={resetLists}

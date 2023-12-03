@@ -1,5 +1,6 @@
 'use server';
 
+import { ManifestModel, isManifestModel } from '@/models/ManifestModel';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
 const storage = new ThirdwebStorage({
@@ -8,8 +9,8 @@ const storage = new ThirdwebStorage({
 
 export interface IPFSObject {
 	uri: string | undefined;
-	name: string | undefined;
-	content: object;
+	name?: string;
+	content: ManifestModel;
 }
 
 export async function uploadObjectToIPFS(obj: IPFSObject): Promise<IPFSObject> {
@@ -25,7 +26,14 @@ export async function downloadObjectFromIPFS(
 	if (!uri.startsWith('ipfs://')) uri = 'ipfs://' + uri;
 	try {
 		const obj = await storage.downloadJSON(uri);
-		return { uri: uri, content: obj, name: undefined };
+		if (!obj || !isManifestModel(obj)) {
+			console.log(
+				'Error while retrieving file. Object is not a valid ManifestModel.' +
+					obj
+			);
+			return;
+		}
+		return { uri: uri, content: obj };
 	} catch (e) {
 		console.log('Error while retrieving file ' + uri, e);
 		return;
