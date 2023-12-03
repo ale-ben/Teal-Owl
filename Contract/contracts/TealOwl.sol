@@ -18,9 +18,9 @@ contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         _grantRole(MINTER_ROLE, minter);
     }
 
-    function safeMint(address to, string memory toTokenID, string memory uri) public onlyRole(MINTER_ROLE) {
+    function safeMint(string memory toTokenID, string memory uri) public onlyRole(MINTER_ROLE) {
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
 		_tokenMapping[toTokenID] = tokenId;
     }
