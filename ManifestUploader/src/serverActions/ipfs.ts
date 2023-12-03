@@ -8,7 +8,7 @@ const storage = new ThirdwebStorage({
 });
 
 export interface IPFSObject {
-	uri: string | undefined;
+	cid: string | undefined;
 	name?: string;
 	content: ManifestModel;
 }
@@ -17,15 +17,16 @@ export async function uploadObjectToIPFS(obj: IPFSObject): Promise<IPFSObject> {
 	const uri = await storage.upload(obj.content, {
 		alwaysUpload: false
 	});
-	return { ...obj, uri: uri };
+	const cid = uri.replace('ipfs://', '');
+	return { ...obj, cid: cid };
 }
 
 export async function downloadObjectFromIPFS(
-	uri: string
+	cid: string
 ): Promise<IPFSObject | undefined> {
-	if (!uri.startsWith('ipfs://')) uri = 'ipfs://' + uri;
+	if (!cid.startsWith('ipfs://')) cid = 'ipfs://' + cid;
 	try {
-		const obj = await storage.downloadJSON(uri);
+		const obj = await storage.downloadJSON(cid);
 		if (!obj || !isManifestModel(obj)) {
 			console.log(
 				'Error while retrieving file. Object is not a valid ManifestModel.' +
@@ -33,9 +34,9 @@ export async function downloadObjectFromIPFS(
 			);
 			return;
 		}
-		return { uri: uri, content: obj };
+		return { cid: cid, content: obj };
 	} catch (e) {
-		console.log('Error while retrieving file ' + uri, e);
+		console.log('Error while retrieving file ' + cid, e);
 		return;
 	}
 }

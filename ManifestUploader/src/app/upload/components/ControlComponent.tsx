@@ -34,18 +34,18 @@ export default function ControlComponent({
 				let obj: IPFSObject = {
 					name: file.name,
 					content: content,
-					uri: undefined
+					cid: undefined
 				};
 
 				// Upload object to IPFS
 				obj = await uploadObjectToIPFS(obj);
 
 				// Save uploaded object to Smart Contract
-				if (obj.uri) {
+				if (obj.cid) {
 					saveManifestInfo(
 						content.author,
 						content.document,
-						obj.uri
+						obj.cid
 					).then((success) => {
 						if (success) setUploadedOBJs([...uploadedOBJs, obj]);
 						else
@@ -56,7 +56,7 @@ export default function ControlComponent({
 					});
 				} else {
 					console.error(
-						'Error uploading object to IPFS. URI is undefined',
+						'Error uploading object to IPFS. CID is undefined',
 						obj
 					);
 					return;
@@ -72,10 +72,13 @@ export default function ControlComponent({
 				<p className="text-xl">Uploaded files:</p>
 				<ul className="max-w-md list-inside list-disc space-y-1 ">
 					{uploadedOBJs.map((obj) => (
-						<li key={obj.uri}>
+						<li key={obj.cid}>
 							{obj.name} -{' '}
-							<a href={obj.uri} className="italic text-blue-600">
-								{obj.uri}
+							<a
+								href={'ipfs://' + obj.cid}
+								className="italic text-blue-600"
+							>
+								{obj.cid}
 							</a>
 						</li>
 					))}
