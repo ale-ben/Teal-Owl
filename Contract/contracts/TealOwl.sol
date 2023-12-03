@@ -8,16 +8,15 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    uint256 private _nextTokenId;
 
     constructor(address defaultAdmin, address minter) ERC721("Teal-Owl", "TO") {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(MINTER_ROLE, minter);
     }
 
-    function safeMint(address to, uint256 tokenId, string memory uri)
-        public
-        onlyRole(MINTER_ROLE)
-    {
+    function safeMint(address to, string memory uri) public onlyRole(MINTER_ROLE) {
+        uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
