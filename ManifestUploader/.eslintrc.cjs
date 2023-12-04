@@ -14,7 +14,8 @@ module.exports = {
     plugins: ["prettier"],
     rules: {
         "no-console": 1, // Means warning
-        "prettier/prettier": 1
+        "prettier/prettier": 1,
+		"no-mixed-spaces-and-tabs": 0,
     }
 };
 
