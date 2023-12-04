@@ -1,9 +1,8 @@
 /Teal-Owl_Contract.code-workspace
 .DS_Store
-/ManifestUploader/.env
-/Contract/node_modules
-/Contract/artifacts
-/Contract/cache
-/Contract/ignition/deployments
-/Contract/typechain-types
-/Contract/credentials.json
+/node_modules
+/artifacts
+/cache
+/ignition/deployments
+/typechain-types
+/credentials.json
