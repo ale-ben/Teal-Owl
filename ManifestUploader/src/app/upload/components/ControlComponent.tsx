@@ -1,5 +1,5 @@
 import { isManifestModel } from '@/models/ManifestModel';
-import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfs';
+import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfsActions';
 import { saveManifestInfo } from '@/utils/contractSignerUtils';
 import { Button } from '@nextui-org/button';
 import { useState } from 'react';

@@ -27,6 +27,8 @@ export async function downloadObjectFromIPFS(
 	if (!cid.startsWith('ipfs://')) cid = 'ipfs://' + cid;
 	try {
 		const obj = await storage.downloadJSON(cid);
+
+		//TODO: Use zod to validate the object
 		if (!obj || !isManifestModel(obj)) {
 			console.log(
 				'Error while retrieving file. Object is not a valid ManifestModel.' +

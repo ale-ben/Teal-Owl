@@ -8,17 +8,6 @@ const deployAddress = contract_address[
 
 const abi = contract_info.abi;
 
-export function getName(): Promise<string | undefined> {
-	return readContract({
-		address: deployAddress,
-		abi: abi,
-		functionName: 'name'
-	}).then((data) => {
-		if (typeof data === 'string') return data;
-		else return undefined;
-	});
-}
-
 export function saveManifestInfo(
 	author: string,
 	document: string,

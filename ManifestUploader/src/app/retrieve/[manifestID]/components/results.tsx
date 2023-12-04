@@ -1,4 +1,4 @@
-import { IPFSObject } from '@/serverActions/ipfs';
+import { IPFSObject } from '@/serverActions/ipfsActions';
 
 interface ResultsProps {
 	retrievedObj: IPFSObject;

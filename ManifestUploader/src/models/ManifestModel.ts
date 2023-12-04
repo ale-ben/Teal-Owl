@@ -13,6 +13,7 @@ export function isManifestModel(obj: unknown): obj is ManifestModel {
 	//TODO: Check if timestamp is a valid date
 	//TODO: Check if elements of hashList are valid hashes
 
+	//TODO: Use zod to validate the object
 	return (
 		obj !== null &&
 		typeof obj === 'object' &&
