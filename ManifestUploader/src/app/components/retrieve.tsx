@@ -1,6 +1,9 @@
 'use client';
 
-import { IPFSObject, downloadObjectFromIPFS } from '@/serverActions/ipfs';
+import {
+	IPFSObject,
+	downloadObjectFromIPFS
+} from '@/serverActions/ipfsActions';
 import { useRef, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 
