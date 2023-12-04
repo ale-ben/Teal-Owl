@@ -8,6 +8,7 @@
 		"dsznajder.es7-react-js-snippets",
 		"msjsdiag.vscode-react-native",
 		"nomicfoundation.hardhat-solidity",
-		"juanblanco.solidity"
+		"juanblanco.solidity",
+		"christian-kohler.npm-intellisense"
 	]
 }

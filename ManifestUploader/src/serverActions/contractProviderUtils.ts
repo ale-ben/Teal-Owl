@@ -12,7 +12,7 @@ createConfig({
 	publicClient
 });
 
-const { address, abi } = getContractInfo('localhost');
+const { address, abi } = getContractInfo('sepolia');
 
 export async function getName(): Promise<string | undefined> {
 	const name = await readContract({
@@ -34,7 +34,11 @@ export async function getTokenURI(
 	});
 
 	const parsed = z.string().safeParse(tokenURI);
-	if (parsed.success === false || parsed.data === undefined || parsed.data === '') {
+	if (
+		parsed.success === false ||
+		parsed.data === undefined ||
+		parsed.data === ''
+	) {
 		return undefined;
 	}
 

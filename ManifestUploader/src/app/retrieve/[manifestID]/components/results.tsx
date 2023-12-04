@@ -19,19 +19,17 @@ const Results = ({ retrievedObj }: ResultsProps) => {
 					</tr>
 				</thead>
 				<tbody>
-					{Object.entries(retrievedObj).map(
-						([key, value]) => (
-							<tr key={key} className="border-b ">
-								<th
-									scope="row"
-									className="whitespace-nowrap px-6 py-4 font-medium"
-								>
-									{key}
-								</th>
-								<td className="px-6 py-4">{value}</td>
-							</tr>
-						)
-					)}
+					{Object.entries(retrievedObj).map(([key, value]) => (
+						<tr key={key} className="border-b ">
+							<th
+								scope="row"
+								className="whitespace-nowrap px-6 py-4 font-medium"
+							>
+								{key}
+							</th>
+							<td className="px-6 py-4">{value}</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>

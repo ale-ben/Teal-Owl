@@ -1,31 +1,25 @@
-import { readContract, writeContract } from 'wagmi/actions';
-import contract_info from '../static/contractInfo/localhost/TealOwlDeploy#TealOwl.json';
-import contract_address from '../static/contractInfo/localhost/deployed_addresses.json';
+import { getContractInfo } from '@/models/ContractConnectionModel';
+import { writeContract } from 'wagmi/actions';
 
-const deployAddress = contract_address[
-	'TealOwlDeploy#TealOwl'
-] as `0x${string}`;
+const { address, abi } = getContractInfo('sepolia');
 
-const abi = contract_info.abi;
-
-export function saveManifestInfo(
+export async function saveManifestInfo(
 	author: string,
 	document: string,
 	uri: string
 ): Promise<boolean> {
 	const manifestID = author + document;
-	return writeContract({
-		address: deployAddress,
-		abi: abi,
-		functionName: 'safeMint',
-		args: [manifestID, uri]
-	})
-		.then((res) => {
-			console.log(res);
-			return true;
-		})
-		.catch((e) => {
-			console.error(e);
-			return false;
+	try {
+		const res = await writeContract({
+			address: address,
+			abi: abi,
+			functionName: 'safeMint',
+			args: [manifestID, uri]
 		});
+		console.log(res);
+		return true;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
 }
