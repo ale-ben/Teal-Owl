@@ -1,7 +1,7 @@
-import { IPFSObject } from '@/serverActions/ipfsActions';
+import { ManifestModel } from '@/models/ManifestModel';
 
 interface ResultsProps {
-	retrievedObj: IPFSObject;
+	retrievedObj: ManifestModel;
 }
 
 const Results = ({ retrievedObj }: ResultsProps) => {
@@ -19,7 +19,7 @@ const Results = ({ retrievedObj }: ResultsProps) => {
 					</tr>
 				</thead>
 				<tbody>
-					{Object.entries(retrievedObj.content).map(
+					{Object.entries(retrievedObj).map(
 						([key, value]) => (
 							<tr key={key} className="border-b ">
 								<th

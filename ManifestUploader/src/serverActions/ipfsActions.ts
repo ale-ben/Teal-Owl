@@ -13,7 +13,9 @@ export interface IPFSObject {
 	content: ManifestModel;
 }
 
-export async function uploadObjectToIPFS(obj: IPFSObject): Promise<IPFSObject> {
+export async function uploadManifestToIPFS(
+	obj: IPFSObject
+): Promise<IPFSObject> {
 	const uri = await storage.upload(obj.content, {
 		alwaysUpload: false
 	});
@@ -21,22 +23,27 @@ export async function uploadObjectToIPFS(obj: IPFSObject): Promise<IPFSObject> {
 	return { ...obj, cid: cid };
 }
 
-export async function downloadObjectFromIPFS(
+export async function downloadManifestFromIPFS(
 	cid: string
-): Promise<IPFSObject | undefined> {
+): Promise<ManifestModel | undefined> {
+	// Add ipfs:// if it's not there
 	if (!cid.startsWith('ipfs://')) cid = 'ipfs://' + cid;
+
 	try {
+		// Download the object
 		const obj = await storage.downloadJSON(cid);
 
-		//TODO: Use zod to validate the object
-		if (!obj || !isManifestModel(obj)) {
+		// Validate the object
+		if (!isManifestModel(obj)) {
 			console.log(
 				'Error while retrieving file. Object is not a valid ManifestModel.' +
 					obj
 			);
 			return;
 		}
-		return { cid: cid, content: obj };
+
+		// Return the object as a ManifestModel
+		return obj;
 	} catch (e) {
 		console.log('Error while retrieving file ' + cid, e);
 		return;

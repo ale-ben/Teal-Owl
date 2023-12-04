@@ -2,6 +2,9 @@
 
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+import { getTokenURI } from './contractProviderUtils';
+import { downloadManifestFromIPFS } from './ipfsActions';
+import { ManifestModel } from '@/models/ManifestModel';
 
 export async function retrieveFormSubmitHandler(formData: FormData) {
 	// Validate and parse the form data to get the authorID, documentID, and manifestID
@@ -57,4 +60,16 @@ export async function retrieveFormSubmitHandler(formData: FormData) {
 	if (authorID.data === '') {
 		redirect(`?error=missingAuthorID&documentID=${documentID.data}`);
 	}
+}
+
+export async function getManifest(tokenId: string): Promise<ManifestModel | undefined>{
+	// Get the manifest URI from the contract
+	const manifestURI = await getTokenURI(tokenId);
+	
+	if (manifestURI === undefined) return undefined;
+
+	console.log('Manifest URI', manifestURI);
+
+	// Fetch the manifest
+	return await downloadManifestFromIPFS(manifestURI);
 }

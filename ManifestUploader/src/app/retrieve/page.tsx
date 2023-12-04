@@ -77,20 +77,24 @@ export default function Retrieve({ searchParams }: RetrieveProps) {
 				</div>
 			</form>
 			<Divider className="my-5" />
-			<div className="mb-5">
-				<p className="text-xl text-red-400">Error</p>
-				<p>
-					{error === 'allEmpty'
-						? 'All fields are empty.'
-						: error === 'missingAuthorID'
-						  ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
-						  : error === 'missingDocumentID'
-						    ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
-						    : error === 'invalid'
-						      ? 'Data entered is invalid.'
-						      : ''}
-				</p>
-			</div>
+			{error !== undefined ? (
+				<div className="mb-5">
+					<p className="text-xl text-red-400">Error</p>
+					<p>
+						{error === 'allEmpty'
+							? 'All fields are empty.'
+							: error === 'missingAuthorID'
+							  ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
+							  : error === 'missingDocumentID'
+							    ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
+							    : error === 'invalid'
+							      ? 'Data entered is invalid.'
+							      : ''}
+					</p>
+				</div>
+			) : (
+				<></>
+			)}
 			<p className="text-xl">How to use</p>
 			<p>
 				Please either specify both <a className="italic">Author ID</a>{' '}

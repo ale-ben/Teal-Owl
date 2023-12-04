@@ -1,5 +1,5 @@
 import { isManifestModel } from '@/models/ManifestModel';
-import { IPFSObject, uploadObjectToIPFS } from '@/serverActions/ipfsActions';
+import { IPFSObject, uploadManifestToIPFS } from '@/serverActions/ipfsActions';
 import { saveManifestInfo } from '@/utils/contractSignerUtils';
 import { Button } from '@nextui-org/button';
 import { useState } from 'react';
@@ -38,7 +38,7 @@ export default function ControlComponent({
 				};
 
 				// Upload object to IPFS
-				obj = await uploadObjectToIPFS(obj);
+				obj = await uploadManifestToIPFS(obj);
 
 				// Save uploaded object to Smart Contract
 				if (obj.cid) {
