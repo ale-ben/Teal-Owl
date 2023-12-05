@@ -1,4 +1,3 @@
-import { Web3Modal } from '@/context/Web3Modal';
 import type { Metadata } from 'next';
 import TONavbar from './components/navbar';
 import './globals.css';
@@ -39,10 +38,8 @@ export default function RootLayout({
 			</head>
 			<body>
 				<Providers>
-					<Web3Modal>
 						<TONavbar />
 						{children}
-					</Web3Modal>
 				</Providers>
 			</body>
 		</html>
