@@ -1,10 +1,8 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+import {AdminWallet, MinterWallet} from "../..//credentials.json";
 
-const admin = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-const minter = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-
-export default buildModule("TealOwlDeploy", (m) => {
-  const TOContract = m.contract("TealOwl", [admin, minter]);
+export default buildModule("TealOwlDeploy", (m: any) => {
+  const TOContract = m.contract("TealOwl", [AdminWallet, MinterWallet]);
 
   return { TOContract };
 });
