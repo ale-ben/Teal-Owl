@@ -1,12 +1,11 @@
 'use server';
 
 import { getContractInfo } from '@/models/ContractConnectionModel';
-import { localChain } from '@/models/LocalChain';
-import { configureChains, createConfig, readContract } from '@wagmi/core';
+import { configureChains, createConfig, readContract, sepolia } from '@wagmi/core';
 import { publicProvider } from '@wagmi/core/providers/public';
 import { z } from 'zod';
 
-const { publicClient } = configureChains([localChain], [publicProvider()]);
+const { publicClient } = configureChains([sepolia], [publicProvider()]); //FIXME: When changing chains, this needs to change as well
 
 createConfig({
 	publicClient
