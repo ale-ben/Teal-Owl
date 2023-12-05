@@ -8,7 +8,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"style": "prettier --write 'src/**/*.{ts,tsx}'"
+		"style": "prettier --write 'src/**/*.{ts,tsx}'",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.2.9",
