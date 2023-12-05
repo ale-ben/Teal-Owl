@@ -4,6 +4,7 @@ import { saveManifestInfo } from '@/utils/contractSignerUtils';
 import { Button } from '@nextui-org/button';
 import { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
+import { useAccount } from 'wagmi';
 
 interface ControlComponentProps {
 	acceptedFiles: File[];
@@ -17,6 +18,7 @@ export default function ControlComponent({
 	resetLists
 }: ControlComponentProps) {
 	const [uploadedOBJs, setUploadedOBJs] = useState<IPFSObject[]>([]);
+	const { isConnected } = useAccount();
 
 	function onSubmit() {
 		acceptedFiles.forEach(async (file) => {
@@ -86,7 +88,7 @@ export default function ControlComponent({
 			</div>
 			<div className="flex flex-col gap-2 w-60">
 				<Button
-					isDisabled={acceptedFiles.length === 0}
+					isDisabled={acceptedFiles.length === 0 || !isConnected}
 					color="primary"
 					onClick={onSubmit}
 					className="h-14"
