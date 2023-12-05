@@ -1,7 +1,12 @@
 'use server';
 
 import { getContractInfo } from '@/models/ContractConnectionModel';
-import { configureChains, createConfig, readContract, sepolia } from '@wagmi/core';
+import {
+	configureChains,
+	createConfig,
+	readContract,
+	sepolia
+} from '@wagmi/core';
 import { publicProvider } from '@wagmi/core/providers/public';
 import { z } from 'zod';
 

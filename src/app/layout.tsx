@@ -38,8 +38,8 @@ export default function RootLayout({
 			</head>
 			<body>
 				<Providers>
-						<TONavbar />
-						{children}
+					<TONavbar />
+					{children}
 				</Providers>
 			</body>
 		</html>
