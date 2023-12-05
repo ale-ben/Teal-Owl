@@ -14,7 +14,7 @@ const NavbarButton = ({ href, text }: NavbarButtonProps) => {
 	return (
 		<NavbarItem isActive={pathname === href}>
 			{pathname === href ? (
-				<Link href={href} aria-current="page">
+				<Link href={href} aria-current="page" color="primary">
 					{text}
 				</Link>
 			) : (
