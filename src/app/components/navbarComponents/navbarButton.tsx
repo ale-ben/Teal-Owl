@@ -10,11 +10,12 @@ interface NavbarButtonProps {
 }
 const NavbarButton = ({ href, text }: NavbarButtonProps) => {
 	const pathname = usePathname();
+	const isActive = pathname.startsWith(href);
 
 	return (
-		<NavbarItem isActive={pathname === href}>
-			{pathname === href ? (
-				<Link href={href} aria-current="page">
+		<NavbarItem isActive={isActive}>
+			{isActive ? (
+				<Link href={href} aria-current="page" color="primary">
 					{text}
 				</Link>
 			) : (

@@ -7,6 +7,7 @@ import {
 import Link from 'next/link';
 import DarkModeToggle from './navbarComponents/darkModeToggle';
 import NavbarButton from './navbarComponents/navbarButton';
+import WalletConnectButton from './navbarComponents/walletconnectButton';
 
 export default function TONavbar() {
 	return (
@@ -22,7 +23,7 @@ export default function TONavbar() {
 			</NavbarContent>
 			<NavbarContent justify="end">
 				<NavbarItem>
-					<w3m-button />
+					<WalletConnectButton />
 				</NavbarItem>
 				<NavbarItem>
 					<DarkModeToggle />

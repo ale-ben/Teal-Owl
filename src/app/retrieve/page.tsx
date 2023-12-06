@@ -1,3 +1,4 @@
+import { getName } from '@/serverActions/contractProviderUtils';
 import { retrieveFormSubmitHandler } from '@/serverActions/retrieveActions';
 import { Button } from '@nextui-org/button';
 import { Divider } from '@nextui-org/divider';
@@ -20,7 +21,9 @@ interface RetrieveProps {
 	searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function Retrieve({ searchParams }: RetrieveProps) {
+export default async function Retrieve({ searchParams }: RetrieveProps) {
+	const contractName = await getName();
+
 	const error = searchParams && (searchParams.error as string | undefined);
 
 	const documentID =
@@ -104,6 +107,7 @@ export default function Retrieve({ searchParams }: RetrieveProps) {
 				Note that if you specify <a className="italic">Manifest ID</a>,
 				all the other fields will be ignored.
 			</p>
+			<p className="text-xl mt-5">Contract Name: {contractName}</p>
 		</div>
 	);
 }

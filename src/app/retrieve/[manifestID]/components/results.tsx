@@ -6,7 +6,7 @@ interface ResultsProps {
 
 const Results = ({ retrievedObj }: ResultsProps) => {
 	return (
-		<div className="relative overflow-x-auto">
+		<div className="relative overflow-x-auto m-5">
 			<table className="w-full text-left text-sm rtl:text-right">
 				<thead className="text-xs uppercase">
 					<tr>
