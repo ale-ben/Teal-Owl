@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import packageInfo from '../../package.json';
 import TONavbar from './components/navbar';
 import './globals.css';
 import { Providers } from './providers';
@@ -41,6 +42,9 @@ export default function RootLayout({
 					<TONavbar />
 					{children}
 				</Providers>
+				<p className="absolute bottom-2 right-2 text-gray-300 dark:text-gray-800">
+					v{packageInfo.version}
+				</p>
 			</body>
 		</html>
 	);
