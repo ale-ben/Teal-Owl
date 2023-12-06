@@ -2,7 +2,7 @@
 import { Manifest } from './Manifest';
 import { Parser } from './Parser';
 import { Payload } from './Payload';
-import {WatermarkingTools} from './TOW/src/watermarkingTools';
+import { WatermarkingTools } from './TOW/src/watermarkingTools';
 import { Utils } from './Utils';
 
 ('use strict');
