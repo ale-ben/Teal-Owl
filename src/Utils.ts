@@ -1,6 +1,6 @@
 import { Parser } from './Parser';
 import { Payload } from './Payload';
-import { WatermarkingTools } from './TOW/src/watermarkingTools';
+import { WatermarkingToolsGAS } from './TOW/src/watermarkingToolsGAS';
 
 export module Utils {
 	export function applyWatermark(
@@ -9,7 +9,9 @@ export module Utils {
 	): string {
 		// Generate document tree
 		const [tree, textElements] = Parser.ParseDocument(content.getBody());
-		WatermarkingTools.encodeTree(textElements, payload);
+
+		// Apply watermark
+		WatermarkingToolsGAS.encodeTree(textElements, payload);
 
 		// Convert tree to HTML
 		const outHTML = Parser.ConvertToHTML(tree);

@@ -2,7 +2,6 @@
 import { Manifest } from './Manifest';
 import { Parser } from './Parser';
 import { Payload } from './Payload';
-import { WatermarkingTools } from './TOW/src/watermarkingTools';
 import { Utils } from './Utils';
 
 ('use strict');
@@ -90,15 +89,10 @@ function applyWatermark(documentID: string) {
 	// --- Manifest ---
 	// Convert HTML back to string
 	const htmlStr = Parser.HTMLToText(outHTML);
-	// Remove all HTML tags and homoglyphs
-	const rawText = WatermarkingTools.extractRawText(htmlStr);
+	// Generate hash list
+	const hashList = Parser.GenerateHashList(htmlStr);
 	// Generate manifest
-	const manifest = Manifest.GenerateManifest(
-		authorID,
-		documentID,
-		doc.getName(),
-		rawText
-	);
+	const manifest = Manifest.GenerateManifest(authorID, documentID, hashList);
 
 	// Save to files
 	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
