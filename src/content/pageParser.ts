@@ -1,5 +1,5 @@
-import { VerifyPayload } from './Payload';
 import { WatermarkingTools } from '../TOW/src/watermarkingTools';
+import { VerifyPayload } from './Payload';
 
 interface WMParagraph {
 	id: string;
@@ -97,7 +97,7 @@ export function toggleReader() {
  * @param newStatus The new status
  */
 function updateStatus(newStatus: Status) {
-	status = newStatus;	
+	status = newStatus;
 	chrome.runtime.sendMessage({
 		event: 'statusChange',
 		status: Status[newStatus]

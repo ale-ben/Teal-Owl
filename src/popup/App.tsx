@@ -21,7 +21,11 @@ function App() {
 					setActionLabel('Hide');
 					break;
 				default:
-					console.error('Teal-Owl popup', 'Unknown status', request.status);
+					console.error(
+						'Teal-Owl popup',
+						'Unknown status',
+						request.status
+					);
 			}
 		}
 	});
