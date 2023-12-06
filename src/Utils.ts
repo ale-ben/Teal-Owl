@@ -9,6 +9,8 @@ export module Utils {
 	): string {
 		// Generate document tree
 		const [tree, textElements] = Parser.ParseDocument(content.getBody());
+
+		// Apply watermark
 		WatermarkingToolsGAS.encodeTree(textElements, payload);
 
 		// Convert tree to HTML

@@ -1,7 +1,9 @@
 // This is a customized version of the parser from google docs to html (https://github.com/thejimbirch/GoogleDoc2Html/tree/master) Note that original
 // parser is in js, this is converted to ts
 
+import { Payload } from './Payload';
 import { WatermarkingTools } from './TOW/src/watermarkingTools';
+import { WatermarkingToolsGAS } from './TOW/src/watermarkingToolsGAS';
 
 export module Parser {
 	/**
@@ -167,6 +169,19 @@ export module Parser {
 	export function HTMLToText(html: string): string {
 		return html.replace(/<[^>]*>?/gm, '');
 	}
+
+	/**
+	 * Generates a hash list from a text. The text is split into paragraphs and homoglyphs are removed.
+	 * @param text The text to be converted to a hash list
+	 * @returns The hash list
+	 */
+	export function GenerateHashList(text: string): string[] {
+		// Split the document into paragraphs and remove homoglyphs
+		const paragraphs = WatermarkingTools.decodeParagraphs(text);
+
+		// Generate hash for each paragraph
+		return paragraphs.map((par) => Payload.Sha256Hash(par.text));
+	}
 }
 
 export function testParse() {
@@ -177,7 +192,7 @@ export function testParse() {
 	console.log(JSON.stringify(tree));
 	console.log(JSON.stringify(textElements));
 
-	WatermarkingTools.encodeTree(textElements, '100100101010101010101');
+	WatermarkingToolsGAS.encodeTree(textElements, '100100101010101010101');
 
 	const html = Parser.ConvertToHTML(tree);
 	console.log(html);
