@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@nomicfoundation/hardhat-ignition':
-    specifier: ^0.11.2
-    version: 0.11.2(@nomicfoundation/hardhat-ethers@3.0.5)(hardhat@2.19.2)
+    specifier: ^0.12.0
+    version: 0.12.0(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2)
   '@nomicfoundation/hardhat-toolbox':
     specifier: ^4.0.0
     version: 4.0.0(@nomicfoundation/hardhat-chai-matchers@2.0.2)(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-network-helpers@1.0.10)(@nomicfoundation/hardhat-verify@2.0.2)(@typechain/ethers-v6@0.5.1)(@typechain/hardhat@9.1.0)(@types/chai@4.3.11)(@types/mocha@10.0.6)(@types/node@20.10.3)(chai@4.3.10)(ethers@6.9.0)(hardhat-gas-reporter@1.0.9)(hardhat@2.19.2)(solidity-coverage@0.8.5)(ts-node@10.9.1)(typechain@8.3.2)(typescript@5.3.2)
@@ -683,18 +683,20 @@ packages:
       - supports-color
     dev: true
 
-  /@nomicfoundation/hardhat-ignition@0.11.2(@nomicfoundation/hardhat-ethers@3.0.5)(hardhat@2.19.2):
-    resolution: {integrity: sha512-4QyxGZ5kevk0OBsXUemMNEFvA9BkoVvln79qR9Zl4JsBtfw+fpZrCebK5pHfpYHEUtROm+8yxxuj5cro7k0eLg==}
+  /@nomicfoundation/hardhat-ignition@0.12.0(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2):
+    resolution: {integrity: sha512-EwePczQ9reB55P3WoNcH+SfXg7Vtow+cJJORi5rvyYHe1lPhLYBUqkbIaBz+JFErAsKc+atQJJifDBWs3/xjqg==}
     peerDependencies:
       '@nomicfoundation/hardhat-ethers': ^3.0.4
+      '@nomicfoundation/hardhat-verify': ^2.0.1
       hardhat: ^2.18.0
     dependencies:
       '@nomicfoundation/hardhat-ethers': 3.0.5(ethers@6.9.0)(hardhat@2.19.2)
-      '@nomicfoundation/ignition-core': 0.11.2
-      '@nomicfoundation/ignition-ui': 0.11.2
+      '@nomicfoundation/hardhat-verify': 2.0.2(hardhat@2.19.2)
+      '@nomicfoundation/ignition-core': 0.12.0
+      '@nomicfoundation/ignition-ui': 0.12.0
       chalk: 4.1.2
       debug: 4.3.4(supports-color@8.1.1)
-      ethers: 6.8.0
+      ethers: 6.9.0
       fs-extra: 10.1.0
       hardhat: 2.19.2(ts-node@10.9.1)(typescript@5.3.2)
       prompts: 2.4.2
@@ -772,13 +774,13 @@ packages:
       - supports-color
     dev: true
 
-  /@nomicfoundation/ignition-core@0.11.2:
-    resolution: {integrity: sha512-QdAs/O4muE59RtOMj7pAvE8VdwOimf1ODVDUrVRS4sxZ4Zdkg4CrZf8eRwIJTtTF4aDFkTkYQDsOmqBLqwijJA==}
+  /@nomicfoundation/ignition-core@0.12.0:
+    resolution: {integrity: sha512-5ZtSKWmNFi5R1OScGLqmWu/Rwk4jUfVMmf/PsE+ougqVTIiVTZT3nP/3279JNr6DzdASqL0++l1OGKe6AcjmVg==}
     dependencies:
       '@ethersproject/address': 5.6.1
       cbor: 9.0.1
       debug: 4.3.4(supports-color@8.1.1)
-      ethers: 6.8.0
+      ethers: 6.9.0
       fs-extra: 10.1.0
       immer: 10.0.2
       lodash: 4.17.21
@@ -789,8 +791,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@nomicfoundation/ignition-ui@0.11.2:
-    resolution: {integrity: sha512-IsuKUj3Msacu7nhb9Q0P6rR1CZYtA039BWFavNR4io39CJo8mIs+8AWorq8msGbHkcDROh2RBVMFIaed9HioCg==}
+  /@nomicfoundation/ignition-ui@0.12.0:
+    resolution: {integrity: sha512-LCnQdCE/s3LgNFn+BIHFMnKIitsXHhodBnCU6/PUIjGDgxk1N85xQMgB/T3goGPYn4/f5MdEbB/CcjeI+1QvCQ==}
     dev: true
 
   /@nomicfoundation/solidity-analyzer-darwin-arm64@0.1.1:
@@ -2068,22 +2070,6 @@ packages:
       - utf-8-validate
     dev: true
 
-  /ethers@6.8.0:
-    resolution: {integrity: sha512-zrFbmQRlraM+cU5mE4CZTLBurZTs2gdp2ld0nG/f3ecBK+x6lZ69KSxBqZ4NjclxwfTxl5LeNufcBbMsTdY53Q==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@adraffy/ens-normalize': 1.10.0
-      '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@types/node': 18.15.13
-      aes-js: 4.0.0-beta.5
-      tslib: 2.4.0
-      ws: 8.5.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: true
-
   /ethers@6.9.0:
     resolution: {integrity: sha512-pmfNyQzc2mseLe91FnT2vmNaTt8dDzhxZ/xItAV7uGsF4dI4ek2ufMu3rAkgQETL/TIs0GS5A+U05g9QyWnv3Q==}
     engines: {node: '>=14.0.0'}
@@ -2232,7 +2218,7 @@ packages:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
-      universalify: 2.0.0
+      universalify: 2.0.1
     dev: true
 
   /fs-extra@7.0.1:
@@ -2782,7 +2768,7 @@ packages:
   /jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
     dependencies:
-      universalify: 2.0.0
+      universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
     dev: true
@@ -4017,11 +4003,6 @@ packages:
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
-    dev: true
-
-  /universalify@2.0.0:
-    resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
-    engines: {node: '>= 10.0.0'}
     dev: true
 
   /universalify@2.0.1:
