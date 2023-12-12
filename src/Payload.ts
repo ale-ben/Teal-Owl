@@ -7,7 +7,11 @@ export module Payload {
 	 */
 	export function Sha256Hash(value: string): string {
 		return BytesToHex(
-			Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value)
+			Utilities.computeDigest(
+				Utilities.DigestAlgorithm.SHA_256,
+				value,
+				Utilities.Charset.UTF_8
+			)
 		);
 	}
 
