@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { getContractInfo } from '../contract/ContractConnectionModel';
-import { getName } from '../contract/contractProviderUtils';
+import { getName } from '../contract/contractUtils';
 
 function App() {
 	const [validationState, setValidationState] =
@@ -35,8 +34,6 @@ function App() {
 			}
 		}
 	});
-
-	console.log(getContractInfo('localhost'));
 
 	return (
 		<div className="flex h-96 w-80 flex-col justify-evenly bg-blue-900 p-5">
