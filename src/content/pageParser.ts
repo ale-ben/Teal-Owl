@@ -1,35 +1,10 @@
-import { WatermarkingTools } from '../TOW/src/watermarkingTools';
-import { VerifyPayload } from './Payload';
-
-interface WMParagraph {
-	id: string;
-	openTag: Element | undefined;
-	subTags: WMSubParagraph[] | undefined;
-	watermark: WatermarkInfo | undefined;
-}
-
-interface WMSubParagraph {
-	id: string;
-	openTag: Element | undefined;
-}
-
-interface WatermarkInfo {
-	author: string;
-	document: string;
-	verificationStatus: VerificationStatus;
-}
-
-enum Status {
-	EMPTY,
-	VALIDATED,
-	SHOWING
-}
-
-enum VerificationStatus {
-	VALID,
-	INVALID,
-	UNKNOWN
-}
+import {
+	Status,
+	VerificationStatus,
+	WMParagraph,
+	WMSubParagraph
+} from './parserTypes';
+import { verifyWatermarks } from './validator';
 
 let wmParagraphs: WMParagraph[] = [];
 let status: Status = Status.EMPTY;
@@ -37,7 +12,7 @@ let status: Status = Status.EMPTY;
 /**
  * Entrypoint for the page parser, called by onClicked event in background.ts
  */
-export function toggleReader() {
+export async function toggleReader() {
 	// Check if meta tag exists
 	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
 
@@ -82,7 +57,8 @@ export function toggleReader() {
 			// Parse tags and populate wmParagraphs
 			populateParagraphList();
 			// Verify watermarking in each tag
-			verifyWatermarking();
+			await verifyWatermarks(wmParagraphs);
+			console.log(wmParagraphs);
 			// Update timestamp in meta tag
 			updateTimestamp(meta);
 			// Show watermarking
@@ -522,42 +498,6 @@ function populateParagraphList() {
 			} else {
 				console.error('No paragraph found for sub paragraph', id);
 			}
-		}
-	});
-}
-
-function verifyWatermarking() {
-	wmParagraphs.forEach(async (el) => {
-		if (el.openTag) {
-			// Get text of paragraph
-			let fullText: string = el.openTag.textContent ?? '';
-
-			// Get text of sub paragraphs
-			el.subTags?.forEach((subEl) => {
-				fullText += subEl.openTag?.textContent ?? '';
-			});
-
-			// Extract payload from text
-			// Get the binary payload
-			const payload = WatermarkingTools.decodeText(fullText).payload;
-
-			// Decode and verify payload locally
-			let verificationStatus = VerificationStatus.UNKNOWN;
-			const payloadVerification = await VerifyPayload(payload);
-
-			if (payloadVerification.valid)
-				verificationStatus = VerificationStatus.VALID;
-			else verificationStatus = VerificationStatus.INVALID;
-
-			// Verify payload on blockchain
-			// TODO
-
-			// Update status
-			el.watermark = {
-				author: payloadVerification.author ?? 'Unknown Author',
-				document: payloadVerification.document ?? 'Unknown Document',
-				verificationStatus: verificationStatus
-			};
 		}
 	});
 }

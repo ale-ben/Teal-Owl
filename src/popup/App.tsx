@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { getName } from '../contract/contractUtils';
 
 function App() {
 	const [validationState, setValidationState] =
 		useState<string>('Not Validated');
 	const [actionLabel, setActionLabel] = useState<string>('Validate');
+
+	const [contractName, setContractName] = useState<string>('');
+
+	getName().then((name) => setContractName(name || ''));
 
 	chrome.runtime.onMessage.addListener(function (request) {
 		if (request.event === 'statusChange') {
@@ -34,6 +39,9 @@ function App() {
 		<div className="flex h-96 w-80 flex-col justify-evenly bg-blue-900 p-5">
 			<p className="text-center text-3xl font-bold text-white">
 				Teal Owl - Reader
+			</p>
+			<p className="text-center text-lg font-bold text-white">
+				Contract name: {contractName}
 			</p>
 			<div className="text-center text-xl text-white">
 				Status:

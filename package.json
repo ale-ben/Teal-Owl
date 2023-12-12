@@ -16,10 +16,14 @@
     "author": "Alessandro Benetton (aleben98@gmail.com)",
     "license": "GPL-3.0-or-later",
     "dependencies": {
+        "@thirdweb-dev/storage": "^2.0.7",
+        "@wagmi/core": "^1.4.8",
         "js-sha256": "^0.10.1",
         "prettier-plugin-organize-imports": "^3.2.4",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "viem": "^1.19.11",
+        "zod": "^3.22.4"
     },
     "repository": {
         "type": "git",
