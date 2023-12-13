@@ -87,12 +87,12 @@ export default async function Retrieve({ searchParams }: RetrieveProps) {
 						{error === 'allEmpty'
 							? 'All fields are empty.'
 							: error === 'missingAuthorID'
-							  ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
-							  : error === 'missingDocumentID'
-							    ? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
-							    : error === 'invalid'
-							      ? 'Data entered is invalid.'
-							      : ''}
+								? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
+								: error === 'missingDocumentID'
+									? 'You have to specify both Autor ID and Document ID (or use Manifest ID)'
+									: error === 'invalid'
+										? 'Data entered is invalid.'
+										: ''}
 					</p>
 				</div>
 			) : (
