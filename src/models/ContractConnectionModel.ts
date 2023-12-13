@@ -44,3 +44,9 @@ export async function getContractInfo(
 
 	return contractList[chain];
 }
+
+/**
+ * https://github.com/ale-ben/Teal-Owl_Contract/releases/download/1.0.1/sepolia-TealOwlDeploy.json
+ * https://github.com/ale-ben/Teal-Owl_Contract/releases/download/latest/sepolia-deployed_addresses.json
+ * https://github.com/ale-ben/Teal-Owl_Contract/releases/download/1.0.1/sepolia-deployed_addresses.json
+ */
