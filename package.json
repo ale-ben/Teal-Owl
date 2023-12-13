@@ -5,8 +5,8 @@
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "test": "jest",
-        "dev": "vite",
-        "build": "tsc && vite build",
+        "dev": "vite --config vite.config_dev.ts",
+        "build": "tsc && vite --config vite.config_prod.ts build",
         "preview": "vite preview",
         "style": "prettier --write 'src/**/*.{ts,tsx}'",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives ",
@@ -16,7 +16,6 @@
     "author": "Alessandro Benetton (aleben98@gmail.com)",
     "license": "GPL-3.0-or-later",
     "dependencies": {
-        "@changesets/cli": "^2.27.1",
         "@thirdweb-dev/storage": "^2.0.7",
         "@wagmi/core": "^1.4.8",
         "js-sha256": "^0.10.1",
@@ -31,6 +30,7 @@
         "url": "https://github.com/ale-ben/Teal-Owl_Reader"
     },
     "devDependencies": {
+        "@changesets/cli": "^2.27.1",
         "@crxjs/vite-plugin": "2.0.0-beta.21",
         "@types/chrome": "^0.0.254",
         "@types/jest": "^29.5.11",
