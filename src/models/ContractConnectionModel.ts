@@ -1,3 +1,5 @@
+'use server';
+
 import { Abi, Narrow } from 'viem';
 
 interface ContractInfo {
