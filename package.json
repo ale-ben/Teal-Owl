@@ -1,6 +1,6 @@
 {
     "name": "teal-owl_reader",
-    "version": "0.0.1",
+    "version": "1.1.0",
     "type": "module",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
