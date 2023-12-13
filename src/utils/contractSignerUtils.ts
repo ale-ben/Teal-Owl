@@ -1,18 +1,22 @@
 import { getContractInfo } from '@/models/ContractConnectionModel';
 import { writeContract } from 'wagmi/actions';
 
-const { address, abi } = getContractInfo('sepolia');
-
 export async function saveManifestInfo(
 	author: string,
 	document: string,
 	uri: string
 ): Promise<boolean> {
 	const manifestID = author + document;
+
+	const contractInfo = await getContractInfo('sepolia');
+	if (contractInfo === undefined) {
+		throw new Error('Contract info not found');
+	}
+
 	try {
 		const res = await writeContract({
-			address: address,
-			abi: abi,
+			address: contractInfo.address,
+			abi: contractInfo.abi,
 			functionName: 'safeMint',
 			args: [manifestID, uri]
 		});

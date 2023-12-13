@@ -1,29 +1,46 @@
 import { Abi, Narrow } from 'viem';
-import localhost_contract_info from '../static/contractInfo/localhost/TealOwlDeploy#TealOwl.json';
-import localhost_contract_address from '../static/contractInfo/localhost/deployed_addresses.json';
-import sepolia_contract_info from '../static/contractInfo/sepolia/TealOwlDeploy#TealOwl.json';
-import sepolia_contract_address from '../static/contractInfo/sepolia/deployed_addresses.json';
+
+interface ContractInfo {
+	address: `0x${string}`;
+	abi: Narrow<readonly unknown[] | Abi>;
+}
+
+const baseURL =
+	'https://github.com/ale-ben/Teal-Owl_Contract/releases/latest/download/';
+const addressEndpoint = '-deployed_addresses.json';
+const abiEndpoint = '-TealOwlDeploy.json';
 
 const contractList: {
-	[chain: string]: {
-		address: `0x${string}`;
-		abi: Narrow<readonly unknown[] | Abi>;
-	};
-} = {
-	sepolia: {
-		address: sepolia_contract_address[
-			'TealOwlDeploy#TealOwl'
-		] as `0x${string}`,
-		abi: sepolia_contract_info.abi
-	},
-	localhost: {
-		address: localhost_contract_address[
-			'TealOwlDeploy#TealOwl'
-		] as `0x${string}`,
-		abi: localhost_contract_info.abi
-	}
-};
+	[chain: string]: ContractInfo;
+} = {};
 
-export function getContractInfo(chain: string) {
+async function fetchContractInfo(chainName: string) {
+	const addressURL = baseURL + chainName + addressEndpoint;
+	const abiURL = baseURL + chainName + abiEndpoint;
+
+	const addressResponse = fetch(addressURL);
+	const abiResponse = fetch(abiURL);
+
+	await Promise.all([addressResponse, abiResponse]).then(
+		async (responses) => {
+			await Promise.all(
+				responses.map((response) => response.json())
+			).then(([addressJSON, abiJSON]) => {
+				contractList[chainName] = {
+					address: addressJSON['TealOwlDeploy#TealOwl'],
+					abi: abiJSON.abi
+				};
+			});
+		}
+	);
+}
+
+export async function getContractInfo(
+	chain: string
+): Promise<ContractInfo | undefined> {
+	if (!(chain in contractList)) {
+		await fetchContractInfo(chain);
+	}
+
 	return contractList[chain];
 }
