@@ -16,12 +16,15 @@ createConfig({
 	publicClient
 });
 
-const { address, abi } = getContractInfo('sepolia');
-
 export async function getName(): Promise<string | undefined> {
+	const contractInfo = await getContractInfo('sepolia');
+	if (contractInfo === undefined) {
+		throw new Error('Contract info not found');
+	}
+
 	const name = await readContract({
-		address,
-		abi,
+		address: contractInfo.address,
+		abi: contractInfo.abi,
 		functionName: 'name'
 	});
 	return name as string;
@@ -30,9 +33,14 @@ export async function getName(): Promise<string | undefined> {
 export async function getTokenURI(
 	tokenId: string
 ): Promise<string | undefined> {
+	const contractInfo = await getContractInfo('sepolia');
+	if (contractInfo === undefined) {
+		throw new Error('Contract info not found');
+	}
+
 	const tokenURI = await readContract({
-		address,
-		abi,
+		address: contractInfo.address,
+		abi: contractInfo.abi,
 		functionName: 'tokenURIS',
 		args: [tokenId]
 	});
