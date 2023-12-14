@@ -1,5 +1,5 @@
 {
-  "name": "@teal-owl/publisher",
+  "name": "publisher",
   "version": "1.0.0",
   "private": true,
   "scripts": {

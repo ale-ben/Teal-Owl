@@ -1,5 +1,5 @@
 {
-	"name": "@teal-owl/backend",
+	"name": "backend",
 	"version": "1.1.1",
 	"private": true,
 	"scripts": {

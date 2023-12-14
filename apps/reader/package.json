@@ -1,5 +1,5 @@
 {
-    "name": "@teal-owl/reader",
+    "name": "reader",
     "version": "1.1.0",
     "type": "module",
     "scripts": {
