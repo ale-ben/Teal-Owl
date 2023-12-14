@@ -1,0 +1,19 @@
+version: '3.8'
+name: teal-owl
+services:
+    ganache:
+        image: "trufflesuite/ganache-cli:v6.12.2"
+        command: --db /ganache --networkId 1234
+        container_name: ganache
+        restart: unless-stopped
+        ports:
+            - "8545:8545"
+        volumes:
+          - ganache:/ganache
+    block-explorer:
+      image: "aleben/ganache-cli-block-explorer"
+      ports:
+        - "5051:5051"
+
+volumes:
+    ganache:

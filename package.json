@@ -1,0 +1,36 @@
+{
+  "name": "teal-owl_contract",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "launch_local_node": "hardhat node",
+    "deploy_localhost": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network localhost",
+    "console_localhost": "hardhat console --network localhost",
+    "deploy_sepolia": "hardhat ignition deploy ignition/modules/TealOwlDeploy.ts --network sepolia",
+    "console_sepolia": "hardhat console --network sepolia",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ale-ben/Teal-Owl_Contract.git"
+  },
+  "author": "Alessandro Benetton (aleben98@gmail.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ale-ben/Teal-Owl_Contract/issues"
+  },
+  "homepage": "https://github.com/ale-ben/Teal-Owl_Contract#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@nomicfoundation/hardhat-ignition": "^0.12.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1"
+  }
+}
