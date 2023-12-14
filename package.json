@@ -1,0 +1,11 @@
+{
+  "name": "teal-owl",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Monorepository for the Teal Owl project",
+  "author": "Alessandro Benetton (aleben98@gmail.com)",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@changesets/cli": "^2.27.1"
+  }
+}
