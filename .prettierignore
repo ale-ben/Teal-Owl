@@ -1,0 +1,8 @@
+node_modules
+webpack
+.husky
+dist
+docs
+src/TOW
+jest.config.ts
+vite.config.ts
