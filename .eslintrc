@@ -1,0 +1,19 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint", "prettier", 
+		"googleappsscript"
+    ],
+    "extends": [
+        "eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": 1, // Means error
+		"@typescript-eslint/no-namespace": 0, // Disable rule that prevents creation of modules, because Google App script wants it that way
+		"no-inner-declarations": 0 // Disable rule that prevents creation of modules, because Google App script wants it that way
+    },
+    "env": {
+      "googleappsscript/googleappsscript": true
+    }
+}

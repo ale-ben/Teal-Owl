@@ -1,0 +1,50 @@
+{
+  "name": "teal-owl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "UI.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "watch": "clasp push --watch",
+    "ts-watch": "tsc -w",
+    "tw-watch": "tailwindcss -i ./src/input.css -o ./static/output.css --watch",
+    "tw-build": "tailwindcss -i ./src/input.css -o ./static/outputMin.css --minify",
+    "test": "jest",
+    "push": "clasp push",
+    "compile": "tsc",
+    "style": "prettier --write 'src/**/*.{ts,tsx}'",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "prepare": "husky install",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.60",
+    "@types/google-apps-script": "^1.0.78",
+    "@types/google.picker": "^0.0.42",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "@google/clasp": "^2.4.2",
+    "@types/jest": "^29.5.10",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-googleappsscript": "^1.0.5",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
+    "install": "^0.13.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.5",
+    "tailwindcss": "^3.3.5",
+    "ts-jest": "^29.0.5"
+  }
+}
