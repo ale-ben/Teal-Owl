@@ -1,5 +1,5 @@
 {
-    "name": "@ale-ben/teal-owl_watermarking",
+    "name": "@teal-owl/watermarking",
     "version": "0.0.1",
     "description": "Watermarking lib for the Teal Owl project",
     "scripts": {

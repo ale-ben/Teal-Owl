@@ -1,5 +1,5 @@
 {
-  "name": "teal-owl_contract",
+  "name": "@teal-owl/contract",
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
