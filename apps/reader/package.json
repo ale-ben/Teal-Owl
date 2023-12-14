@@ -10,8 +10,7 @@
         "preview": "vite preview",
         "style": "prettier --write 'src/**/*.{ts,tsx}'",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives ",
-        "lint-fix": "eslint . --ext .ts --ext .tsx --fix",
-        "prepare": "husky install"
+        "lint-fix": "eslint . --ext .ts --ext .tsx --fix"
     },
     "author": "Alessandro Benetton (aleben98@gmail.com)",
     "license": "GPL-3.0-or-later",

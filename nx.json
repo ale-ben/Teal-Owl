@@ -1,0 +1,60 @@
+{
+  "targetDefaults": {
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ],
+      "cache": true
+    },
+    "style": {
+      "dependsOn": [
+        "^style"
+      ],
+      "cache": true
+    },
+    "tw-build": {
+      "dependsOn": [
+        "^tw-build"
+      ],
+      "cache": true
+    },
+    "test": {
+      "dependsOn": [
+        "^test"
+      ]
+    },
+    "compile": {
+      "dependsOn": [
+        "^compile"
+      ],
+      "cache": true
+    },
+    "lint-fix": {
+      "dependsOn": [
+        "^lint-fix"
+      ],
+      "cache": true
+    },
+    "build": {
+      "cache": true
+    },
+    "start": {
+      "dependsOn": [
+        "^start"
+      ]
+    },
+    "push": {
+      "dependsOn": [
+        "^push"
+      ]
+    },
+    "preview": {
+      "dependsOn": [
+        "^preview"
+      ]
+    }
+  },
+  "affected": {
+    "defaultBase": "develop"
+  }
+}
