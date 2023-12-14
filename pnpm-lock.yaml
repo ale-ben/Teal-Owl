@@ -302,8 +302,8 @@ importers:
         version: 5.0.1
     devDependencies:
       '@nomicfoundation/hardhat-ignition':
-        specifier: ^0.12.0
-        version: 0.12.0(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2)
+        specifier: ^0.13.0
+        version: 0.13.0(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2)
       '@nomicfoundation/hardhat-toolbox':
         specifier: ^4.0.0
         version: 4.0.0(@nomicfoundation/hardhat-chai-matchers@2.0.2)(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-network-helpers@1.0.10)(@nomicfoundation/hardhat-verify@2.0.2)(@typechain/ethers-v6@0.5.1)(@typechain/hardhat@9.1.0)(@types/chai@4.3.11)(@types/mocha@10.0.6)(@types/node@20.10.4)(chai@4.3.10)(ethers@6.9.0)(hardhat-gas-reporter@1.0.9)(hardhat@2.19.2)(solidity-coverage@0.8.5)(ts-node@10.9.2)(typechain@8.3.2)(typescript@5.3.3)
@@ -3726,20 +3726,17 @@ packages:
       - supports-color
     dev: true
 
-  /@nomicfoundation/hardhat-ignition@0.12.0(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2):
-    resolution: {integrity: sha512-EwePczQ9reB55P3WoNcH+SfXg7Vtow+cJJORi5rvyYHe1lPhLYBUqkbIaBz+JFErAsKc+atQJJifDBWs3/xjqg==}
+  /@nomicfoundation/hardhat-ignition@0.13.0(@nomicfoundation/hardhat-verify@2.0.2)(hardhat@2.19.2):
+    resolution: {integrity: sha512-Xw3Zbp3yiuP83YOo9CIaxcokVpU7+O3rzGVIge6u44q2Hsciwv/I18ZStmgQ9C5M7MUb/9pi3pMaQCsppUB9Iw==}
     peerDependencies:
-      '@nomicfoundation/hardhat-ethers': ^3.0.4
       '@nomicfoundation/hardhat-verify': ^2.0.1
       hardhat: ^2.18.0
     dependencies:
-      '@nomicfoundation/hardhat-ethers': 3.0.5(ethers@6.9.0)(hardhat@2.19.2)
       '@nomicfoundation/hardhat-verify': 2.0.2(hardhat@2.19.2)
-      '@nomicfoundation/ignition-core': 0.12.0
-      '@nomicfoundation/ignition-ui': 0.12.0
+      '@nomicfoundation/ignition-core': 0.13.0
+      '@nomicfoundation/ignition-ui': 0.13.0
       chalk: 4.1.2
       debug: 4.3.4(supports-color@8.1.1)
-      ethers: 6.9.0
       fs-extra: 10.1.0
       hardhat: 2.19.2(ts-node@10.9.2)(typescript@5.3.3)
       prompts: 2.4.2
@@ -3817,8 +3814,8 @@ packages:
       - supports-color
     dev: true
 
-  /@nomicfoundation/ignition-core@0.12.0:
-    resolution: {integrity: sha512-5ZtSKWmNFi5R1OScGLqmWu/Rwk4jUfVMmf/PsE+ougqVTIiVTZT3nP/3279JNr6DzdASqL0++l1OGKe6AcjmVg==}
+  /@nomicfoundation/ignition-core@0.13.0:
+    resolution: {integrity: sha512-6xkmmckeZXEkuzxIT4OPvDp9gltTpHk7i12sjCmUR4G71kqEbO6XF6eW4WRqqgtckG/DWe4YmbvbchaVEWHA1Q==}
     dependencies:
       '@ethersproject/address': 5.6.1
       cbor: 9.0.1
@@ -3834,8 +3831,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@nomicfoundation/ignition-ui@0.12.0:
-    resolution: {integrity: sha512-LCnQdCE/s3LgNFn+BIHFMnKIitsXHhodBnCU6/PUIjGDgxk1N85xQMgB/T3goGPYn4/f5MdEbB/CcjeI+1QvCQ==}
+  /@nomicfoundation/ignition-ui@0.13.0:
+    resolution: {integrity: sha512-efod8xbsK9Rx8RnWdmjawet9P+5aAoEQ7sgRt68tNXTsJm8KE7dxp2QmPdagjbNoIltP3upbfgsadw+pllx4Mw==}
     dev: true
 
   /@nomicfoundation/solidity-analyzer-darwin-arm64@0.1.1:
@@ -5274,7 +5271,7 @@ packages:
     resolution: {integrity: sha512-N1ZhksgwD3OBlwTv3R6KFEcPojl/W4ElJOeCZdi+vuI5QmTFwLq3OFf2zd2ROpKvxFdgZ6hUpb0dx9bVNEwYCA==}
     dependencies:
       '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
     dev: false
 
@@ -5288,7 +5285,7 @@ packages:
   /@scure/bip39@1.2.1:
     resolution: {integrity: sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==}
     dependencies:
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
 
   /@sentry/core@5.30.0:
