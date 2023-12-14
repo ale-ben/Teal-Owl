@@ -1,10 +1,10 @@
-/Teal-Owl_Contract.code-workspace
-.DS_Store
+# dependencies
 /node_modules
-/artifacts
-/cache
-/typechain-types
-/credentials.json
-ignition/deployments/*/build-info
-ignition/deployments/*/artifacts/TealOwlDeploy\#TealOwl.dbg.json
-ignition/deployments/*/journal.jsonl
+
+# production
+/build
+
+# misc
+.DS_Store
+
+npm-debug.log*
