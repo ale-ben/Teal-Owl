@@ -1,6 +1,6 @@
 import { Parser } from './Parser';
 import { Payload } from './Payload';
-import { WatermarkingToolsGAS } from './TOW/src/watermarkingToolsGAS';
+import { WatermarkingToolsGAS } from '@teal-owl/watermarking';
 
 export module Utils {
 	export function applyWatermark(

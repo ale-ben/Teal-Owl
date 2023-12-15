@@ -2,13 +2,12 @@
     "compilerOptions": {
         "strict": true,
         "module": "commonjs",
-        "target": "ES5",
+        "target": "ES2020",
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
         "noEmitOnError": true,
-        "jsx": "react",
         "typeRoots": ["node_modules/@types"],
         "moduleResolution": "node",
         "skipLibCheck": true

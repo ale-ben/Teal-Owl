@@ -17,6 +17,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@teal-owl/watermarking": "workspace:^",
     "@types/gapi": "^0.0.47",
     "@types/gapi.auth2": "^0.0.60",
     "@types/google-apps-script": "^1.0.78",

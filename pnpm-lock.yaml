@@ -118,6 +118,9 @@ importers:
 
   apps/publisher:
     dependencies:
+      '@teal-owl/watermarking':
+        specifier: workspace:^
+        version: link:../../packages/watermarking
       '@types/gapi':
         specifier: ^0.0.47
         version: 0.0.47
@@ -179,6 +182,9 @@ importers:
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
+      rollup:
+        specifier: ^4.9.0
+        version: 4.9.0
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.6(ts-node@10.9.2)

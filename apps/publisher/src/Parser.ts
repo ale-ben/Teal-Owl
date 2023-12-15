@@ -2,8 +2,8 @@
 // parser is in js, this is converted to ts
 
 import { Payload } from './Payload';
-import { WatermarkingTools } from './TOW/src/watermarkingTools';
-import { WatermarkingToolsGAS } from './TOW/src/watermarkingToolsGAS';
+import { WatermarkingTools } from '@teal-owl/watermarking';
+import { WatermarkingToolsGAS } from '@teal-owl/watermarking';
 
 export module Parser {
 	/**
