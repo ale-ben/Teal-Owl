@@ -1,4 +1,4 @@
-import { WatermarkingTools } from './watermarkingTools';
+import { encodeString } from './watermarkingTools';
 
 /**
  * This module contains functions that are specific to Google Apps Script. It is separated from the main module to avoid the need of installing Google Apps Script types in all projects
@@ -20,11 +20,7 @@ export module WatermarkingToolsGAS {
 			if (text.text === undefined) continue;
 
 			// Encode the text
-			const encoded = WatermarkingTools.encodeString(
-				text.text,
-				binaryCode,
-				binIter
-			);
+			const encoded = encodeString(text.text, binaryCode, binIter);
 
 			text.text = encoded.outText;
 			binIter = encoded.binIter;
