@@ -1,6 +1,6 @@
+import { encodeTree } from '@teal-owl/watermarking';
 import { Parser } from './Parser';
 import { Payload } from './Payload';
-import { WatermarkingToolsGAS } from '@teal-owl/watermarking';
 
 export module Utils {
 	export function applyWatermark(
@@ -11,7 +11,7 @@ export module Utils {
 		const [tree, textElements] = Parser.ParseDocument(content.getBody());
 
 		// Apply watermark
-		WatermarkingToolsGAS.encodeTree(textElements, payload);
+		encodeTree(textElements, payload);
 
 		// Convert tree to HTML
 		const outHTML = Parser.ConvertToHTML(tree);

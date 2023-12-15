@@ -8,7 +8,7 @@ import { Utils } from './Utils';
 function doGet() {
 	try {
 		return HtmlService.createTemplateFromFile(
-			'src/webpage/index'
+			'build/webpage/index'
 		).evaluate();
 	} catch (e) {
 		// TODO (Developer) - Handle exception

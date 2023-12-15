@@ -1,15 +1,22 @@
 {
     "compilerOptions": {
         "strict": true,
-        "module": "commonjs",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"isolatedModules": true,
         "target": "ES2020",
+		"lib": [
+		  "esnext"
+		],
         "esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
         "noEmitOnError": true,
         "typeRoots": ["node_modules/@types"],
-        "moduleResolution": "node",
         "skipLibCheck": true
     },
     "types": [
