@@ -1,0 +1,6 @@
+{
+  "name": "@teal-owl/config-prettier",
+  "version": "1.0.0",
+  "private": true,
+  "main": "base.mjs"
+}

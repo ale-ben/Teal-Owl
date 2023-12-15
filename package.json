@@ -9,6 +9,9 @@
     "@changesets/cli": "^2.27.1"
   },
   "devDependencies": {
-    "nx": "17.2.4"
+    "@teal-owl/config-prettier": "workspace:^",
+    "nx": "17.2.4",
+    "prettier": "^3.1.1",
+    "prettier-plugin-organize-imports": "^3.2.4"
   }
 }
