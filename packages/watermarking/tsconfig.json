@@ -2,18 +2,29 @@
     "compilerOptions": {
         "strict": true,
         "module": "commonjs",
-        "target": "es2022",
+        "target": "ES2020",
         "esModuleInterop": true,
-        "sourceMap": false,
         "rootDir": "src/",
-        "outDir": "dist/js",
+        "outDir": "./dist",
         "noEmitOnError": true,
-        "jsx": "react",
         "typeRoots": ["node_modules/@types"],
+		"moduleDetection": "force",
         "moduleResolution": "node",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"declaration":true,
+		"declarationMap": true
     },
     "types": [ //(various types, e.g. jquery, core-js),
         "google-apps-script"
-    ]
+    ],
+	"include": [
+		"src/"
+	],
+	"exclude": [
+		"dist",
+		"node_modules",
+		"**/*.test.ts",
+	],
 }

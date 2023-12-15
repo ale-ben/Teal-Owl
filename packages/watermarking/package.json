@@ -2,20 +2,22 @@
     "name": "@teal-owl/watermarking",
     "version": "0.0.1",
     "description": "Watermarking lib for the Teal Owl project",
-    "scripts": {
+	"main": "dist/index.js",
+    "author": "Alessandro Benetton (aleben98@gmail.com)",
+    "license": "GPL-3.0-or-later",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ale-ben/Teal-Owl"
+    },
+	"private": true,
+	"scripts": {
         "preinstall": "npx only-allow pnpm",
+		"build": "rm -rf dist && tsc",
         "test": "jest",
         "style": "prettier --write 'src/**/*.{ts,tsx}'",
         "lint": "eslint . --ext .ts",
         "lint-fix": "eslint . --ext .ts --fix",
         "clean": "rimraf dist"
-    },
-    "main": "watermarkingTools.ts",
-    "author": "Alessandro Benetton (aleben98@gmail.com)",
-    "license": "GPL-3.0-or-later",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ale-ben/Teal-Owl_Watermarking"
     },
     "devDependencies": {
         "@types/google-apps-script": "^1.0.78",
