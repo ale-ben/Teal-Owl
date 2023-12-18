@@ -15,6 +15,7 @@
     "lint": "eslint . --ext .ts",
     "style": "prettier --write 'src/**/*.{ts,tsx}'",
     "test": "jest",
+	"build": "pnpm clean && pnpm rollup:build",
     "push": "pnpm clean && pnpm rollup:build && pnpm clasp:push",
     "watch": "concurrently --kill-others \"pnpm:clasp:watch\" \"pnpm:tw:watch\" \"pnpm:rollup:watch\"",
     "clean": "rimraf dist build"

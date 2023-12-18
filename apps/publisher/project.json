@@ -1,0 +1,24 @@
+{
+	"name": "publisher",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"targets": {
+		"build": {
+			"dependsOn": [
+				{
+					"projects": ["watermarking"],
+					"target": "build"
+				}
+			],
+			"cache": true,
+			"outputs": ["{projectRoot}/build"]
+		},
+		"push": {
+			"dependsOn": [
+				{
+					"projects": ["watermarking"],
+					"target": "build"
+				}
+			]
+		}
+	}
+}
