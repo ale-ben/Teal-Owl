@@ -11,7 +11,7 @@ const availableChains: { [key: string]: string } = {
 };
 
 const baseURL =
-	'https://raw.githubusercontent.com/ale-ben/Teal-Owl/develop/packages/contract/ignition/deployments/';
+	'https://raw.githubusercontent.com/ale-ben/Teal-Owl/develop/libs/contract/ignition/deployments/';
 const addressEndpoint = '/deployed_addresses.json';
 const abiEndpoint = '/artifacts/TealOwlDeploy%23TealOwl.json';
 
