@@ -1,6 +1,5 @@
 'use server';
 
-import { getContractInfo } from '@/models/ContractConnectionModel';
 import {
 	configureChains,
 	createConfig,
@@ -9,8 +8,9 @@ import {
 } from '@wagmi/core';
 import { publicProvider } from '@wagmi/core/providers/public';
 import { z } from 'zod';
+import {getContractInfo } from "@teal-owl/contract-utils";
 
-const { publicClient } = configureChains([sepolia], [publicProvider()]); //FIXME: When changing chains, this needs to change as well
+const { publicClient } = configureChains([sepolia], [publicProvider()]);
 
 createConfig({
 	publicClient

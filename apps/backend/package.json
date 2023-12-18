@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.2.9",
+		"@teal-owl/contract-utils": "workspace:^",
 		"@teal-owl/types": "workspace:^",
 		"@thirdweb-dev/storage": "^2.0.7",
 		"@typescript-eslint/eslint-plugin": "^6.14.0",

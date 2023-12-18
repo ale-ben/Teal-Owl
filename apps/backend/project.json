@@ -5,7 +5,7 @@
 		"build": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/types"],
+					"projects": ["@teal-owl/types", "@teal-owl/contract-utils"],
 					"target": "build"
 				}
 			],
