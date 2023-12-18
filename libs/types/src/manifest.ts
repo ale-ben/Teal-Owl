@@ -6,6 +6,7 @@ const manifestModelSchema = z.object({
 	document: z.string(),
 	timestamp: z.string(), // TODO: Check if timestamp is a valid date
 	hashList: z.array(z.string()),
+	source: z.string().optional(),
 	notes: z.string().optional()
 });
 
@@ -15,6 +16,7 @@ export interface ManifestType {
 	document: string;
 	timestamp: string;
 	hashList: string[];
+	source?: string;
 	notes?: string;
 }
 

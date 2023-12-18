@@ -84,9 +84,10 @@
             document
                 .getElementById('result')
                 .innerHTML = title;
-            document
-                .getElementById('document-id')
-                .innerHTML = id;
+			document.getElementById("result-id").innerHTML = id;
+			const documentInput = document.getElementById('document-id-input');
+            documentInput.value = id;
+			documentInput.disabled = false;
 			document.getElementById("apply-button").disabled = false;
         } else if (action == google.picker.Action.CANCEL) {
             document

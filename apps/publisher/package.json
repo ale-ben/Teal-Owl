@@ -1,6 +1,6 @@
 {
   "name": "publisher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -10,8 +10,8 @@
     "clasp:watch": "clasp push --watch",
     "tsc:build": "tsc",
     "tsc:watch": "tsc -w",
-    "tw:build": "tailwindcss -i ./src/input.css -o ./static/outputMin.css --minify",
-    "tw:watch": "tailwindcss -i ./src/input.css -o ./static/output.css --watch",
+    "tw:build": "tailwindcss -i ./src/input.css -o ./src/webpage/static/outputMin.css --minify && node utilities/convertCSS.mjs",
+    "tw:watch": "tailwindcss -i ./src/input.css -o ./src/webpage/static/output.css --watch",
     "lint": "eslint . --ext .ts",
     "style": "prettier --write 'src/**/*.{ts,tsx}'",
     "test": "jest",
