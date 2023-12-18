@@ -2,20 +2,33 @@
 	"name": "publisher",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"targets": {
+		"tw:build": {
+			"cache": true,
+			"outputs": [
+				"{projectRoot}/src/webpage/static/outputMin.html"
+			]
+		},
 		"build": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/watermarking"],
+					"projects": [
+						"@teal-owl/watermarking"
+					],
 					"target": "build"
-				}
+				},
+				"tw:build"
 			],
 			"cache": true,
-			"outputs": ["{projectRoot}/build"]
+			"outputs": [
+				"{projectRoot}/build"
+			]
 		},
 		"push": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/watermarking"],
+					"projects": [
+						"@teal-owl/watermarking"
+					],
 					"target": "build"
 				},
 				"build"
