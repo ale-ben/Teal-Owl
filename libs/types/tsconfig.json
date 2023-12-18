@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "ESNext",
+        "target": "ES2020",
+        "esModuleInterop": true,
+        "rootDir": "src/",
+        "outDir": "./dist",
+        "noEmitOnError": true,
+        "typeRoots": ["node_modules/@types"],
+		"moduleDetection": "force",
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"declaration":true,
+		"declarationMap": true
+    },
+	"include": [
+		"src/"
+	],
+	"exclude": [
+		"dist",
+		"node_modules",
+		"**/*.test.ts",
+	],
+}

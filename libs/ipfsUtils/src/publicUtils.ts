@@ -1,27 +1,7 @@
-'use server';
-
-import { isManifestType, ManifestType } from "@teal-owl/types";
+import { isManifestType, ManifestType } from '@teal-owl/types';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
-const storage = new ThirdwebStorage({
-	secretKey: process.env.THIRDWEB_API_KEY
-});
-
-export interface IPFSObject {
-	cid: string | undefined;
-	name?: string;
-	content: ManifestType;
-}
-
-export async function uploadManifestToIPFS(
-	obj: IPFSObject
-): Promise<IPFSObject> {
-	const uri = await storage.upload(obj.content, {
-		alwaysUpload: false
-	});
-	const cid = uri.replace('ipfs://', '');
-	return { ...obj, cid: cid };
-}
+const authStorage = new ThirdwebStorage();
 
 export async function downloadManifestFromIPFS(
 	cid: string
@@ -31,7 +11,7 @@ export async function downloadManifestFromIPFS(
 
 	try {
 		// Download the object
-		const obj = await storage.downloadJSON(cid);
+		const obj = await authStorage.downloadJSON(cid);
 
 		// Validate the object
 		if (!isManifestType(obj)) {

@@ -1,7 +1,7 @@
 import { getManifest } from '@/serverActions/retrieveActions';
 import { Divider } from '@nextui-org/divider';
+import { ManifestType } from '@teal-owl/types';
 import Results from './components/results';
-import { ManifestType } from "@teal-owl/types";
 
 interface RetrieveDocProps {
 	params: { manifestID: string };

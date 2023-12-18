@@ -1,4 +1,4 @@
-import { ManifestType } from "@teal-owl/types";
+import { ManifestType } from '@teal-owl/types';
 
 interface ResultsProps {
 	retrievedObj: ManifestType;

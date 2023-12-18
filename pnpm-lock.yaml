@@ -14,7 +14,7 @@ importers:
     devDependencies:
       '@teal-owl/config-prettier':
         specifier: workspace:^
-        version: link:packages/config/prettier
+        version: link:libs/config/prettier
       '@typescript-eslint/parser':
         specifier: ^6.14.0
         version: 6.14.0(eslint@8.56.0)(typescript@5.3.3)
@@ -38,10 +38,13 @@ importers:
         version: 2.2.9(@types/react@18.2.45)(framer-motion@10.16.16)(react-dom@18.2.0)(react@18.2.0)(tailwind-variants@0.1.19)(tailwindcss@3.3.6)
       '@teal-owl/contract-utils':
         specifier: workspace:^
-        version: link:../../packages/contractUtils
+        version: link:../../libs/contractUtils
+      '@teal-owl/ipfs-utils':
+        specifier: workspace:^
+        version: link:../../libs/ipfsUtils
       '@teal-owl/types':
         specifier: workspace:^
-        version: link:../../packages/types
+        version: link:../../libs/types
       '@thirdweb-dev/storage':
         specifier: ^2.0.7
         version: 2.0.7
@@ -141,7 +144,7 @@ importers:
     dependencies:
       '@teal-owl/watermarking':
         specifier: workspace:^
-        version: link:../../packages/watermarking
+        version: link:../../libs/watermarking
     devDependencies:
       '@babel/core':
         specifier: ^7.23.6
@@ -166,7 +169,7 @@ importers:
         version: 15.2.3(rollup@4.9.1)
       '@teal-owl/config-prettier':
         specifier: workspace:^
-        version: link:../../packages/config/prettier
+        version: link:../../libs/config/prettier
       '@types/gapi':
         specifier: ^0.0.47
         version: 0.0.47
@@ -355,7 +358,7 @@ importers:
         specifier: ^5.0.10
         version: 5.0.10(@types/node@20.10.5)
 
-  packages/config/eslint:
+  libs/config/eslint:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.11.0
@@ -373,9 +376,9 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1
 
-  packages/config/prettier: {}
+  libs/config/prettier: {}
 
-  packages/contract:
+  libs/contract:
     dependencies:
       '@openzeppelin/contracts':
         specifier: ^5.0.1
@@ -397,7 +400,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  packages/contractUtils:
+  libs/contractUtils:
     dependencies:
       viem:
         specifier: ^1.20.1
@@ -431,7 +434,50 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.10.5)(typescript@5.3.3)
 
-  packages/types:
+  libs/ipfsUtils:
+    dependencies:
+      '@thirdweb-dev/storage':
+        specifier: ^2.0.7
+        version: 2.0.7
+      viem:
+        specifier: ^1.20.1
+        version: 1.20.1(typescript@5.3.3)(zod@3.22.4)
+    devDependencies:
+      '@teal-owl/types':
+        specifier: workspace:^
+        version: link:../types
+      '@types/node':
+        specifier: ^20.10.5
+        version: 20.10.5
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.14.0
+        version: 6.14.0(@typescript-eslint/parser@6.14.0)(eslint@8.56.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.14.0
+        version: 6.14.0(eslint@8.56.0)(typescript@5.3.3)
+      eslint:
+        specifier: ^8.55.0
+        version: 8.56.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.56.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.1
+        version: 5.0.1(eslint-config-prettier@9.1.0)(eslint@8.56.0)(prettier@3.1.1)
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
+      prettier-plugin-organize-imports:
+        specifier: ^3.2.4
+        version: 3.2.4(prettier@3.1.1)(typescript@5.3.3)
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.5
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.10.5)(typescript@5.3.3)
+
+  libs/types:
     dependencies:
       zod:
         specifier: ^3.22.4
@@ -465,7 +511,7 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.10.5)(typescript@5.3.3)
 
-  packages/watermarking:
+  libs/watermarking:
     devDependencies:
       '@teal-owl/config-prettier':
         specifier: workspace:^
@@ -14548,7 +14594,7 @@ packages:
     dependencies:
       lilconfig: 3.0.0
       postcss: 8.4.32
-      ts-node: 10.9.2(@types/node@20.10.4)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.10.5)(typescript@5.3.3)
       yaml: 2.3.4
 
   /postcss-nested@6.0.1(postcss@8.4.32):
@@ -16469,6 +16515,7 @@ packages:
       typescript: 5.3.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+    dev: false
 
   /ts-node@10.9.2(@types/node@20.10.5)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
@@ -16499,7 +16546,6 @@ packages:
       typescript: 5.3.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
 
   /ts2gas@4.2.0:
     resolution: {integrity: sha512-5xZugaeM3wKQPj/vrWnrtYjNh4xnIz6cGSW/smCe9OTmkh1+KvHpm7M7HLq/OnBaljf4+yKctC4AYimBi4T1/Q==}

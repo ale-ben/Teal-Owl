@@ -1,5 +1,6 @@
 'use server';
 
+import { getContractInfo } from '@teal-owl/contract-utils';
 import {
 	configureChains,
 	createConfig,
@@ -8,7 +9,6 @@ import {
 } from '@wagmi/core';
 import { publicProvider } from '@wagmi/core/providers/public';
 import { z } from 'zod';
-import {getContractInfo } from "@teal-owl/contract-utils";
 
 const { publicClient } = configureChains([sepolia], [publicProvider()]);
 

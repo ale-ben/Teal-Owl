@@ -3,7 +3,8 @@
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { getTokenURI } from './contractProviderUtils';
-import { downloadManifestFromIPFS } from './ipfsActions';
+
+import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
 import { ManifestType } from '@teal-owl/types';
 
 export async function retrieveFormSubmitHandler(formData: FormData) {
