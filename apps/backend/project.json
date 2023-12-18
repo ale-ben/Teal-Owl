@@ -11,6 +11,15 @@
 			],
 			"cache": true,
 			"outputs": ["{projectRoot}/.next"]
+		},
+		"dev": {
+			"dependsOn": [
+				{
+					"projects": ["@teal-owl/types", "@teal-owl/contract-utils"],
+					"target": "build"
+				}
+			],
+			"cache": false
 		}
 	}
 }

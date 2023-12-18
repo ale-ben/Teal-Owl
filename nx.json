@@ -2,6 +2,7 @@
   "targetDefaults": {
     "lint": {
       "dependsOn": [
+		"style",
         "^lint"
       ],
       "cache": true
@@ -17,7 +18,11 @@
       "inputs": [
         "production",
         "^production"
-      ]
+      ],
+	  "dependsOn": [
+		"lint",
+		"^build"
+	  ]
     }
   },
   "affected": {
