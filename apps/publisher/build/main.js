@@ -1,18 +1,3 @@
-let Manifest;
-(function (_Manifest) {
-  function GenerateManifest(userID, documentID, hashList, notes) {
-    return {
-      version: '1.0',
-      author: userID,
-      document: documentID,
-      hashList: hashList,
-      timestamp: new Date(),
-      notes: notes
-    };
-  }
-  _Manifest.GenerateManifest = GenerateManifest;
-})(Manifest || (Manifest = {}));
-
 /**
  * Non printable character used to separate the paragraphs
  */
@@ -195,255 +180,250 @@ function encodeTree(tree, binaryCode) {
   }
 }
 
-let Payload;
-(function (_Payload) {
-  function Sha256Hash(value) {
-    return BytesToHex(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value, Utilities.Charset.UTF_8));
-  }
-  _Payload.Sha256Hash = Sha256Hash;
-  /**
-   * Convert bytes array to hex string
-   * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
-   * @param bytes
-   * @returns
-   */
-  function BytesToHex(bytes) {
-    const hex = [];
-    for (let i = 0; i < bytes.length; i++) {
-      const b = bytes[i];
-      let c;
-      if (b < 0) {
-        c = (256 + b).toString(16);
-      } else {
-        c = b.toString(16);
-      }
-      if (c.length == 1) {
-        hex.push('0' + c);
-      } else {
-        hex.push(c);
-      }
-    }
-    return hex.join('');
-  }
+/**
+ * Generate SHA256 hash of string
+ * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
+ * @param value
+ * @returns
+ */
+function Sha256Hash(value) {
+  return BytesToHex(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value, Utilities.Charset.UTF_8));
+}
 
-  /**
-   * Generate payload for watermarking
-   * @param userID ID of the author of the document
-   * @param docID ID of the document
-   * @returns Payload as string
-   */
-  function GeneratePayload(userID, docID) {
-    // Base payload
-    let payload = userID + ',' + docID;
-
-    // Generarte hash of payload
-    const hash = Sha256Hash(payload);
-
-    // Add hash to payload (as string)
-    payload += ',' + hash;
-    console.log(hash);
-    console.log(payload);
-    return payload;
-  }
-  _Payload.GeneratePayload = GeneratePayload;
-  function StringToBinStr(str) {
-    let result = '';
-    for (let i = 0; i < str.length; i++) {
-      result += str.charCodeAt(i).toString(2).padStart(8, '0');
+/**
+ * Convert bytes array to hex string
+ * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
+ * @param bytes
+ * @returns
+ */
+function BytesToHex(bytes) {
+  const hex = [];
+  for (let i = 0; i < bytes.length; i++) {
+    const b = bytes[i];
+    let c;
+    if (b < 0) {
+      c = (256 + b).toString(16);
+    } else {
+      c = b.toString(16);
     }
-    return result;
-  }
-  _Payload.StringToBinStr = StringToBinStr;
-  function BinStrToString(binStr) {
-    let result = '';
-    for (let i = 0; i < binStr.length; i += 8) {
-      result += String.fromCharCode(parseInt(binStr.substring(i, i + 8), 2));
+    if (c.length == 1) {
+      hex.push('0' + c);
+    } else {
+      hex.push(c);
     }
-    return result;
   }
-  _Payload.BinStrToString = BinStrToString;
-})(Payload || (Payload = {}));
+  return hex.join('');
+}
+
+/**
+ * Generate payload for watermarking
+ * @param userID ID of the author of the document
+ * @param docID ID of the document
+ * @returns Payload as string
+ */
+function GeneratePayload(userID, docID) {
+  // Base payload
+  let payload = userID + ',' + docID;
+
+  // Generarte hash of payload
+  const hash = Sha256Hash(payload);
+
+  // Add hash to payload (as string)
+  payload += ',' + hash;
+  console.log(hash);
+  console.log(payload);
+  return payload;
+}
+function StringToBinStr(str) {
+  let result = '';
+  for (let i = 0; i < str.length; i++) {
+    result += str.charCodeAt(i).toString(2).padStart(8, '0');
+  }
+  return result;
+}
 
 // This is a customized version of the parser from google docs to html (https://github.com/thejimbirch/GoogleDoc2Html/tree/master) Note that original
 // parser is in js, this is converted to ts
 
-let Parser;
-(function (_Parser) {
-  /**
-   * Tree structure of the document
-   */
 
-  /**
-   * Main function to parse the document into a tree structure.
-   * @param content The body of the document
-   * @returns The root of the tree structure of the document as a TreeStruct object and an array of tree text elements.
-   */
-  function ParseDocument(content) {
-    // Queue for the elements to be parsed (See BFS algorithm)
-    const parseQueue = [];
-    const textElements = [];
+/**
+ * Tree structure of the document
+ */
 
-    // Root of the tree structure
-    const root = {
-      content: content,
-      children: [],
-      type: content.getType()
-    };
-    parseQueue.push(root);
+/**
+ * Main function to parse the document into a tree structure.
+ * @param content The body of the document
+ * @returns The root of the tree structure of the document as a TreeStruct object and an array of tree text elements.
+ */
+function ParseDocument(content) {
+  // Queue for the elements to be parsed (See BFS algorithm)
+  const parseQueue = [];
+  const textElements = [];
 
-    // Next element in the queue
-    let el;
+  // Root of the tree structure
+  const root = {
+    content: content,
+    children: [],
+    type: content.getType()
+  };
+  parseQueue.push(root);
 
-    // Parse each element in the queue. This function will add the elements to the tree and push the childs to the queue.
-    while ((el = parseQueue.shift()) != undefined) {
-      parseElement(parseQueue, textElements, el);
-    }
-    return [root, textElements];
+  // Next element in the queue
+  let el;
+
+  // Parse each element in the queue. This function will add the elements to the tree and push the childs to the queue.
+  while ((el = parseQueue.shift()) != undefined) {
+    parseElement(parseQueue, textElements, el);
   }
-  _Parser.ParseDocument = ParseDocument;
-  /**
-   * Internal function to parse an element into a tree structure.
-   * @param parseQueue Queue of elements to be parsed
-   * @param elem The element to be parsed
-   */
-  function parseElement(parseQueue, textElements, elem) {
-    // Define how to parse each type of element.
-    if (elem.content.getType() == DocumentApp.ElementType.PARAGRAPH) {
-      const par = elem.content.asParagraph();
-      for (let i = 0; i < par.getNumChildren(); i++) {
-        const child = {
-          content: par.getChild(i),
-          children: [],
-          type: par.getChild(i).getType()
-        };
-        elem.children.push(child);
-        parseQueue.push(child);
+  return [root, textElements];
+}
+
+/**
+ * Internal function to parse an element into a tree structure.
+ * @param parseQueue Queue of elements to be parsed
+ * @param elem The element to be parsed
+ */
+function parseElement(parseQueue, textElements, elem) {
+  // Define how to parse each type of element.
+  if (elem.content.getType() == DocumentApp.ElementType.PARAGRAPH) {
+    const par = elem.content.asParagraph();
+    for (let i = 0; i < par.getNumChildren(); i++) {
+      const child = {
+        content: par.getChild(i),
+        children: [],
+        type: par.getChild(i).getType()
+      };
+      elem.children.push(child);
+      parseQueue.push(child);
+    }
+  } else if (elem.content.getType() == DocumentApp.ElementType.BODY_SECTION) {
+    const par = elem.content.asBody();
+    for (let i = 0; i < par.getNumChildren(); i++) {
+      const child = {
+        content: par.getChild(i),
+        children: [],
+        type: par.getChild(i).getType()
+      };
+      elem.children.push(child);
+      parseQueue.push(child);
+    }
+  } else if (elem.content.getType() == DocumentApp.ElementType.TEXT) {
+    elem.text = elem.content.asText().getText();
+    textElements.push(elem);
+  }
+}
+
+/**
+ * Converts the tree structure of the document into a formatted HTML string.
+ * @param tree The root of the tree structure of the document
+ * @param indent Indent string to be placed before each line
+ * @returns The HTML representation of the document
+ */
+function ConvertToHTML(tree, indent = '') {
+  let html = '';
+  let prefix = '';
+  let suffix = '';
+  switch (tree.content.getType()) {
+    case DocumentApp.ElementType.BODY_SECTION:
+      prefix = '<watermark>';
+      suffix = '</watermark>';
+      break;
+    case DocumentApp.ElementType.PARAGRAPH:
+      switch (tree.content.asParagraph().getHeading()) {
+        case DocumentApp.ParagraphHeading.HEADING1:
+          prefix = '<h1>';
+          suffix = '</h1>';
+          break;
+        case DocumentApp.ParagraphHeading.HEADING2:
+          prefix = '<h2>';
+          suffix = '</h2>';
+          break;
+        case DocumentApp.ParagraphHeading.HEADING3:
+          prefix = '<h3>';
+          suffix = '</h3>';
+          break;
+        case DocumentApp.ParagraphHeading.HEADING4:
+          prefix = '<h4>';
+          suffix = '</h4>';
+          break;
+        case DocumentApp.ParagraphHeading.HEADING5:
+          prefix = '<h5>';
+          suffix = '</h5>';
+          break;
+        case DocumentApp.ParagraphHeading.HEADING6:
+          prefix = '<h6>';
+          suffix = '</h6>';
+          break;
+        default:
+          prefix = '<p>';
+          suffix = '</p>';
+          break;
       }
-    } else if (elem.content.getType() == DocumentApp.ElementType.BODY_SECTION) {
-      const par = elem.content.asBody();
-      for (let i = 0; i < par.getNumChildren(); i++) {
-        const child = {
-          content: par.getChild(i),
-          children: [],
-          type: par.getChild(i).getType()
-        };
-        elem.children.push(child);
-        parseQueue.push(child);
-      }
-    } else if (elem.content.getType() == DocumentApp.ElementType.TEXT) {
-      elem.text = elem.content.asText().getText();
-      textElements.push(elem);
-    }
+      break;
+    case DocumentApp.ElementType.TEXT:
+      prefix = '';
+      suffix = '';
+      html += tree.text;
+      break;
   }
+  if (prefix != '') html += '\n' + indent + prefix + '\n';
+  tree.children.forEach(child => {
+    html += indent + '\t' + ConvertToHTML(child, indent + '\t');
+  });
+  if (suffix != '') html += '\n' + indent + suffix + '\n';
+  return html;
+}
 
-  /**
-   * Converts the tree structure of the document into a formatted HTML string.
-   * @param tree The root of the tree structure of the document
-   * @param indent Indent string to be placed before each line
-   * @returns The HTML representation of the document
-   */
-  function ConvertToHTML(tree, indent = '') {
-    let html = '';
-    let prefix = '';
-    let suffix = '';
-    switch (tree.content.getType()) {
-      case DocumentApp.ElementType.BODY_SECTION:
-        prefix = '<watermark>';
-        suffix = '</watermark>';
-        break;
-      case DocumentApp.ElementType.PARAGRAPH:
-        switch (tree.content.asParagraph().getHeading()) {
-          case DocumentApp.ParagraphHeading.HEADING1:
-            prefix = '<h1>';
-            suffix = '</h1>';
-            break;
-          case DocumentApp.ParagraphHeading.HEADING2:
-            prefix = '<h2>';
-            suffix = '</h2>';
-            break;
-          case DocumentApp.ParagraphHeading.HEADING3:
-            prefix = '<h3>';
-            suffix = '</h3>';
-            break;
-          case DocumentApp.ParagraphHeading.HEADING4:
-            prefix = '<h4>';
-            suffix = '</h4>';
-            break;
-          case DocumentApp.ParagraphHeading.HEADING5:
-            prefix = '<h5>';
-            suffix = '</h5>';
-            break;
-          case DocumentApp.ParagraphHeading.HEADING6:
-            prefix = '<h6>';
-            suffix = '</h6>';
-            break;
-          default:
-            prefix = '<p>';
-            suffix = '</p>';
-            break;
-        }
-        break;
-      case DocumentApp.ElementType.TEXT:
-        prefix = '';
-        suffix = '';
-        html += tree.text;
-        break;
-    }
-    if (prefix != '') html += '\n' + indent + prefix + '\n';
-    tree.children.forEach(child => {
-      html += indent + '\t' + ConvertToHTML(child, indent + '\t');
-    });
-    if (suffix != '') html += '\n' + indent + suffix + '\n';
-    return html;
-  }
-  _Parser.ConvertToHTML = ConvertToHTML;
-  function HTMLToText(html) {
-    return html.replace(/<[^>]*>?/gm, '');
-  }
-  _Parser.HTMLToText = HTMLToText;
-  function GenerateHashList(text) {
-    // Split the document into paragraphs and remove homoglyphs
-    const paragraphs = decodeParagraphs(text);
+/**
+ * Converts an HTML string into a plain text string by removing all tags.
+ * @param html The HTML string to be converted
+ * @returns The plain text string
+ */
+function HTMLToText(html) {
+  return html.replace(/<[^>]*>?/gm, '');
+}
 
-    // Generate hash for each paragraph
-    return paragraphs.map(par => Payload.Sha256Hash(par.text));
-  }
-  _Parser.GenerateHashList = GenerateHashList;
-})(Parser || (Parser = {}));
+/**
+ * Generates a hash list from a text. The text is split into paragraphs and homoglyphs are removed.
+ * @param text The text to be converted to a hash list
+ * @returns The hash list
+ */
+function GenerateHashList(text) {
+  // Split the document into paragraphs and remove homoglyphs
+  const paragraphs = decodeParagraphs(text);
 
-let Utils;
-(function (_Utils) {
-  function applyWatermark(content, payload) {
-    // Generate document tree
-    const [tree, textElements] = Parser.ParseDocument(content.getBody());
+  // Generate hash for each paragraph
+  return paragraphs.map(par => Sha256Hash(par.text));
+}
 
-    // Apply watermark
-    encodeTree(textElements, payload);
+function applyWatermark$1(content, payload) {
+  // Generate document tree
+  const [tree, textElements] = ParseDocument(content.getBody());
 
-    // Convert tree to HTML
-    const outHTML = Parser.ConvertToHTML(tree);
-    return outHTML;
-  }
-  _Utils.applyWatermark = applyWatermark;
-  function saveToHTMLFile(content, path, name) {
-    // Generate out document
-    const outFile = DriveApp.createFile(name + '.html', content, 'text/html');
-    // Move to correct folder
-    DriveApp.getFileById(outFile.getId()).moveTo(path);
-    return outFile;
-  }
-  _Utils.saveToHTMLFile = saveToHTMLFile;
-  function saveToJSONFile(content, path, name) {
-    // Generate out document
-    const outFile = DriveApp.createFile(name + '.json', content, 'text/json');
-    // Move to correct folder
-    DriveApp.getFileById(outFile.getId()).moveTo(path);
-    return outFile;
-  }
-  _Utils.saveToJSONFile = saveToJSONFile;
-})(Utils || (Utils = {}));
+  // Apply watermark
+  encodeTree(textElements, payload);
+
+  // Convert tree to HTML
+  const outHTML = ConvertToHTML(tree);
+  return outHTML;
+}
+function saveToHTMLFile(content, path, name) {
+  // Generate out document
+  const outFile = DriveApp.createFile(name + '.html', content, 'text/html');
+  // Move to correct folder
+  DriveApp.getFileById(outFile.getId()).moveTo(path);
+  return outFile;
+}
+function saveToJSONFile(content, path, name) {
+  // Generate out document
+  const outFile = DriveApp.createFile(name + '.json', content, 'text/json');
+  // Move to correct folder
+  DriveApp.getFileById(outFile.getId()).moveTo(path);
+  return outFile;
+}
 
 /* eslint @typescript-eslint/no-unused-vars: "off" */
+
 'use strict';
 function doGet() {
   try {
@@ -512,23 +492,29 @@ function applyWatermark(documentID) {
   const outFolder = docFolder.createFolder(outFolderName);
 
   // Generate the payload
-  const payload = Payload.GeneratePayload(authorID, documentID);
-  const payloadStr = Payload.StringToBinStr(payload);
+  const payload = GeneratePayload(authorID, documentID);
+  const payloadStr = StringToBinStr(payload);
 
   // Generate out html
-  const outHTML = Utils.applyWatermark(doc, payloadStr);
+  const outHTML = applyWatermark$1(doc, payloadStr);
 
   // --- Manifest ---
   // Convert HTML back to string
-  const htmlStr = Parser.HTMLToText(outHTML);
+  const htmlStr = HTMLToText(outHTML);
   // Generate hash list
-  const hashList = Parser.GenerateHashList(htmlStr);
+  const hashList = GenerateHashList(htmlStr);
   // Generate manifest
-  const manifest = Manifest.GenerateManifest(authorID, documentID, hashList);
+  const manifest = {
+    version: '1.0',
+    author: authorID,
+    document: documentID,
+    timestamp: new Date().toISOString(),
+    hashList
+  };
 
   // Save to files
-  Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
-  Utils.saveToJSONFile(JSON.stringify(manifest), outFolder, outManifestName);
+  saveToHTMLFile(outHTML, outFolder, outFileName);
+  saveToJSONFile(JSON.stringify(manifest), outFolder, outManifestName);
   return {
     documents: [outFileName, outManifestName],
     outFolder: outFolderName,

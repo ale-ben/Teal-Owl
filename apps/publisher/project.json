@@ -17,8 +17,10 @@
 				{
 					"projects": ["@teal-owl/watermarking"],
 					"target": "build"
-				}
-			]
+				},
+				"build"
+			],
+			"cache": false
 		}
 	}
 }

@@ -142,6 +142,9 @@ importers:
 
   apps/publisher:
     dependencies:
+      '@teal-owl/types':
+        specifier: workspace:^
+        version: link:../../libs/types
       '@teal-owl/watermarking':
         specifier: workspace:^
         version: link:../../libs/watermarking

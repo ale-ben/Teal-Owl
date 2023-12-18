@@ -1,10 +1,15 @@
 /* eslint @typescript-eslint/no-unused-vars: "off" */
-import { Manifest } from './Manifest';
-import { Parser } from './Parser';
-import { Payload } from './Payload';
-import { Utils } from './Utils';
+import { ManifestType } from '@teal-owl/types';
+import { GenerateHashList, HTMLToText } from './Parser';
+import { GeneratePayload, StringToBinStr } from './Payload';
+import {
+	saveToHTMLFile,
+	saveToJSONFile,
+	applyWatermark as utilsApplyWatermark
+} from './Utils';
 
 ('use strict');
+
 function doGet() {
 	try {
 		return HtmlService.createTemplateFromFile(
@@ -80,23 +85,29 @@ function applyWatermark(documentID: string) {
 	const outFolder = docFolder.createFolder(outFolderName);
 
 	// Generate the payload
-	const payload = Payload.GeneratePayload(authorID, documentID);
-	const payloadStr = Payload.StringToBinStr(payload);
+	const payload = GeneratePayload(authorID, documentID);
+	const payloadStr = StringToBinStr(payload);
 
 	// Generate out html
-	const outHTML = Utils.applyWatermark(doc, payloadStr);
+	const outHTML = utilsApplyWatermark(doc, payloadStr);
 
 	// --- Manifest ---
 	// Convert HTML back to string
-	const htmlStr = Parser.HTMLToText(outHTML);
+	const htmlStr = HTMLToText(outHTML);
 	// Generate hash list
-	const hashList = Parser.GenerateHashList(htmlStr);
+	const hashList = GenerateHashList(htmlStr);
 	// Generate manifest
-	const manifest = Manifest.GenerateManifest(authorID, documentID, hashList);
+	const manifest: ManifestType = {
+		version: '1.0',
+		author: authorID,
+		document: documentID,
+		timestamp: new Date().toISOString(),
+		hashList
+	};
 
 	// Save to files
-	Utils.saveToHTMLFile(outHTML, outFolder, outFileName);
-	Utils.saveToJSONFile(JSON.stringify(manifest), outFolder, outManifestName);
+	saveToHTMLFile(outHTML, outFolder, outFileName);
+	saveToJSONFile(JSON.stringify(manifest), outFolder, outManifestName);
 
 	return {
 		documents: [outFileName, outManifestName],
