@@ -1,6 +1,6 @@
 'use server';
 
-import { ManifestModel, isManifestModel } from '@/models/ManifestModel';
+import { isManifestType, ManifestType } from "@teal-owl/types";
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
 const storage = new ThirdwebStorage({
@@ -10,7 +10,7 @@ const storage = new ThirdwebStorage({
 export interface IPFSObject {
 	cid: string | undefined;
 	name?: string;
-	content: ManifestModel;
+	content: ManifestType;
 }
 
 export async function uploadManifestToIPFS(
@@ -25,7 +25,7 @@ export async function uploadManifestToIPFS(
 
 export async function downloadManifestFromIPFS(
 	cid: string
-): Promise<ManifestModel | undefined> {
+): Promise<ManifestType | undefined> {
 	// Add ipfs:// if it's not there
 	if (!cid.startsWith('ipfs://')) cid = 'ipfs://' + cid;
 
@@ -34,7 +34,7 @@ export async function downloadManifestFromIPFS(
 		const obj = await storage.downloadJSON(cid);
 
 		// Validate the object
-		if (!isManifestModel(obj)) {
+		if (!isManifestType(obj)) {
 			console.log(
 				'Error while retrieving file. Object is not a valid ManifestModel.' +
 					obj

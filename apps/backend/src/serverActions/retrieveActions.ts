@@ -1,10 +1,10 @@
 'use server';
 
-import { ManifestModel } from '@/models/ManifestModel';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { getTokenURI } from './contractProviderUtils';
 import { downloadManifestFromIPFS } from './ipfsActions';
+import { ManifestType } from '@teal-owl/types';
 
 export async function retrieveFormSubmitHandler(formData: FormData) {
 	// Validate and parse the form data to get the authorID, documentID, and manifestID
@@ -64,7 +64,7 @@ export async function retrieveFormSubmitHandler(formData: FormData) {
 
 export async function getManifest(
 	tokenId: string
-): Promise<ManifestModel | undefined> {
+): Promise<ManifestType | undefined> {
 	// Get the manifest URI from the contract
 	const manifestURI = await getTokenURI(tokenId);
 

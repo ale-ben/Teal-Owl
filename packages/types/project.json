@@ -1,5 +1,5 @@
 {
-	"name": "@teal-owl/watermarking",
+	"name": "@teal-owl/types",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"targets": {
 		"build": {

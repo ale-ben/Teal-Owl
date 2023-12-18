@@ -3,6 +3,12 @@
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"targets": {
 		"build": {
+			"dependsOn": [
+				{
+					"projects": ["@teal-owl/types"],
+					"target": "build"
+				}
+			],
 			"cache": true,
 			"outputs": ["{projectRoot}/.next"]
 		}
