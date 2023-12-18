@@ -18,5 +18,10 @@
 		"nx": "^17.2.5",
 		"prettier": "^3.1.1",
 		"prettier-plugin-organize-imports": "^3.2.4"
-	}
+	},
+	"workspaces": [
+		"apps/*",
+		"libs/*",
+		"libs/config/*"
+	  ]
 }
