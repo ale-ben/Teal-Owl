@@ -1,9 +1,9 @@
 import { sha256 } from 'js-sha256';
-import { WatermarkingTools } from '../TOW/src/watermarkingTools';
 import { getTokenURI } from '../contract/contractUtils';
-import { downloadManifestFromIPFS } from '../contract/ipfs';
 import { VerifyPayload } from './Payload';
 import { VerificationStatus, WMParagraph, WatermarkInfo } from './parserTypes';
+import { decodeText, extractRawText } from '@teal-owl/watermarking';
+import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
 
 /**
  * Converts an HTML string into a plain text string by removing all tags.
@@ -32,7 +32,7 @@ function localValidation(wmParagraph: WMParagraph): WatermarkInfo {
 
 	// Extract payload from text
 	// Get the binary payload
-	const payload = WatermarkingTools.decodeText(fullText).payload;
+	const payload = decodeText(fullText).payload;
 
 	// Decode and verify payload locally
 	const payloadVerification = VerifyPayload(payload);
@@ -101,7 +101,7 @@ async function remoteValidation(
 	fullText = HTMLToText(fullText);
 
 	// Remove watermark from text
-	fullText = WatermarkingTools.extractRawText(fullText);
+	fullText = extractRawText(fullText);
 
 	// Compare paragraph hash with hash from manifest
 	const hash = sha256(fullText);

@@ -254,6 +254,18 @@ importers:
 
   apps/reader:
     dependencies:
+      '@teal-owl/contract-utils':
+        specifier: workspace:^
+        version: link:../../libs/contractUtils
+      '@teal-owl/ipfs-utils':
+        specifier: workspace:^
+        version: link:../../libs/ipfsUtils
+      '@teal-owl/types':
+        specifier: workspace:^
+        version: link:../../libs/types
+      '@teal-owl/watermarking':
+        specifier: workspace:^
+        version: link:../../libs/watermarking
       '@thirdweb-dev/storage':
         specifier: ^2.0.7
         version: 2.0.7

@@ -9,12 +9,15 @@
         "build": "tsc && vite --config vite.config_prod.ts build",
         "preview": "vite preview",
         "style": "prettier --write 'src/**/*.{ts,tsx}'",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives ",
-        "lint-fix": "eslint . --ext .ts --ext .tsx --fix"
+        "lint": "eslint . --ext ts,tsx"
     },
     "author": "Alessandro Benetton (aleben98@gmail.com)",
     "license": "GPL-3.0-or-later",
     "dependencies": {
+        "@teal-owl/contract-utils": "workspace:^",
+        "@teal-owl/ipfs-utils": "workspace:^",
+        "@teal-owl/types": "workspace:^",
+        "@teal-owl/watermarking": "workspace:^",
         "@thirdweb-dev/storage": "^2.0.7",
         "@wagmi/core": "^1.4.8",
         "js-sha256": "^0.10.1",
