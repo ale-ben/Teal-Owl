@@ -1,4 +1,4 @@
-import { Payload } from '../Payload';
+import { BinStrToString, StringToBinStr } from "../Payload";
 
 function randSTR(length: number): string {
 	let result = '';
@@ -23,10 +23,10 @@ describe('Testing Payload encoding and decoding', () => {
 	const originalPayload = randSTR(payloadLength);
 
 	// Encode payload
-	const encodedPayload = Payload.StringToBinStr(originalPayload);
+	const encodedPayload = StringToBinStr(originalPayload);
 
 	// Decode payload
-	const decodedPayload = Payload.BinStrToString(encodedPayload);
+	const decodedPayload = BinStrToString(encodedPayload);
 
 	// Compare original payload with decoded payload
 	test('Decoding payload', () => {

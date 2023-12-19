@@ -1,7 +1,7 @@
-import { ManifestModel } from '@/models/ManifestModel';
+import { ManifestType } from '@teal-owl/types';
 
 interface ResultsProps {
-	retrievedObj: ManifestModel;
+	retrievedObj: ManifestType;
 }
 
 const Results = ({ retrievedObj }: ResultsProps) => {

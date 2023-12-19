@@ -2,6 +2,7 @@
   "targetDefaults": {
     "lint": {
       "dependsOn": [
+		"style",
         "^lint"
       ],
       "cache": true
@@ -12,49 +13,28 @@
       ],
       "cache": true
     },
-    "tw-build": {
-      "dependsOn": [
-        "^tw-build"
-      ],
-      "cache": true
-    },
-    "test": {
-      "dependsOn": [
-        "^test"
-      ]
-    },
-    "compile": {
-      "dependsOn": [
-        "^compile"
-      ],
-      "cache": true
-    },
-    "lint-fix": {
-      "dependsOn": [
-        "^lint-fix"
-      ],
-      "cache": true
-    },
     "build": {
-      "cache": true
-    },
-    "start": {
-      "dependsOn": [
-        "^start"
-      ]
-    },
-    "push": {
-      "dependsOn": [
-        "^push"
-      ]
-    },
-    "preview": {
-      "dependsOn": [
-        "^preview"
-      ]
+      "cache": true,
+      "inputs": [
+        "production",
+        "^production"
+      ],
+	  "dependsOn": [
+		"^build"
+	  ]
     }
   },
   "affected": {
     "defaultBase": "develop"
+  },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [],
+    "production": [
+      "default"
+    ]
   }
 }

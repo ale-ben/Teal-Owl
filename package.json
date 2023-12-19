@@ -1,14 +1,27 @@
 {
-  "name": "teal-owl",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Monorepository for the Teal Owl project",
-  "author": "Alessandro Benetton (aleben98@gmail.com)",
-  "license": "GPL-3.0-or-later",
-  "dependencies": {
-    "@changesets/cli": "^2.27.1"
-  },
-  "devDependencies": {
-    "nx": "17.2.4"
-  }
+	"name": "teal-owl",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Monorepository for the Teal Owl project",
+	"author": "Alessandro Benetton (aleben98@gmail.com)",
+	"license": "GPL-3.0-or-later",
+	"scripts": {
+		"graph": "nx graph"
+	},
+	"dependencies": {
+		"@changesets/cli": "^2.27.1"
+	},
+	"devDependencies": {
+		"@teal-owl/config-prettier": "workspace:^",
+		"@typescript-eslint/parser": "^6.14.0",
+		"eslint": "^8.56.0",
+		"nx": "^17.2.6",
+		"prettier": "^3.1.1",
+		"prettier-plugin-organize-imports": "^3.2.4"
+	},
+	"workspaces": [
+		"apps/*",
+		"libs/*",
+		"libs/config/*"
+	  ]
 }

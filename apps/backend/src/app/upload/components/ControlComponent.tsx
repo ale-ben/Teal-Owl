@@ -1,7 +1,7 @@
-import { isManifestModel } from '@/models/ManifestModel';
-import { IPFSObject, uploadManifestToIPFS } from '@/serverActions/ipfsActions';
 import { saveManifestInfo } from '@/utils/contractSignerUtils';
 import { Button } from '@nextui-org/button';
+import { IPFSObject, uploadManifestToIPFS } from '@teal-owl/ipfs-utils';
+import { isManifestType } from '@teal-owl/types';
 import { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 import { useAccount } from 'wagmi';
@@ -27,7 +27,7 @@ export default function ControlComponent({
 				const content = JSON.parse(text);
 
 				// Check if file is a valid ManifestModel
-				if (!isManifestModel(content)) {
+				if (!isManifestType(content)) {
 					console.error('File is not a valid ManifestModel', content);
 					return;
 				}

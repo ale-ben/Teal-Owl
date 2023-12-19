@@ -1,0 +1,35 @@
+{
+	"name": "backend",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"targets": {
+		"build": {
+			"dependsOn": [
+				{
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/contract-utils"
+					],
+					"target": "build"
+				}
+			],
+			"cache": true,
+			"outputs": [
+				"{projectRoot}/.next"
+			]
+		},
+		"dev": {
+			"dependsOn": [
+				{
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/contract-utils"
+					],
+					"target": "build"
+				}
+			],
+			"cache": false
+		}
+	}
+}

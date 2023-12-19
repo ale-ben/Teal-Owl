@@ -1,0 +1,26 @@
+{
+	"name": "reader",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"targets": {
+		"build": {
+			"dependsOn": [
+				{
+					"projects": ["@teal-owl/watermarking"],
+					"target": "build"
+				}
+			],
+			"cache": true,
+			"outputs": ["{projectRoot}/build"]
+		},
+		"dev": {
+			"dependsOn": [
+				{
+					"projects": ["@teal-owl/watermarking"],
+					"target": "build"
+				},
+				"build"
+			],
+			"cache": false
+		}
+	}
+}

@@ -1,4 +1,4 @@
-import { getContractInfo } from '@/models/ContractConnectionModel';
+import { getContractInfo } from '@teal-owl/contract-utils';
 import { writeContract } from 'wagmi/actions';
 
 export async function saveManifestInfo(

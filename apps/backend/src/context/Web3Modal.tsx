@@ -1,9 +1,8 @@
 'use client';
 
-import { localChain } from '@/models/LocalChain';
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
 
-import { mainnet, sepolia } from 'viem/chains';
+import { sepolia } from 'viem/chains';
 import { WagmiConfig } from 'wagmi';
 
 // 1. Get projectId at https://cloud.walletconnect.com
@@ -23,7 +22,7 @@ const metadata = {
 	]
 };
 
-const chains = [mainnet, sepolia, localChain];
+const chains = [sepolia];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
