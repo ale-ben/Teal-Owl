@@ -12,6 +12,7 @@
 			"dependsOn": [
 				{
 					"projects": [
+						"@teal-owl/types",
 						"@teal-owl/watermarking"
 					],
 					"target": "build"
@@ -27,6 +28,7 @@
 			"dependsOn": [
 				{
 					"projects": [
+						"@teal-owl/types",
 						"@teal-owl/watermarking"
 					],
 					"target": "build"
