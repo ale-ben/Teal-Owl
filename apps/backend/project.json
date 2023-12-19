@@ -5,17 +5,27 @@
 		"build": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/types", "@teal-owl/contract-utils"],
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/contract-utils"
+					],
 					"target": "build"
 				}
 			],
 			"cache": true,
-			"outputs": ["{projectRoot}/.next"]
+			"outputs": [
+				"{projectRoot}/.next"
+			]
 		},
 		"dev": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/types", "@teal-owl/contract-utils"],
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/contract-utils"
+					],
 					"target": "build"
 				}
 			],
