@@ -15,7 +15,7 @@
 		"@teal-owl/contract-utils": "workspace:^",
 		"@teal-owl/ipfs-utils": "workspace:^",
 		"@teal-owl/types": "workspace:^",
-		"@thirdweb-dev/storage": "^2.0.7",
+		"@thirdweb-dev/storage": "^2.0.8",
 		"@typescript-eslint/eslint-plugin": "^6.14.0",
 		"@typescript-eslint/parser": "^6.14.0",
 		"@wagmi/core": "^1.4.10",
@@ -31,7 +31,7 @@
 		"react-dropzone": "^14.2.3",
 		"react-icons": "^4.12.0",
 		"ts-node": "^10.9.2",
-		"viem": "^1.20.1",
+		"viem": "^1.20.2",
 		"wagmi": "^1.4.10",
 		"zod": "^3.22.4"
 	},
@@ -51,7 +51,7 @@
 		"prettier": "^3.1.1",
 		"prettier-plugin-organize-imports": "^3.2.4",
 		"prettier-plugin-tailwindcss": "^0.5.9",
-		"tailwindcss": "^3.3.6",
+		"tailwindcss": "^3.3.7",
 		"typescript": "^5"
 	}
 }
