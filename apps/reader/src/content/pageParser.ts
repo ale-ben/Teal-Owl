@@ -3,7 +3,7 @@ import {
 	VerificationStatus,
 	WMParagraph,
 	WMSubParagraph
-} from './parserTypes';
+} from '../models/parserTypes';
 import { verifyWatermarks } from './validator';
 
 let wmParagraphs: WMParagraph[] = [];

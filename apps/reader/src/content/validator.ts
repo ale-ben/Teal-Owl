@@ -1,9 +1,13 @@
+import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
+import { decodeText, extractRawText } from '@teal-owl/watermarking';
 import { sha256 } from 'js-sha256';
 import { getTokenURI } from '../contract/contractUtils';
+import {
+	VerificationStatus,
+	WMParagraph,
+	WatermarkInfo
+} from '../models/parserTypes';
 import { VerifyPayload } from './Payload';
-import { VerificationStatus, WMParagraph, WatermarkInfo } from './parserTypes';
-import { decodeText, extractRawText } from '@teal-owl/watermarking';
-import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
 
 /**
  * Converts an HTML string into a plain text string by removing all tags.

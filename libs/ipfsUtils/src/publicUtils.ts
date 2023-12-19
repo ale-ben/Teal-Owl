@@ -1,7 +1,5 @@
 import { isManifestType, ManifestType } from '@teal-owl/types';
-import { ThirdwebStorage } from '@thirdweb-dev/storage';
-
-const authStorage = new ThirdwebStorage();
+import { authStorage } from './baseStorage';
 
 export async function downloadManifestFromIPFS(
 	cid: string

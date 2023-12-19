@@ -1,9 +1,7 @@
-import { ThirdwebStorage } from '@thirdweb-dev/storage';
+import { authStorage } from './baseStorage';
 import { IPFSObject } from './types';
 
-const authStorage = new ThirdwebStorage({
-	secretKey: process.env.THIRDWEB_API_KEY
-});
+
 
 export async function uploadManifestToIPFS(
 	obj: IPFSObject
