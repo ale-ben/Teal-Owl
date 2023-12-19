@@ -23,7 +23,7 @@ export enum Status {
 }
 
 export enum VerificationStatus {
-	VALID,
-	INVALID,
-	UNKNOWN
+	VALID = "Valid",
+	INVALID = "Not Valid",
+	UNKNOWN = "Unknown"
 }

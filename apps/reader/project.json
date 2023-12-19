@@ -8,6 +8,7 @@
 					"projects": [
 						"@teal-owl/types",
 						"@teal-owl/contract-utils",
+						"@teal-owl/ipfs-utils",
 						"@teal-owl/watermarking"
 					],
 					"target": "build"
@@ -24,6 +25,7 @@
 					"projects": [
 						"@teal-owl/types",
 						"@teal-owl/contract-utils",
+						"@teal-owl/ipfs-utils",
 						"@teal-owl/watermarking"
 					],
 					"target": "build"
