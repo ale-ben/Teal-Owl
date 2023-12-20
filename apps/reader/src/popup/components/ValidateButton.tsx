@@ -14,13 +14,13 @@ const ValidateButton = ({ actionLabel }: props) => {
 				const tabs = await chrome.tabs.query(queryOptions);
 				const tab = tabs[0];
 
-				console.log('Toggle');
+				console.log('Validate');
 				chrome.tabs
 					.sendMessage(tab.id ? tab.id : -1, {
-						event: 'toggle'
+						event: 'validate'
 					})
 					.catch((error): void => {
-						console.error('Teal-Owl', error);
+						console.error('Teal-Owl', error); //TODO: Add error handling
 					});
 			}}
 		>
