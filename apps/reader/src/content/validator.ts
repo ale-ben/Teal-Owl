@@ -110,7 +110,7 @@ async function remoteValidation(
 	// Compare paragraph hash with hash from manifest
 	const hash = sha256(fullText);
 
-	const result = manifest.hashList.find((el) => el === hash);
+	const result = manifest.hashList.find((el: string) => el === hash);
 
 	if (result !== undefined && result !== '') return VerificationStatus.VALID;
 	else {

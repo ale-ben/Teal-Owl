@@ -12,7 +12,7 @@ let status: Status = Status.EMPTY;
 /**
  * Entrypoint for the page parser, called by onClicked event in background.ts
  */
-export async function toggleReader() {
+export async function launchValidation() {
 	// Check if meta tag exists
 	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
 
