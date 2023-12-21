@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const manifestModelSchema = z.object({
+export const zManifestType = z.object({
 	version: z.string(),
 	author: z.string(),
 	document: z.string(),
@@ -26,7 +26,7 @@ export interface ManifestType {
  * @returns true if the object is a valid ManifestType
  */
 export function isManifestType(obj: unknown): obj is ManifestType {
-	return manifestModelSchema.safeParse(obj).success;
+	return zManifestType.safeParse(obj).success;
 }
 
 /**
@@ -35,7 +35,7 @@ export function isManifestType(obj: unknown): obj is ManifestType {
  * @returns A Manifest object or undefined if the object is invalid
  */
 export function ManifestTypeFromObject(obj: unknown): ManifestType | undefined {
-	const result = manifestModelSchema.safeParse(obj);
+	const result = zManifestType.safeParse(obj);
 	if (result.success) {
 		return result.data;
 	}

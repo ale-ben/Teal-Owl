@@ -104,12 +104,12 @@ export const initialState: State = {
 type Action =
 	| { type: 'CHANGE_VALIDATION_BUTTON_LABEL'; label: string }
 	| {
-			type: 'ADD_MANIFEST';
-			manifest: ManifestType;
+			type: 'SET_MANIFEST_LIST';
+			manifests: ManifestType[];
 	  }
 	| {
-			type: 'ADD_WATERMARK';
-			watermark: WMParagraph;
+			type: 'SET_WATERMARK_LIST';
+			watermarks: WMParagraph[];
 	  };
 
 // Define the reducer function
@@ -120,15 +120,15 @@ export const reducer: Reducer<State, Action> = (state, action) => {
 				...state,
 				validateButtonLabel: action.label
 			};
-		case 'ADD_MANIFEST':
+		case 'SET_MANIFEST_LIST':
 			return {
 				...state,
-				manifestStorage: [...state.manifestStorage, action.manifest]
+				manifestStorage: action.manifests
 			};
-		case 'ADD_WATERMARK':
+		case 'SET_WATERMARK_LIST':
 			return {
 				...state,
-				watermarkList: [...state.watermarkList, action.watermark]
+				watermarkList: action.watermarks
 			};
 		default:
 			return state;

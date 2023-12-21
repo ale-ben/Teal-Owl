@@ -17,6 +17,11 @@ function App() {
 		}
 	});
 
+	chrome.storage.session.setAccessLevel({accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS"});
+	chrome.storage.session.onChanged.addListener((changes) => {
+		console.log('Changes', changes);
+	})
+
 	return (
 		<div className="flex min-h-96 max-h-[38rem] w-96 flex-col justify-evenly bg-blue-900 p-5">
 			<p className="text-center text-3xl font-bold text-white">

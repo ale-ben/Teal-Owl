@@ -2,15 +2,16 @@ import {
 	Status,
 	VerificationStatus,
 	WMParagraph,
-	WMSubParagraph
+	WMSubParagraph,
+	WatermarkInfo
 } from '../models/parserTypes';
+import { sendWatermark } from './messageSender';
 import { verifyWatermarks } from './validator';
 
 let wmParagraphs: WMParagraph[] = [];
-let status: Status = Status.EMPTY;
 
 /**
- * Entrypoint for the page parser, called by onClicked event in background.ts
+ * Validates the page and injects watermarking tags
  */
 export async function launchValidation() {
 	// Check if meta tag exists
@@ -40,44 +41,16 @@ export async function launchValidation() {
 		`;
 	}
 
-	switch (status) {
-		case Status.VALIDATED:
-			showWatermarking();
-			status = Status.SHOWING;
-			break;
-		case Status.SHOWING:
-			hideWatermarking();
-			status = Status.VALIDATED;
-			break;
-		default:
-			// Page has not been parsed yet
+	//FIXME: Assumes that this is the first validation on the page
 
-			// Add tags to the page
-			parsePage();
-			// Parse tags and populate wmParagraphs
-			populateParagraphList();
-			// Verify watermarking in each tag
-			await verifyWatermarks(wmParagraphs);
-			console.log(wmParagraphs);
-			// Update timestamp in meta tag
-			updateTimestamp(meta);
-			// Show watermarking
-			//showWatermarking(); FIXME: This does not work
-			updateStatus(Status.VALIDATED);
-			break;
-	}
-}
-
-/**
- * Updates the status and sends a message to the popup script
- * @param newStatus The new status
- */
-function updateStatus(newStatus: Status) {
-	status = newStatus;
-	chrome.runtime.sendMessage({
-		event: 'statusChange',
-		status: Status[newStatus]
-	});
+	// Add tags to the page
+	parsePage();
+	// Parse tags and populate wmParagraphs
+	populateParagraphList();
+	// Verify watermarking in each tag
+	await verifyWatermarks(wmParagraphs);
+	// Update timestamp in meta tag
+	updateTimestamp(meta);
 }
 
 /**
@@ -502,6 +475,8 @@ function populateParagraphList() {
 	});
 }
 
+
+
 function hideWatermarking() {
 	wmParagraphs.forEach((el) => {
 		el.openTag?.classList.remove('wm-marked');
@@ -513,7 +488,6 @@ function hideWatermarking() {
 			subEl.openTag?.classList.remove('wm-invalid');
 		});
 	});
-	updateStatus(Status.VALIDATED);
 }
 
 function showWatermarking() {
@@ -533,5 +507,4 @@ function showWatermarking() {
 			}
 		}
 	});
-	updateStatus(Status.SHOWING);
 }
