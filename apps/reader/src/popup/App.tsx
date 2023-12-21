@@ -7,12 +7,6 @@ import { initialState, reducer } from './models/popupReducer';
 function App() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	chrome.runtime.onMessage.addListener(function (request) {
-		if (request.event === 'statusChange') {
-			console.log('Status change', request);
-		}
-	});
-
 	chrome.storage.session.setAccessLevel({
 		accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS'
 	});
@@ -28,6 +22,22 @@ function App() {
 	chrome.storage.session.get('watermarks', (result) => {
 		if ('watermarks' in result) {
 			const watermarks = parseWatermarks(result.watermarks);
+
+			console.log('Watermarks', watermarks);
+			if (watermarks !== undefined)
+				dispatch({ type: 'SET_WATERMARK_LIST', watermarks });
+		}
+	});
+
+	chrome.storage.onChanged.addListener((changes) => {
+		if ('manifests' in changes) {
+			const manifests = parseManifests(changes.manifests.newValue);
+
+			console.log('Manifests', manifests);
+			if (manifests !== undefined)
+				dispatch({ type: 'SET_MANIFEST_LIST', manifests });
+		} else if ('watermarks' in changes) {
+			const watermarks = parseWatermarks(changes.watermarks.newValue);
 
 			console.log('Watermarks', watermarks);
 			if (watermarks !== undefined)

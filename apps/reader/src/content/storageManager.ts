@@ -35,12 +35,11 @@ export async function saveWatermark(id: string, watermark: WatermarkInfo) {
 	});
 
 	// Save the watermarks
-	chrome.storage.session.set({ watermarks: filteredWatermarks }).then(() => {
-		console.log('Watermark saved', filteredWatermarks);
-	});
+	await chrome.storage.session.set({ watermarks: filteredWatermarks });
+	console.log('Watermark saved');
 }
 
-export function saveManifest(manifest: ManifestType) {
+export async function saveManifest(manifest: ManifestType) {
 	// Get the current manifests
 	const result = chrome.storage.session.get('manifests');
 
@@ -65,9 +64,8 @@ export function saveManifest(manifest: ManifestType) {
 	filteredManifests.push(manifest);
 
 	// Save the manifests
-	chrome.storage.session.set({ manifests: filteredManifests }).then(() => {
-		console.log('Manifest saved');
-	});
+	await chrome.storage.session.set({ manifests: filteredManifests });
+	console.log('Manifest saved');
 }
 
 /**
@@ -76,30 +74,21 @@ export function saveManifest(manifest: ManifestType) {
  * @param document The document of the maifest.
  * @returns The manifest if found, undefined otherwise.
  */
-export function getManifest(
+export async function getManifest(
 	author: string,
 	document: string
-): ManifestType | undefined {
-	const manifests = parseManifests(chrome.storage.local.get('manifests'));
+): Promise<ManifestType | undefined> {
+	// Get the current manifests
+	const result = chrome.storage.session.get('manifests');
 
-	if (manifests !== undefined) {
-		return manifests.find(
-			(m) => m.author === author && m.document === document
-		);
-	}
-}
+	if ('manifests' in result) {
+		// Parse the manifests from the result
+		const manifests = parseManifests(result.manifests);
 
-/**
- * Gets the watermark with the given id from the session storage.
- * @param id The id of the watermark.
- * @returns The watermark if found, undefined otherwise.
- */
-export function getWatermark(id: string): WMParagraph | undefined {
-	const watermarks = parseWatermarks(
-		chrome.storage.session.get('watermarks')
-	);
-
-	if (watermarks !== undefined) {
-		return watermarks.find((wm) => wm.id === id);
-	}
+		if (manifests !== undefined) {
+			return manifests.find(
+				(m) => m.author === author && m.document === document
+			);
+		}
+	}	
 }
