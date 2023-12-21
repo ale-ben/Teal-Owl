@@ -46,23 +46,21 @@ export const zWMParagraph = z.object({
 });
 
 export function parseWatermarks(watermarks: any): WMParagraph[] | undefined {
-	const zWMArray = z.object({
-		watermarks: z.array(zWMParagraph)
-	});
+	const zWMArray = z.array(zWMParagraph);
 
 	const wmArray = zWMArray.safeParse(watermarks);
 
 	if (wmArray.success) {
-		return wmArray.data.watermarks;
+		return wmArray.data;
 	}
 }
 
 export function parseManifests(manifests: any): ManifestType[] | undefined {
-	const zManifestArray = z.object({manifests: z.array(zManifestType)});
+	const zManifestArray = z.array(zManifestType);
 
 	const manifestArray = zManifestArray.safeParse(manifests);
 
 	if (manifestArray.success) {
-		return manifestArray.data.manifests;
+		return manifestArray.data;
 	}
 }

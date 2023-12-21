@@ -13,50 +13,59 @@ import {
  */
 export async function saveWatermark(id: string, watermark: WatermarkInfo) {
 	// Get the current watermarks
-	const watermarks = parseWatermarks(
-		await chrome.storage.session.get('watermarks')
-	);
+	const result = await chrome.storage.session.get('watermarks');
 
-	// Filter out the watermark with the same id (if no watermark found, get an empty array)
-	const filteredWatermarks: WMParagraph[] =
-		watermarks !== undefined
-			? watermarks?.filter((wm) => wm.id !== id)
-			: [];
+	let filteredWatermarks: WMParagraph[] = [];
 
+	if ('watermarks' in result) {
+		// Parse the manifests from the result
+		const watermarks = parseWatermarks(result.watermarks);
 
-	// Add the new watermark
+		// Filter out the watermark with the same id (if no watermark found, get an empty array)
+		filteredWatermarks =
+			watermarks !== undefined
+				? watermarks?.filter((wm) => wm.id !== id)
+				: [];
+	}
+
+	// Push the new watermark
 	filteredWatermarks.push({
 		id: id,
-		watermark: watermark,
-		openTag: undefined,
-		subTags: undefined
+		watermark: watermark
 	});
 
 	// Save the watermarks
 	chrome.storage.session.set({ watermarks: filteredWatermarks }).then(() => {
-		console.log('Watermark saved');
+		console.log('Watermark saved', filteredWatermarks);
 	});
 }
 
 export function saveManifest(manifest: ManifestType) {
 	// Get the current manifests
-	const manifests = parseManifests(chrome.storage.local.get('manifests'));
+	const result = chrome.storage.session.get('manifests');
 
-	// Filter out the manifest with the same author and document (if no manifest found, get an empty array)
-	const filteredManifests: ManifestType[] =
-		manifests !== undefined
-			? manifests?.filter(
-					(m) =>
-						m.author !== manifest.author ||
-						m.document !== manifest.document
-				)
-			: [];
+	let filteredManifests: ManifestType[] = [];
+
+	if ('manifests' in result) {
+		// Parse the manifests from the result
+		const manifests = parseManifests(result.manifests);
+
+		// Filter out the manifest with the same author and document (if no manifest found, get an empty array)
+		filteredManifests =
+			manifests !== undefined
+				? manifests?.filter(
+						(m) =>
+							m.author !== manifest.author ||
+							m.document !== manifest.document
+					)
+				: [];
+	}
 
 	// Add the new manifest
 	filteredManifests.push(manifest);
 
 	// Save the manifests
-	chrome.storage.local.set({ manifests: filteredManifests }).then(() => {
+	chrome.storage.session.set({ manifests: filteredManifests }).then(() => {
 		console.log('Manifest saved');
 	});
 }
@@ -67,7 +76,10 @@ export function saveManifest(manifest: ManifestType) {
  * @param document The document of the maifest.
  * @returns The manifest if found, undefined otherwise.
  */
-export function getManifest(author: string, document: string): ManifestType | undefined {
+export function getManifest(
+	author: string,
+	document: string
+): ManifestType | undefined {
 	const manifests = parseManifests(chrome.storage.local.get('manifests'));
 
 	if (manifests !== undefined) {
