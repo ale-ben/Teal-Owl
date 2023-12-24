@@ -4,9 +4,10 @@ pragma solidity ^0.8.23;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "hardhat/console.sol";
 
 contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage {
-    uint256 private _nextTokenId = 0;
+    uint256 private _nextTokenId = 1;
 
 	// mapping for token IDs
     mapping(string toTokenID => uint256) private _tokenMapping;
@@ -43,7 +44,9 @@ contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage {
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return super.tokenURI(tokenId);
+		string memory val = super.tokenURI(tokenId);
+		console.log("tokenURI", tokenId, val);
+        return val;
     }
 
 	 function tokenURIS(string memory toTokenID)
@@ -51,7 +54,12 @@ contract TealOwl is ERC721, ERC721Enumerable, ERC721URIStorage {
         view
         returns (string memory)
     {
-        return tokenURI(_tokenMapping[toTokenID]);
+		uint256 tokenId = _tokenMapping[toTokenID];
+		
+		require(tokenId > 0, "Token not found");
+
+		console.log("tokenURIS", toTokenID, tokenId);
+        return tokenURI(tokenId);
     }
 
     function supportsInterface(bytes4 interfaceId)

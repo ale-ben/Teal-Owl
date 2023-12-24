@@ -5,20 +5,31 @@
 		"build": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/watermarking"],
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/contract-utils",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/watermarking"
+					],
 					"target": "build"
 				}
 			],
 			"cache": true,
-			"outputs": ["{projectRoot}/build"]
+			"outputs": [
+				"{projectRoot}/dist/prod"
+			]
 		},
 		"dev": {
 			"dependsOn": [
 				{
-					"projects": ["@teal-owl/watermarking"],
+					"projects": [
+						"@teal-owl/types",
+						"@teal-owl/contract-utils",
+						"@teal-owl/ipfs-utils",
+						"@teal-owl/watermarking"
+					],
 					"target": "build"
-				},
-				"build"
+				}
 			],
 			"cache": false
 		}

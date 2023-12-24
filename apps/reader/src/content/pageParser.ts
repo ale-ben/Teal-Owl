@@ -1,18 +1,13 @@
-import {
-	Status,
-	VerificationStatus,
-	WMParagraph,
-	WMSubParagraph
-} from './parserTypes';
+import { NPC } from '@teal-owl/watermarking';
+import { WMParagraph, WMSubParagraph } from '../models/parserTypes';
 import { verifyWatermarks } from './validator';
 
 let wmParagraphs: WMParagraph[] = [];
-let status: Status = Status.EMPTY;
 
 /**
- * Entrypoint for the page parser, called by onClicked event in background.ts
+ * Validates the page and injects watermarking tags
  */
-export async function toggleReader() {
+export async function launchValidation() {
 	// Check if meta tag exists
 	let meta = document.head.getElementsByTagName('watermarking-meta')[0];
 
@@ -23,13 +18,8 @@ export async function toggleReader() {
 		const style = document.createElement('style');
 		document.head.appendChild(style);
 		style.innerHTML = `
-			.wm-valid {
-				background-color: #cefad0;
-				color: black;
-			}
-
-			.wm-invalid {
-				background-color: #ffc8c9;
+			.wm-highlighted {
+				background-color: #FBF719;
 				color: black;
 			}
 
@@ -40,44 +30,16 @@ export async function toggleReader() {
 		`;
 	}
 
-	switch (status) {
-		case Status.VALIDATED:
-			showWatermarking();
-			status = Status.SHOWING;
-			break;
-		case Status.SHOWING:
-			hideWatermarking();
-			status = Status.VALIDATED;
-			break;
-		default:
-			// Page has not been parsed yet
+	//FIXME: Assumes that this is the first validation on the page
 
-			// Add tags to the page
-			parsePage();
-			// Parse tags and populate wmParagraphs
-			populateParagraphList();
-			// Verify watermarking in each tag
-			await verifyWatermarks(wmParagraphs);
-			console.log(wmParagraphs);
-			// Update timestamp in meta tag
-			updateTimestamp(meta);
-			// Show watermarking
-			//showWatermarking(); FIXME: This does not work
-			updateStatus(Status.VALIDATED);
-			break;
-	}
-}
-
-/**
- * Updates the status and sends a message to the popup script
- * @param newStatus The new status
- */
-function updateStatus(newStatus: Status) {
-	status = newStatus;
-	chrome.runtime.sendMessage({
-		event: 'statusChange',
-		status: Status[newStatus]
-	});
+	// Add tags to the page
+	parsePage();
+	// Parse tags and populate wmParagraphs
+	populateParagraphList();
+	// Verify watermarking in each tag
+	await verifyWatermarks(wmParagraphs);
+	// Update timestamp in meta tag
+	updateTimestamp(meta);
 }
 
 /**
@@ -109,9 +71,6 @@ function parsePage() {
 
 	// Index of watermarking tag
 	let wmIndex = 0;
-
-	// Non Printable Character used to separate paragraphs
-	const NPC = '§';
 
 	// Find first NPC in body
 	let beginIndex = body.indexOf(NPC);
@@ -502,36 +461,24 @@ function populateParagraphList() {
 	});
 }
 
-function hideWatermarking() {
-	wmParagraphs.forEach((el) => {
-		el.openTag?.classList.remove('wm-marked');
-		el.openTag?.classList.remove('wm-valid');
-		el.openTag?.classList.remove('wm-invalid');
-		el.subTags?.forEach((subEl) => {
-			subEl.openTag?.classList.remove('wm-marked');
-			subEl.openTag?.classList.remove('wm-valid');
-			subEl.openTag?.classList.remove('wm-invalid');
+export function highlight(paragraphId: string) {
+	removeHighlight();
+
+	const par = wmParagraphs.find((el) => el.id === paragraphId);
+
+	if (par) {
+		par.openTag?.classList.add('wm-highlighted');
+		par.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.add('wm-highlighted');
 		});
-	});
-	updateStatus(Status.VALIDATED);
+	}
 }
 
-function showWatermarking() {
+function removeHighlight() {
 	wmParagraphs.forEach((el) => {
-		if (el.watermark) {
-			if (
-				el.watermark.verificationStatus !== VerificationStatus.UNKNOWN
-			) {
-				const className =
-					el.watermark.verificationStatus === VerificationStatus.VALID
-						? 'wm-valid'
-						: 'wm-invalid';
-				el.openTag?.classList.add(className);
-				el.subTags?.forEach((subEl) => {
-					subEl.openTag?.classList.add(className);
-				});
-			}
-		}
+		el.openTag?.classList.remove('wm-highlighted');
+		el.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.remove('wm-highlighted');
+		});
 	});
-	updateStatus(Status.SHOWING);
 }
