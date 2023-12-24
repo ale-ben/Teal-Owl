@@ -90,5 +90,5 @@ export async function getManifest(
 				(m) => m.author === author && m.document === document
 			);
 		}
-	}	
+	}
 }

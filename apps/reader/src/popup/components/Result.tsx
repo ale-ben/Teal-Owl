@@ -59,8 +59,11 @@ const Result = ({ manifest, watermarkList }: props) => {
 				</div>
 			) : (
 				<div>
-					<p className='text-xl'>No manifest found</p>
-					<p className='text-base'>The following paragraphs have a watermark but no corresponding manifest has been found.</p>
+					<p className="text-xl">No manifest found</p>
+					<p className="text-base">
+						The following paragraphs have a watermark but no
+						corresponding manifest has been found.
+					</p>
 				</div>
 			)}
 			<a className="text-base">Paragraphs:</a>

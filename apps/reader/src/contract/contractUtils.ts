@@ -61,7 +61,7 @@ export async function getTokenURI(
 
 		return parsed.data;
 	} catch (e) {
-		console.warn("Error while fetching tokenURI", e);
+		console.warn('Error while fetching tokenURI', e);
 		return undefined;
 	}
 }

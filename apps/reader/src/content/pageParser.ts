@@ -461,19 +461,6 @@ function populateParagraphList() {
 	});
 }
 
-function hideWatermarking() {
-	wmParagraphs.forEach((el) => {
-		el.openTag?.classList.remove('wm-marked');
-		el.openTag?.classList.remove('wm-valid');
-		el.openTag?.classList.remove('wm-invalid');
-		el.subTags?.forEach((subEl) => {
-			subEl.openTag?.classList.remove('wm-marked');
-			subEl.openTag?.classList.remove('wm-valid');
-			subEl.openTag?.classList.remove('wm-invalid');
-		});
-	});
-}
-
 export function highlight(paragraphId: string) {
 	removeHighlight();
 
