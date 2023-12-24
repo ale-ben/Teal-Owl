@@ -1,6 +1,6 @@
 {
     "name": "@teal-owl/watermarking",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Watermarking lib for the Teal Owl project",
     "main": "dist/index.js",
     "author": "Alessandro Benetton (aleben98@gmail.com)",
@@ -14,7 +14,7 @@
         "preinstall": "npx only-allow pnpm",
         "build": "rm -rf dist && tsc",
         "test": "jest",
-		"style": "prettier --write 'src/**/*.{ts,tsx}'",
+        "style": "prettier --write 'src/**/*.{ts,tsx}'",
         "lint": "eslint . --ext .ts",
         "lint-fix": "eslint . --ext .ts --fix",
         "clean": "rimraf dist"
