@@ -1,10 +1,1 @@
-{
-	"version": "1.0",
-	"author": "alessandro.benetton@studio.unibo.it",
-	"document": "1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8",
-	"hashList": [
-		"316a8a13bc03f99edf8de0e024a7a69e3ddfcee8f8eb8745b0a809ddd58f9928",
-		"af9d8adb7a69ccc758c1eb30e59bef7bcbb7e894f3452c2eeb5e34078ed0f479"
-	],
-	"timestamp": "2023-12-12T15:52:22.835Z"
-}
+{"version":"1.0","author":"aleben","document":"1JUhzMh3R","timestamp":"2023-12-22T11:18:44.248Z","hashList":["73ad9af6e9f7976dbc189d6462b945ab8d8886e882aa34d6cd4b8e60ff2387c0","399e9d40245be26d7dd530ef3489b1256b57b40a7d9766637945c97dd7cc4500","211c58620788141862844d2ae7b5fea634325bf5500380b8a52e2843419ed5fc","de6f3c1ffbecd7a6ebab0f4714ade00da53061ce6b6c5179eb9ebfed47656347","d47c69241762643228be49e557086131c7adb1be296251cb76462cad05b65d83"],"source":"https://docs.google.com/document/d/1JUhzMh3RAOVqns21JaIAWl-hD3Isz869YmbGb15pAH8","notes":"Test document for Teal Owl Project"}

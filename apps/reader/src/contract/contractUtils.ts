@@ -33,27 +33,35 @@ export async function getName(): Promise<string | undefined> {
 export async function getTokenURI(
 	tokenId: string
 ): Promise<string | undefined> {
+	console.log('Getting token URI for', tokenId);
 	const contractInfo = await getContractInfo('sepolia');
 
 	if (contractInfo === undefined) {
 		return undefined;
 	}
 
-	const tokenURI = await readContract({
-		address: contractInfo.address,
-		abi: contractInfo.abi,
-		functionName: 'tokenURIS',
-		args: [tokenId]
-	});
+	try {
+		const tokenURI = await readContract({
+			address: contractInfo.address,
+			abi: contractInfo.abi,
+			functionName: 'tokenURIS',
+			args: [tokenId]
+		});
 
-	const parsed = z.string().safeParse(tokenURI);
-	if (
-		parsed.success === false ||
-		parsed.data === undefined ||
-		parsed.data === ''
-	) {
+		console.log('Found tokenURI', tokenURI);
+
+		const parsed = z.string().safeParse(tokenURI);
+		if (
+			parsed.success === false ||
+			parsed.data === undefined ||
+			parsed.data === ''
+		) {
+			return undefined;
+		}
+
+		return parsed.data;
+	} catch (e) {
+		console.warn('Error while fetching tokenURI', e);
 		return undefined;
 	}
-
-	return parsed.data;
 }

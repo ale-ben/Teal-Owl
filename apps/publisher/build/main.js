@@ -1,7 +1,7 @@
 /**
  * Non printable character used to separate the paragraphs
  */
-const NPC = '\u00a7'; // <>; TODO: Change this to the real NPC
+const NPC = '\u200b'; // Zero width space
 /**
  * Conversion table for characters and their homoglyphs
  */

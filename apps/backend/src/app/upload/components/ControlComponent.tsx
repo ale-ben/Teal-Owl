@@ -1,6 +1,7 @@
+import { uploadToIPFS } from '@/serverActions/ipfsActions';
 import { saveManifestInfo } from '@/utils/contractSignerUtils';
 import { Button } from '@nextui-org/button';
-import { IPFSObject, uploadManifestToIPFS } from '@teal-owl/ipfs-utils';
+import { IPFSObject } from '@teal-owl/ipfs-utils';
 import { isManifestType } from '@teal-owl/types';
 import { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
@@ -40,7 +41,9 @@ export default function ControlComponent({
 				};
 
 				// Upload object to IPFS
-				obj = await uploadManifestToIPFS(obj);
+				const tmpObj = await uploadToIPFS(obj);
+				if (tmpObj) obj = tmpObj;
+				else throw new Error('Error uploading object to IPFS');
 
 				// Save uploaded object to Smart Contract
 				if (obj.cid) {

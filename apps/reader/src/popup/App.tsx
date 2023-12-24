@@ -1,74 +1,58 @@
-import { useState } from 'react';
-import { getName } from '../contract/contractUtils';
+import { useReducer } from 'react';
+import { parseManifests, parseWatermarks } from '../models/parserTypes';
+import Results from './components/Results';
+import ValidateButton from './components/ValidateButton';
+import { initialState, reducer } from './models/popupReducer';
 
 function App() {
-	const [validationState, setValidationState] =
-		useState<string>('Not Validated');
-	const [actionLabel, setActionLabel] = useState<string>('Validate');
+	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const [contractName, setContractName] = useState<string>('');
+	chrome.storage.session.setAccessLevel({
+		accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS'
+	});
 
-	getName().then((name) => setContractName(name || ''));
+	chrome.storage.session.get('manifests', (result) => {
+		if ('manifests' in result) {
+			const manifests = parseManifests(result.manifests);
 
-	chrome.runtime.onMessage.addListener(function (request) {
-		if (request.event === 'statusChange') {
-			switch (request.status) {
-				case 'EMPTY':
-					setValidationState(request.status);
-					setActionLabel('Validate');
-					break;
-				case 'VALIDATED':
-					setValidationState(request.status);
-					setActionLabel('Show');
-					break;
-				case 'SHOWING':
-					setValidationState(request.status);
-					setActionLabel('Hide');
-					break;
-				default:
-					console.error(
-						'Teal-Owl popup',
-						'Unknown status',
-						request.status
-					);
-			}
+			console.log('Manifests', manifests);
+			if (manifests !== undefined)
+				dispatch({ type: 'SET_MANIFEST_LIST', manifests });
+		}
+	});
+	chrome.storage.session.get('watermarks', (result) => {
+		if ('watermarks' in result) {
+			const watermarks = parseWatermarks(result.watermarks);
+
+			console.log('Watermarks', watermarks);
+			if (watermarks !== undefined)
+				dispatch({ type: 'SET_WATERMARK_LIST', watermarks });
+		}
+	});
+
+	chrome.storage.onChanged.addListener((changes) => {
+		if ('manifests' in changes) {
+			const manifests = parseManifests(changes.manifests.newValue);
+
+			console.log('Manifests', manifests);
+			if (manifests !== undefined)
+				dispatch({ type: 'SET_MANIFEST_LIST', manifests });
+		} else if ('watermarks' in changes) {
+			const watermarks = parseWatermarks(changes.watermarks.newValue);
+
+			console.log('Watermarks', watermarks);
+			if (watermarks !== undefined)
+				dispatch({ type: 'SET_WATERMARK_LIST', watermarks });
 		}
 	});
 
 	return (
-		<div className="flex h-96 w-80 flex-col justify-evenly bg-blue-900 p-5">
+		<div className="flex min-h-96 max-h-[38rem] w-96 flex-col justify-evenly bg-blue-900 p-5">
 			<p className="text-center text-3xl font-bold text-white">
 				Teal Owl - Reader
 			</p>
-			<p className="text-center text-lg font-bold text-white">
-				Contract name: {contractName}
-			</p>
-			<div className="text-center text-xl text-white">
-				Status:
-				<div className="font-bold">{validationState}</div>
-			</div>
-			<button
-				className="mb-2 mr-2 rounded-lg border border-white px-5 py-2.5 text-center text-sm font-medium text-white hover:border-blue-900 hover:bg-white hover:text-blue-900"
-				onClick={async () => {
-					const queryOptions = {
-						active: true,
-						currentWindow: true
-					};
-					const tabs = await chrome.tabs.query(queryOptions);
-					const tab = tabs[0];
-
-					console.log('Toggle');
-					chrome.tabs
-						.sendMessage(tab.id ? tab.id : -1, {
-							event: 'toggle'
-						})
-						.catch((error): void => {
-							console.error('Teal-Owl', error);
-						});
-				}}
-			>
-				{actionLabel}
-			</button>
+			<ValidateButton actionLabel={state.validateButtonLabel} />
+			<Results state={state} />
 		</div>
 	);
 }

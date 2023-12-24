@@ -6,7 +6,7 @@ interface Paragraph {
 /**
  * Non printable character used to separate the paragraphs
  */
-export const NPC: string = '\u00a7'; // <>; TODO: Change this to the real NPC
+export const NPC: string = '\u200b'; // Zero width space
 
 /**
  * Conversion table for characters and their homoglyphs
