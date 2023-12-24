@@ -1,12 +1,15 @@
 import { IpfsUploadBatchOptions, ThirdwebStorage } from '@thirdweb-dev/storage';
 
-export let authStorage: ThirdwebStorage<IpfsUploadBatchOptions>;
+const baseStorage = new ThirdwebStorage();
+let authClient: ThirdwebStorage<IpfsUploadBatchOptions> | undefined;
 
-if (typeof process !== 'undefined' && process.env.THIRDWEB_API_KEY){
-	authStorage = new ThirdwebStorage({
-		secretKey: process.env.THIRDWEB_API_KEY
-	});
-} else {
-	console.warn("No THIRDWEB_API_KEY found in environment variables. Only public queries will be available.");
-	authStorage = new ThirdwebStorage();
+export function getThirdwebBaseClient() {
+	return baseStorage;
+}
+
+export function getThirdwebAuthClient(key?: string) {
+	if (authClient !== undefined) return authClient;
+	if (key === undefined)
+		throw new Error('No key provided for thirdweb auth client');
+	return new ThirdwebStorage({ secretKey: key });
 }

@@ -1,12 +1,12 @@
-import { authStorage } from './baseStorage';
+import { getThirdwebAuthClient } from './baseStorage';
 import { IPFSObject } from './types';
 
-
-
 export async function uploadManifestToIPFS(
-	obj: IPFSObject
+	obj: IPFSObject,
+	thirdwebKey?: string
 ): Promise<IPFSObject> {
-	const uri = await authStorage.upload(obj.content, {
+	const client = getThirdwebAuthClient(thirdwebKey);
+	const uri = await client.upload(obj.content, {
 		alwaysUpload: false
 	});
 	const cid = uri.replace('ipfs://', '');
