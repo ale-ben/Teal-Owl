@@ -87,7 +87,7 @@ async function remoteValidation(
 		if (tokenURI === undefined) return VerificationStatus.INVALID; // TODO: There should be a third status like "I'm not sure" or something like that
 
 		// Step 2: Download the object from IPFS
-		manifest = await downloadManifestFromIPFS(tokenURI); // TODO: Local cache would be good here
+		manifest = await downloadManifestFromIPFS(tokenURI);
 		if (manifest === undefined) return VerificationStatus.INVALID; // TODO: There should be a third status like "I'm not sure" or something like that
 
 		// Step 2.1: Save the manifest to local cache

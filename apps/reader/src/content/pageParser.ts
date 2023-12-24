@@ -1,11 +1,5 @@
-import {
-	Status,
-	VerificationStatus,
-	WMParagraph,
-	WMSubParagraph,
-	WatermarkInfo
-} from '../models/parserTypes';
-import { sendWatermark } from './messageSender';
+import { NPC } from '@teal-owl/watermarking';
+import { WMParagraph, WMSubParagraph } from '../models/parserTypes';
 import { verifyWatermarks } from './validator';
 
 let wmParagraphs: WMParagraph[] = [];
@@ -24,13 +18,8 @@ export async function launchValidation() {
 		const style = document.createElement('style');
 		document.head.appendChild(style);
 		style.innerHTML = `
-			.wm-valid {
-				background-color: #cefad0;
-				color: black;
-			}
-
-			.wm-invalid {
-				background-color: #ffc8c9;
+			.wm-highlighted {
+				background-color: #FBF719;
 				color: black;
 			}
 
@@ -82,9 +71,6 @@ function parsePage() {
 
 	// Index of watermarking tag
 	let wmIndex = 0;
-
-	// Non Printable Character used to separate paragraphs
-	const NPC = '§';
 
 	// Find first NPC in body
 	let beginIndex = body.indexOf(NPC);
@@ -475,8 +461,6 @@ function populateParagraphList() {
 	});
 }
 
-
-
 function hideWatermarking() {
 	wmParagraphs.forEach((el) => {
 		el.openTag?.classList.remove('wm-marked');
@@ -490,21 +474,24 @@ function hideWatermarking() {
 	});
 }
 
-function showWatermarking() {
+export function highlight(paragraphId: string) {
+	removeHighlight();
+
+	const par = wmParagraphs.find((el) => el.id === paragraphId);
+
+	if (par) {
+		par.openTag?.classList.add('wm-highlighted');
+		par.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.add('wm-highlighted');
+		});
+	}
+}
+
+function removeHighlight() {
 	wmParagraphs.forEach((el) => {
-		if (el.watermark) {
-			if (
-				el.watermark.verificationStatus !== VerificationStatus.UNKNOWN
-			) {
-				const className =
-					el.watermark.verificationStatus === VerificationStatus.VALID
-						? 'wm-valid'
-						: 'wm-invalid';
-				el.openTag?.classList.add(className);
-				el.subTags?.forEach((subEl) => {
-					subEl.openTag?.classList.add(className);
-				});
-			}
-		}
+		el.openTag?.classList.remove('wm-highlighted');
+		el.subTags?.forEach((subEl) => {
+			subEl.openTag?.classList.remove('wm-highlighted');
+		});
 	});
 }

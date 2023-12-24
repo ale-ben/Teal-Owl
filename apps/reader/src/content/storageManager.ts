@@ -65,7 +65,7 @@ export async function saveManifest(manifest: ManifestType) {
 
 	// Save the manifests
 	await chrome.storage.session.set({ manifests: filteredManifests });
-	console.log('Manifest saved');
+	console.log('Manifest saved', manifest);
 }
 
 /**

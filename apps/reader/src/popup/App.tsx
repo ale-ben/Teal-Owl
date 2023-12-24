@@ -10,6 +10,7 @@ function App() {
 	chrome.storage.session.setAccessLevel({
 		accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS'
 	});
+	
 	chrome.storage.session.get('manifests', (result) => {
 		if ('manifests' in result) {
 			const manifests = parseManifests(result.manifests);
