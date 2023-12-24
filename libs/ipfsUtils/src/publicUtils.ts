@@ -1,5 +1,5 @@
 import { isManifestType, ManifestType } from '@teal-owl/types';
-import { authStorage } from './baseStorage';
+import { getThirdwebBaseClient } from './baseStorage';
 
 export async function downloadManifestFromIPFS(
 	cid: string
@@ -8,8 +8,10 @@ export async function downloadManifestFromIPFS(
 	if (!cid.startsWith('ipfs://')) cid = 'ipfs://' + cid;
 
 	try {
+		// Get the base client
+		const baseStorage = getThirdwebBaseClient();
 		// Download the object
-		const obj = await authStorage.downloadJSON(cid);
+		const obj = await baseStorage.downloadJSON(cid);
 
 		// Validate the object
 		if (!isManifestType(obj)) {

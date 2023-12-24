@@ -19,6 +19,7 @@ module.exports = {
             }
         ],
         "no-console": 1, // Means warning
-        "prettier/prettier": 1 // Means error
+        "prettier/prettier": 1, // Means warn
+		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"]
     }
 };

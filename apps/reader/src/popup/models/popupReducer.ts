@@ -89,6 +89,26 @@ export const dummyInitialState: State = {
 				document: 'doc',
 				verificationStatus: VerificationStatus.INVALID
 			}
+		},
+		{
+			id: '4',
+			openTag: undefined,
+			subTags: [],
+			watermark: {
+				author: 'ajeje',
+				document: 'brazorf',
+				verificationStatus: VerificationStatus.VALID
+			}
+		},
+		{
+			id: '5',
+			openTag: undefined,
+			subTags: [],
+			watermark: {
+				author: 'brazorf',
+				document: 'ajeje',
+				verificationStatus: VerificationStatus.INVALID
+			}
 		}
 	]
 };

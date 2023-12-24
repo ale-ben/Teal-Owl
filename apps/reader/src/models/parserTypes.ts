@@ -1,5 +1,5 @@
-import { ManifestType, zManifestType } from "@teal-owl/types";
-import { z } from "zod";
+import { ManifestType, zManifestType } from '@teal-owl/types';
+import { z } from 'zod';
 
 export interface WMSubParagraph {
 	id: string;
@@ -12,12 +12,16 @@ const zWMSubParagraph = z.object({
 });
 
 export enum VerificationStatus {
-	VALID = "Valid",
-	INVALID = "Not Valid",
-	UNKNOWN = "Unknown"
+	VALID = 'Valid',
+	INVALID = 'Not Valid',
+	UNKNOWN = 'Unknown'
 }
 
-const zVerificationStatus = z.enum([VerificationStatus.VALID, VerificationStatus.INVALID, VerificationStatus.UNKNOWN]);
+const zVerificationStatus = z.enum([
+	VerificationStatus.VALID,
+	VerificationStatus.INVALID,
+	VerificationStatus.UNKNOWN
+]);
 
 export interface WatermarkInfo {
 	author: string;
@@ -45,24 +49,24 @@ export const zWMParagraph = z.object({
 	watermark: zWatermarkInfo.optional()
 });
 
-export function parseWatermarks(watermarks: any): WMParagraph[] | undefined {
-	const zWMArray = z.object({
-		watermarks: z.array(zWMParagraph)
-	});
+export function parseWatermarks(
+	watermarks: unknown
+): WMParagraph[] | undefined {
+	const zWMArray = z.array(zWMParagraph);
 
 	const wmArray = zWMArray.safeParse(watermarks);
 
 	if (wmArray.success) {
-		return wmArray.data.watermarks;
+		return wmArray.data;
 	}
 }
 
-export function parseManifests(manifests: any): ManifestType[] | undefined {
-	const zManifestArray = z.object({manifests: z.array(zManifestType)});
+export function parseManifests(manifests: unknown): ManifestType[] | undefined {
+	const zManifestArray = z.array(zManifestType);
 
 	const manifestArray = zManifestArray.safeParse(manifests);
 
 	if (manifestArray.success) {
-		return manifestArray.data.manifests;
+		return manifestArray.data;
 	}
 }

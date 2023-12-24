@@ -76,7 +76,10 @@ async function remoteValidation(
 	wmInfo: WatermarkInfo
 ): Promise<VerificationStatus> {
 	// Step 0: Check if the watermark is in session storage
-	let manifest: ManifestType = getManifest(wmInfo.author, wmInfo.document);
+	let manifest: ManifestType | undefined = await getManifest(
+		wmInfo.author,
+		wmInfo.document
+	);
 
 	if (manifest === undefined || manifest === null) {
 		// Step 1: Get the CID from the smart contract
@@ -84,11 +87,11 @@ async function remoteValidation(
 		if (tokenURI === undefined) return VerificationStatus.INVALID; // TODO: There should be a third status like "I'm not sure" or something like that
 
 		// Step 2: Download the object from IPFS
-		manifest = await downloadManifestFromIPFS(tokenURI); // TODO: Local cache would be good here
+		manifest = await downloadManifestFromIPFS(tokenURI);
 		if (manifest === undefined) return VerificationStatus.INVALID; // TODO: There should be a third status like "I'm not sure" or something like that
 
 		// Step 2.1: Save the manifest to local cache
-		saveManifest(manifest);
+		await saveManifest(manifest);
 	} else {
 		console.log('Manifest found in cache', manifest);
 	}
@@ -139,7 +142,7 @@ async function remoteValidation(
 }
 
 export async function verifyWatermarks(wmParagraphs: WMParagraph[]) {
-	wmParagraphs.forEach(async (el) => {
+	for (const el of wmParagraphs) {
 		if (el.openTag) {
 			const localValidationResult = localValidation(el);
 			let remoteValidationResult: VerificationStatus | undefined;
@@ -165,7 +168,7 @@ export async function verifyWatermarks(wmParagraphs: WMParagraph[]) {
 			};
 
 			// Send message to background script to save the watermark
-			saveWatermark(el.id, el.watermark);
+			await saveWatermark(el.id, el.watermark);
 		}
-	});
+	}
 }
