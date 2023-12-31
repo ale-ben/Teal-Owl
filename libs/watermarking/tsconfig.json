@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "module": "ESNext",
-        "target": "ES2020",
+        "target": "ES2021",
         "esModuleInterop": true,
         "rootDir": "src/",
         "outDir": "./dist",

@@ -1,7 +1,6 @@
 import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
 import { ManifestType } from '@teal-owl/types';
-import { decodeText, extractRawText } from '@teal-owl/watermarking';
-import { sha256 } from 'js-sha256';
+import { decodeText, extractRawText, hashText } from '@teal-owl/watermarking';
 import { getTokenURI } from '../contract/contractUtils';
 import {
 	VerificationStatus,
@@ -123,7 +122,7 @@ async function remoteValidation(
 	fullText = extractRawText(fullText);
 
 	// Compare paragraph hash with hash from manifest
-	const hash = sha256(fullText);
+	const hash = hashText(fullText);
 
 	const result = manifest.hashList.find((el: string) => el === hash);
 
@@ -132,7 +131,7 @@ async function remoteValidation(
 		console.warn(
 			'Calculated hash does not match any of the known hashes.',
 			JSON.stringify({
-				par: fullText,
+				par: '|' + fullText + '|',
 				generated: hash,
 				known: manifest.hashList
 			})

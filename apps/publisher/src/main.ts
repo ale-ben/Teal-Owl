@@ -72,12 +72,30 @@ function getBasicInfo() {
 	}
 }
 
-function applyWatermark(documentID: string, authorID: string, source: string, notes: string, originalDocumentID: string) {
-	console.log('Applying watermark', documentID, authorID, source, notes, originalDocumentID);
+function applyWatermark(
+	documentID: string,
+	authorID: string,
+	source: string,
+	notes: string,
+	originalDocumentID: string
+) {
+	console.log(
+		'Applying watermark',
+		documentID,
+		authorID,
+		source,
+		notes,
+		originalDocumentID
+	);
 
 	// Basic info and paths
-	const doc: GoogleAppsScript.Document.Document = DocumentApp.openById(originalDocumentID);
-	const docFolder: GoogleAppsScript.Drive.Folder = DriveApp.getFileById(originalDocumentID).getParents().next();
+	const doc: GoogleAppsScript.Document.Document =
+		DocumentApp.openById(originalDocumentID);
+	const docFolder: GoogleAppsScript.Drive.Folder = DriveApp.getFileById(
+		originalDocumentID
+	)
+		.getParents()
+		.next();
 
 	const outFolderName = doc.getName() + '_watermarked';
 	const outFileName = doc.getName() + '_watermark';
@@ -104,8 +122,8 @@ function applyWatermark(documentID: string, authorID: string, source: string, no
 		document: documentID,
 		timestamp: new Date().toISOString(),
 		hashList,
-		source: (source.replaceAll(" ", "") !==  "" ? source : undefined),
-		notes: (notes.replaceAll(" ", "") !==  "" ? notes : undefined)
+		source: source.replaceAll(' ', '') !== '' ? source : undefined,
+		notes: notes.replaceAll(' ', '') !== '' ? notes : undefined
 	};
 
 	// Save to files

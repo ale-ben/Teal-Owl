@@ -1,43 +1,4 @@
-/**
- * Generate SHA256 hash of string
- * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
- * @param value
- * @returns
- */
-export function Sha256Hash(value: string): string {
-	return BytesToHex(
-		Utilities.computeDigest(
-			Utilities.DigestAlgorithm.SHA_256,
-			value,
-			Utilities.Charset.UTF_8
-		)
-	);
-}
-
-/**
- * Convert bytes array to hex string
- * https://stackoverflow.com/questions/59381945/how-do-i-get-google-apps-script-to-do-sha-256-encryption
- * @param bytes
- * @returns
- */
-function BytesToHex(bytes: number[]): string {
-	const hex = [];
-	for (let i = 0; i < bytes.length; i++) {
-		const b = bytes[i];
-		let c;
-		if (b < 0) {
-			c = (256 + b).toString(16);
-		} else {
-			c = b.toString(16);
-		}
-		if (c.length == 1) {
-			hex.push('0' + c);
-		} else {
-			hex.push(c);
-		}
-	}
-	return hex.join('');
-}
+import { hashText } from '@teal-owl/watermarking';
 
 /**
  * Generate payload for watermarking
@@ -50,7 +11,7 @@ export function GeneratePayload(userID: string, docID: string): string {
 	let payload = userID + ',' + docID;
 
 	// Generarte hash of payload
-	const hash = Sha256Hash(payload);
+	const hash = hashText(payload);
 
 	// Add hash to payload (as string)
 	payload += ',' + hash;

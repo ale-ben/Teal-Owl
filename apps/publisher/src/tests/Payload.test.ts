@@ -1,4 +1,4 @@
-import { BinStrToString, StringToBinStr } from "../Payload";
+import { BinStrToString, StringToBinStr } from '../Payload';
 
 function randSTR(length: number): string {
 	let result = '';
