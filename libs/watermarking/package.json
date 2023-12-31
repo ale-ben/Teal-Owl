@@ -1,6 +1,6 @@
 {
     "name": "@teal-owl/watermarking",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Watermarking lib for the Teal Owl project",
     "main": "dist/index.js",
     "author": "Alessandro Benetton (aleben98@gmail.com)",
@@ -10,7 +10,7 @@
         "url": "https://github.com/ale-ben/Teal-Owl"
     },
     "private": true,
-	"type": "module",
+    "type": "module",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "build": "rm -rf dist && tsc",
