@@ -1,4 +1,4 @@
-import { sha256 } from 'js-sha256';
+import { hashText } from '@teal-owl/watermarking';
 
 export function VerifyPayload(payload: string): {
 	valid: boolean;
@@ -13,7 +13,7 @@ export function VerifyPayload(payload: string): {
 
 	const [author, document, hash] = payloadParts;
 
-	const generatedHash = sha256(`${author},${document}`);
+	const generatedHash = hashText(`${author},${document}`);
 
 	return { valid: hash === generatedHash, author, document };
 }

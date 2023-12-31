@@ -20,11 +20,10 @@
         "@teal-owl/watermarking": "workspace:^",
         "@thirdweb-dev/storage": "^2.0.8",
         "@wagmi/core": "^1.4.8",
-        "js-sha256": "^0.10.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "viem": "^1.21.0",
         "react-icons": "^4.12.0",
+        "viem": "^1.21.0",
         "zod": "^3.22.4"
     },
     "repository": {
