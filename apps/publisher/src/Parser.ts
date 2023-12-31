@@ -1,8 +1,7 @@
 // This is a customized version of the parser from google docs to html (https://github.com/thejimbirch/GoogleDoc2Html/tree/master) Note that original
 // parser is in js, this is converted to ts
 
-import { decodeParagraphs } from '@teal-owl/watermarking';
-import { Sha256Hash } from './Payload';
+import { Paragraph, decodeParagraphs, hashText } from '@teal-owl/watermarking';
 
 /**
  * Tree structure of the document
@@ -170,8 +169,11 @@ export function HTMLToText(html: string): string {
  */
 export function GenerateHashList(text: string): string[] {
 	// Split the document into paragraphs and remove homoglyphs
-	const paragraphs = decodeParagraphs(text);
+	const paragraphs: Paragraph[] = decodeParagraphs(text);
 
 	// Generate hash for each paragraph
-	return paragraphs.map((par) => Sha256Hash(par.text));
+	return paragraphs.map((par) => {
+		const hash = hashText(par.text);
+		return hash;
+	});
 }

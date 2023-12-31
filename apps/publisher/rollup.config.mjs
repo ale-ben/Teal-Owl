@@ -1,8 +1,10 @@
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy'
+import commonjs from '@rollup/plugin-commonjs';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
-const extensions = ['.ts', '.js'];
+const extensions = ['.ts', '.js', '.mjs', '.mts'];
 
 const preventTreeShakingPlugin = () => {
 	return {
@@ -25,8 +27,12 @@ export default {
 	},
 	plugins: [
 		preventTreeShakingPlugin(),
+		nodePolyfills(),
+		commonjs(),
 		nodeResolve({
-			extensions
+			extensions,
+			preferBuiltins: false,
+			modulePaths: ['node_modules', '../../node_modules']
 		}),
 		babel({ extensions, babelHelpers: 'runtime', skipPreflightCheck: true }),
 		copy({
