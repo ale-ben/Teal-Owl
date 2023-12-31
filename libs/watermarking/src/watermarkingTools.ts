@@ -1,4 +1,4 @@
-interface Paragraph {
+export interface Paragraph {
 	text: string;
 	payload: string;
 }
