@@ -10,6 +10,7 @@
         "url": "https://github.com/ale-ben/Teal-Owl"
     },
     "private": true,
+	"type": "module",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "build": "rm -rf dist && tsc",

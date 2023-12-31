@@ -4,7 +4,7 @@ function prepareText(text: string): string {
 	const charsToRemove = ['\n', '\r', '\t'];
 
 	charsToRemove.forEach((char) => {
-		text = text.replace(char, '');
+		text = text.replaceAll(char, '');
 	});
 
 	return text;
