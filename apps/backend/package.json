@@ -18,7 +18,7 @@
 		"@thirdweb-dev/storage": "^2.0.8",
 		"@typescript-eslint/eslint-plugin": "^6.18.0",
 		"@typescript-eslint/parser": "^6.18.0",
-		"@wagmi/core": "^1.4.10",
+		"@wagmi/core": "^2.0.2",
 		"@web3modal/wagmi": "^3.5.5",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.1.2",
