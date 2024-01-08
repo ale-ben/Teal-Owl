@@ -1,19 +1,15 @@
 'use server';
 
 import { getContractInfo } from '@teal-owl/contract-utils';
-import {
-	configureChains,
-	createConfig,
-	readContract,
-	sepolia
-} from '@wagmi/core';
-import { publicProvider } from '@wagmi/core/providers/public';
+import { createConfig, readContract, http } from '@wagmi/core';
+import { sepolia } from '@wagmi/core/chains';
 import { z } from 'zod';
 
-const { publicClient } = configureChains([sepolia], [publicProvider()]);
-
-createConfig({
-	publicClient
+const config = createConfig({
+	chains: [sepolia],
+	transports: {
+		[sepolia.id]: http()
+	}
 });
 
 export async function getName(): Promise<string | undefined> {
@@ -22,7 +18,7 @@ export async function getName(): Promise<string | undefined> {
 		throw new Error('Contract info not found');
 	}
 
-	const name = await readContract({
+	const name = await readContract(config, {
 		address: contractInfo.address,
 		abi: contractInfo.abi,
 		functionName: 'name'
@@ -38,7 +34,7 @@ export async function getTokenURI(
 		throw new Error('Contract info not found');
 	}
 
-	const tokenURI = await readContract({
+	const tokenURI = await readContract(config, {
 		address: contractInfo.address,
 		abi: contractInfo.abi,
 		functionName: 'tokenURIS',

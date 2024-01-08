@@ -1,8 +1,12 @@
 {
 	"folders": [
 		{
-			"name": "✨ teal-owl",
-			"path": "."
+			"name": "🚀 reader",
+			"path": "apps/reader"
+		},
+		{
+			"name": "📦 @teal-owl/contract-utils",
+			"path": "libs/contractUtils"
 		}
 	],
 	"settings": {

@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.2.9",
+		"@tanstack/react-query": "^5.17.9",
 		"@teal-owl/contract-utils": "workspace:^",
 		"@teal-owl/ipfs-utils": "workspace:^",
 		"@teal-owl/types": "workspace:^",

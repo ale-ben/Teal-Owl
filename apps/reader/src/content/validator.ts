@@ -1,7 +1,6 @@
 import { downloadManifestFromIPFS } from '@teal-owl/ipfs-utils';
 import { ManifestType } from '@teal-owl/types';
 import { decodeText, extractRawText, hashText } from '@teal-owl/watermarking';
-import { getTokenURI } from '../contract/contractUtils';
 import {
 	VerificationStatus,
 	WMParagraph,
@@ -9,6 +8,7 @@ import {
 } from '../models/parserTypes';
 import { VerifyPayload } from './Payload';
 import { getManifest, saveManifest, saveWatermark } from './storageManager';
+import { getTokenURI } from '@teal-owl/contract-utils';
 
 /**
  * Converts an HTML string into a plain text string by removing all tags.

@@ -1,4 +1,5 @@
-import { Abi, Narrow } from 'viem';
+import { Abi, Chain, Narrow } from 'viem';
+import { sepolia } from '@wagmi/core/chains';
 
 interface ContractInfo {
 	address: `0x${string}`;
@@ -18,6 +19,9 @@ const abiEndpoint = '/artifacts/TealOwlDeploy%23TealOwl.json';
 const contractList: {
 	[chain: string]: ContractInfo;
 } = {};
+
+//Type is weird but createConfig is not happy with Chain[]. Only reason I found is that readonly [Chain, ...Chain[]] does not allow for an empty array
+export const viemChains: [Chain, ...Chain[]] = [sepolia]; 
 
 async function fetchContractInfo(chainName: string) {
 	if (!(chainName in availableChains)) {
